@@ -83,6 +83,7 @@ const brainShaderMaterial = new THREE.ShaderMaterial({
     varying float vSeed;
     varying vec3 vViewDir;
     varying vec3 vSurfaceNormal;
+    varying float vFacing;
 
     mat3 rotationMatrix(vec3 axis, float angle) {
       axis = normalize(axis);
@@ -112,8 +113,12 @@ const brainShaderMaterial = new THREE.ShaderMaterial({
       float spinAngle = uTime * (0.1 + aSeed * 0.2) * aSpeed + aSeed * 6.28;
       mat3 spinMat = rotationMatrix(vec3(0.0, 1.0, 0.0), spinAngle);
 
-      // Scale variation
-      float scale = 0.6 + aSeed * 1.0;
+      // Facing factor relative to local view direction (rotated Y)
+      float facing = abs(-N.x * 0.9757 + N.z * 0.2190);
+      float sizeFactor = 1.0 + 0.5 * pow(1.0 - facing, 2.0);
+
+      // Scale variation (1.5px - 4px on screen)
+      float scale = (0.5 + aSeed * 0.7) * sizeFactor;
       vec3 localPos = alignMat * (spinMat * (position * scale));
 
       // Gentle breathing
@@ -132,6 +137,7 @@ const brainShaderMaterial = new THREE.ShaderMaterial({
 
       vViewDir = cameraPosition - modelPos.xyz;
       vSurfaceNormal = normalize(normalMatrix * N);
+      vFacing = facing;
     }
   `,
   fragmentShader: `
@@ -143,6 +149,7 @@ const brainShaderMaterial = new THREE.ShaderMaterial({
     varying float vSeed;
     varying vec3 vViewDir;
     varying vec3 vSurfaceNormal;
+    varying float vFacing;
 
     void main() {
       // Wireframe edge detection
@@ -151,11 +158,9 @@ const brainShaderMaterial = new THREE.ShaderMaterial({
       float edge = 1.0 - smoothstep(0.0, delta * 1.0, edgeFactor);
       if (edge < 0.1) discard;
 
-      // Outer contour brighter (rim effect)
-      vec3 viewDir = normalize(vViewDir);
-      vec3 sN = normalize(vSurfaceNormal);
-      float rim = pow(1.0 - abs(dot(sN, viewDir)), 1.5);
-      float edgeBright = 0.60 + 0.40 * rim;
+      // Silhouette contour brighter (rim enhancement)
+      float rim = pow(1.0 - vFacing, 2.0);
+      float edgeBright = 0.60 + 0.90 * rim;
 
       // Subtle shimmer
       float shimmer = 0.88 + 0.12 * sin(uTime * 1.5 + vSeed * 80.0);
@@ -200,7 +205,7 @@ interface ParticleBrainProps {
 
 function BrainParticles({ animState }: ParticleBrainProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const count = 4500;
+  const count = 11500;
 
   const { positions, colors, normals, seeds, speeds } = useMemo(() => {
     const posArr = new Float32Array(count * 3);
@@ -221,11 +226,11 @@ function BrainParticles({ animState }: ParticleBrainProps) {
     const stem = createBrainstem();
 
     const regions: { mesh: THREE.Mesh; samples: number; type: string }[] = [
-      { mesh: cerebrumLeft,    samples: 1650, type: "cerebrum" },
-      { mesh: cerebrumRight,   samples: 1650, type: "cerebrum" },
-      { mesh: cerebellumLeft,  samples: 450,  type: "cerebellum" },
-      { mesh: cerebellumRight, samples: 450,  type: "cerebellum" },
-      { mesh: stem,            samples: 300,  type: "stem" },
+      { mesh: cerebrumLeft,    samples: 4200, type: "cerebrum" },
+      { mesh: cerebrumRight,   samples: 4200, type: "cerebrum" },
+      { mesh: cerebellumLeft,  samples: 1150, type: "cerebellum" },
+      { mesh: cerebellumRight, samples: 1150, type: "cerebellum" },
+      { mesh: stem,            samples: 800,  type: "stem" },
     ];
 
     const _p = new THREE.Vector3();
@@ -233,7 +238,7 @@ function BrainParticles({ animState }: ParticleBrainProps) {
     let idx = 0;
 
     // Spatial grid for spacing check
-    const minDistance = 0.028;
+    const minDistance = 0.014;
     const grid = new Map<string, THREE.Vector3>();
 
     const getGridKey = (x: number, y: number, z: number): string => {
@@ -274,9 +279,9 @@ function BrainParticles({ animState }: ParticleBrainProps) {
 
           // Dynamic silhouette weight based on side-view angle
           const facing = Math.abs(-_n.x * Math.sin(1.35) + _n.z * Math.cos(1.35));
-          const silhouetteWeight = Math.pow(1.0 - facing, 2.5);
-
-          let weight = 0.02; // Sparse base density inside
+          const isSilhouette = facing < 0.28;
+          
+          let weight = 0.08; // Base density for inner regions
 
           if (type === "cerebrum") {
             const xOff = mesh === cerebrumLeft ? -0.16 : 0.16;
@@ -291,8 +296,8 @@ function BrainParticles({ animState }: ParticleBrainProps) {
                           Math.sin(nsx * 28) * Math.cos(nsy * 28) * Math.sin(nsz * 28) * 0.020 +
                           Math.sin(nsx * 7) * Math.cos(nsy * 7) * Math.sin(nsz * 7) * 0.030;
             
-            const foldWeight = noise < -0.01 && facing > 0.2 ? 0.35 : 0.0;
-            weight = Math.max(silhouetteWeight * 0.98 + 0.02, foldWeight);
+            const isFold = noise < -0.01;
+            weight = isSilhouette ? Math.pow(1.0 - facing, 1.2) : (isFold ? 0.32 : 0.08);
           } else if (type === "cerebellum") {
             const xOff = mesh === cerebellumLeft ? -0.15 : 0.15;
             const sx = (_p.x - xOff) / 0.22;
@@ -304,11 +309,11 @@ function BrainParticles({ animState }: ParticleBrainProps) {
             const nsz = sz / len;
             const noise = Math.sin(nsy * 38) * 0.045 + Math.cos(nsz * 24) * 0.015 + Math.sin(nsx * 50) * 0.02;
 
-            const foldWeight = noise < -0.01 && facing > 0.2 ? 0.35 : 0.0;
-            weight = Math.max(silhouetteWeight * 0.98 + 0.02, foldWeight);
+            const isFold = noise < -0.01;
+            weight = isSilhouette ? Math.pow(1.0 - facing, 1.2) : (isFold ? 0.32 : 0.08);
           } else {
             // Brainstem
-            weight = Math.max(silhouetteWeight * 0.98 + 0.02, 0.15);
+            weight = isSilhouette ? Math.pow(1.0 - facing, 1.2) : 0.15;
           }
 
           if (Math.random() < weight) {
@@ -331,8 +336,8 @@ function BrainParticles({ animState }: ParticleBrainProps) {
         normArr[idx * 3 + 2] = _n.z;
 
         const rv = Math.random();
-        // 40% White, 30% Amber, 20% Purple, 10% Cyan
-        const c = rv < 0.40 ? cWhite : rv < 0.70 ? cAmber : rv < 0.90 ? cPurple : cCyan;
+        // 40% White, 35% Amber, 15% Purple, 10% Cyan
+        const c = rv < 0.40 ? cWhite : rv < 0.75 ? cAmber : rv < 0.90 ? cPurple : cCyan;
         colArr[idx * 3]     = c.r;
         colArr[idx * 3 + 1] = c.g;
         colArr[idx * 3 + 2] = c.b;
@@ -349,7 +354,7 @@ function BrainParticles({ animState }: ParticleBrainProps) {
 
   // Build InstancedBufferGeometry — flat triangle with per-instance attributes
   const instancedGeometry = useMemo(() => {
-    const s = 0.003;
+    const s = 0.005;
     const verts = new Float32Array([
        0,          0, -s * 1.15,
       -s * 0.866,  0,  s * 0.577,
