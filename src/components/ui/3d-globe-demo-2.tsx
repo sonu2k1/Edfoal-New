@@ -92,24 +92,52 @@ const serviceTestimonials = [
     name: "Customer Feedback Intelligence",
     designation: "AI Solution",
     src: "https://images.unsplash.com/photo-1552581230-c015914626ed?q=80&w=1368&auto=format&fit=crop",
+    icon: "send",
+    features: [
+      { icon: "smile", text: "Sentiment Analysis" },
+      { icon: "globe", text: "Multi-Channel Collection" },
+      { icon: "send", text: "Automated Surveys" },
+      { icon: "mappin", text: "Insight Dashboards" },
+    ],
   },
   {
     quote: "Get AI tailored to your business needs, enhancing efficiency and solving unique challenges with personalized solutions.",
     name: "Custom AI Systems",
     designation: "AI Solution",
     src: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1368&auto=format&fit=crop",
+    icon: "globe",
+    features: [
+      { icon: "smile", text: "Tailored Models" },
+      { icon: "globe", text: "Scalable Architecture" },
+      { icon: "send", text: "API Integration" },
+      { icon: "mappin", text: "Real-time Processing" },
+    ],
   },
   {
     quote: "Organize and update your knowledge base with AI, ensuring accurate and efficient customer support every time.",
     name: "Knowledge Base Optimization",
     designation: "AI Solution",
     src: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?q=80&w=1368&auto=format&fit=crop",
+    icon: "mappin",
+    features: [
+      { icon: "smile", text: "Smart Categorization" },
+      { icon: "globe", text: "Auto-updating Content" },
+      { icon: "send", text: "Search Optimization" },
+      { icon: "mappin", text: "Analytics & Reporting" },
+    ],
   },
   {
     quote: "Automate routine tasks, boost productivity, and reduce errors with intelligent AI solutions that streamline your operations.",
     name: "AI-Driven Automation",
     designation: "AI Solution",
     src: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1368&auto=format&fit=crop",
+    icon: "smile",
+    features: [
+      { icon: "smile", text: "Workflow Automation" },
+      { icon: "globe", text: "Process Optimization" },
+      { icon: "send", text: "Error Reduction" },
+      { icon: "mappin", text: "Productivity Boost" },
+    ],
   },
 ];
 

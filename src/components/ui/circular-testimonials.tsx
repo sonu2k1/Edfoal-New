@@ -8,12 +8,22 @@ import React, {
 } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { Globe, Smile, Send, MapPin } from "lucide-react";
+import { OriginButton } from "@/components/ui/origin-button";
+import { CardSpotlight } from "@/components/ui/card-spotlight";
+
+interface FeatureItem {
+  icon: string;
+  text: string;
+}
 
 interface Testimonial {
   quote: string;
   name: string;
   designation: string;
   src: string;
+  icon?: string;
+  features?: FeatureItem[];
 }
 interface Colors {
   name?: string;
@@ -220,51 +230,75 @@ export const CircularTestimonials = ({
           return (
             <div
               key={testimonial.src}
-              className="absolute w-[380px] h-[380px] rounded-[1.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] bg-zinc-900 border border-white/10 select-none origin-center"
+              className="absolute w-[380px] h-[380px] select-none origin-center"
               style={getImageStyle(index)}
             >
-              {/* Background Image */}
-              <img
-                src={testimonial.src}
-                alt={testimonial.name}
-                className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
-              />
+              <CardSpotlight
+                color="#f4f4f5"
+                showGradient={false}
+                className="relative w-full h-full rounded-[1.5rem] overflow-hidden shadow-xl bg-white/95 border border-neutral-200/80 dark:border-neutral-200/80 dark:bg-white/95 backdrop-blur-sm"
+              >
+              {/* Card Content - matching Realtime tracking style */}
+              <div className="absolute inset-0 z-20 flex flex-col justify-center items-center p-6 text-center gap-y-4">
+                {/* Icon Badge */}
+                <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center">
+                  {testimonial.icon === "globe" && <Globe className="w-5 h-5 text-gray-800" />}
+                  {testimonial.icon === "smile" && <Smile className="w-5 h-5 text-gray-800" />}
+                  {testimonial.icon === "send" && <Send className="w-5 h-5 text-gray-800" />}
+                  {testimonial.icon === "mappin" && <MapPin className="w-5 h-5 text-gray-800" />}
+                  {!testimonial.icon && <Globe className="w-5 h-5 text-gray-800" />}
+                </div>
 
-              {/* Dark Gradient Overlay for Readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/20 z-10" />
-
-              {/* Card Content */}
-              <div className="absolute inset-0 z-20 flex flex-col justify-end p-7 text-left">
                 {/* Title */}
-                <h3
-                  className="font-bold mb-1.5 leading-tight tracking-wide"
-                  style={{ color: colorName, fontSize: fontSizeName }}
-                >
+                <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight leading-tight">
                   {testimonial.name}
                 </h3>
 
-                {/* Designation / Subtitle */}
-                <p
-                  className="mb-3 font-semibold uppercase tracking-widest"
-                  style={{ color: colorDesignation, fontSize: fontSizeDesignation }}
-                >
-                  {testimonial.designation}
-                </p>
-
-                {/* Quote / Description inside the card */}
-                <p
-                  className="leading-relaxed line-clamp-3 mb-5"
-                  style={{ color: colorTestimony, fontSize: fontSizeQuote }}
-                >
+                {/* Description */}
+                <p className="text-zinc-500 text-sm leading-relaxed font-normal max-w-[280px]">
                   {testimonial.quote}
                 </p>
 
-                {/* Learn More link */}
-                <div className="flex items-center gap-1.5 text-blue-400 hover:text-blue-300 font-bold text-sm transition-colors cursor-pointer w-fit">
-                  <span>Learn More</span>
-                  <FaArrowRight className="w-3.5 h-3.5 mt-0.5" />
+                {/* Feature Bullets */}
+                {testimonial.features && testimonial.features.length > 0 && (
+                  <div className="space-y-2 w-fit text-left flex flex-col items-start mx-auto">
+                    {testimonial.features.map((feature, fIdx) => (
+                      <div key={fIdx} className="flex items-center gap-3 text-gray-700 text-sm font-semibold">
+                        {feature.icon === "smile" && <Smile className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
+                        {feature.icon === "globe" && <Globe className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
+                        {feature.icon === "send" && <Send className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
+                        {feature.icon === "mappin" && <MapPin className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
+                        <span>{feature.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Learn More Button */}
+                <div className="w-full flex justify-center">
+                  <div className="inline-flex rounded-full w-[160px] h-[40px] items-center justify-center">
+                    <OriginButton
+                      className="w-full h-full rounded-full px-0 text-sm font-bold tracking-wide border-0"
+                      style={{
+                        "--ic-card": "#000000",
+                        "--ic-card-foreground": "#ffffff",
+                        "--ic-border": "transparent",
+                        "--ic-foreground": "#ffffff",
+                        "--ic-background": "#000000",
+                      } as React.CSSProperties}
+                      onClick={() => {
+                        const contactElem = document.getElementById("contact");
+                        if (contactElem) {
+                          contactElem.scrollIntoView({ behavior: "smooth" });
+                        }
+                      }}
+                    >
+                      Learn more
+                    </OriginButton>
+                  </div>
                 </div>
               </div>
+              </CardSpotlight>
             </div>
           );
         })}
