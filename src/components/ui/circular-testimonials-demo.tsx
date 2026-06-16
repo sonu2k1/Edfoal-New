@@ -31,9 +31,9 @@ const testimonials = [
 export const CircularTestimonialsDemo = () => (
   <section className="space-y-12 w-full">
     {/* Dark theme testimonials section - fits nicely with the rest of the dark background app */}
-    <div className="bg-black/40 border border-white/5 p-8 md:p-16 rounded-3xl min-h-[300px] flex flex-wrap gap-6 items-center justify-center relative backdrop-blur-sm">
+    <div className="bg-black/40 border border-white/5 p-8 md:p-16 rounded-3xl min-h-[450px] flex flex-wrap gap-6 items-center justify-center relative backdrop-blur-sm overflow-visible">
       <div
-        className="items-center justify-center relative flex w-full"
+        className="items-center justify-center relative flex w-full overflow-visible"
         style={{ maxWidth: "1024px" }}
       >
         <CircularTestimonials
@@ -41,16 +41,16 @@ export const CircularTestimonialsDemo = () => (
           autoplay={true}
           colors={{
             name: "#f7f7ff",
-            designation: "#a1a1aa",
-            testimony: "#e4e4e7",
-            arrowBackground: "#3b82f6",
-            arrowForeground: "#18181b",
-            arrowHoverBackground: "#60a5fa",
+            designation: "#3b82f6", // Vibrant theme color for AI Solution tag
+            testimony: "#d4d4d8",
+            arrowBackground: "#18181b",
+            arrowForeground: "#ffffff",
+            arrowHoverBackground: "#3b82f6",
           }}
           fontSizes={{
-            name: "28px",
-            designation: "16px",
-            quote: "18px",
+            name: "22px",
+            designation: "11px",
+            quote: "14px",
           }}
         />
       </div>

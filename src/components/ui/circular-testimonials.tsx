@@ -36,14 +36,9 @@ interface CircularTestimonialsProps {
 }
 
 function calculateGap(width: number) {
-  const minWidth = 1024;
-  const maxWidth = 1456;
-  const minGap = 60;
-  const maxGap = 86;
-  if (width <= minWidth) return minGap;
-  if (width >= maxWidth)
-    return Math.max(minGap, maxGap + 0.06018 * (width - maxWidth));
-  return minGap + (maxGap - minGap) * ((width - minWidth) / (maxWidth - minWidth));
+  if (width < 640) return 90;
+  if (width < 1024) return 180;
+  return 240;
 }
 
 export const CircularTestimonials = ({
@@ -53,15 +48,15 @@ export const CircularTestimonials = ({
   fontSizes = {},
 }: CircularTestimonialsProps) => {
   // Color & font config
-  const colorName = colors.name ?? "#000";
-  const colorDesignation = colors.designation ?? "#6b7280";
-  const colorTestimony = colors.testimony ?? "#4b5563";
-  const colorArrowBg = colors.arrowBackground ?? "#141414";
-  const colorArrowFg = colors.arrowForeground ?? "#f1f1f7";
-  const colorArrowHoverBg = colors.arrowHoverBackground ?? "#00a6fb";
+  const colorName = colors.name ?? "#fff";
+  const colorDesignation = colors.designation ?? "#a1a1aa";
+  const colorTestimony = colors.testimony ?? "#e4e4e7";
+  const colorArrowBg = colors.arrowBackground ?? "#1f2937";
+  const colorArrowFg = colors.arrowForeground ?? "#fff";
+  const colorArrowHoverBg = colors.arrowHoverBackground ?? "#3b82f6";
   const fontSizeName = fontSizes.name ?? "1.5rem";
-  const fontSizeDesignation = fontSizes.designation ?? "0.925rem";
-  const fontSizeQuote = fontSizes.quote ?? "1.125rem";
+  const fontSizeDesignation = fontSizes.designation ?? "0.875rem";
+  const fontSizeQuote = fontSizes.quote ?? "0.95rem";
 
   // State
   const [activeIndex, setActiveIndex] = useState(0);
@@ -73,10 +68,6 @@ export const CircularTestimonials = ({
   const autoplayIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const testimonialsLength = useMemo(() => testimonials.length, [testimonials]);
-  const activeTestimonial = useMemo(
-    () => testimonials[activeIndex],
-    [activeIndex, testimonials]
-  );
 
   // Responsive gap calculation
   useEffect(() => {
@@ -126,35 +117,39 @@ export const CircularTestimonials = ({
   // Compute transforms for each image (always show 3: left, center, right)
   function getImageStyle(index: number): React.CSSProperties {
     const gap = calculateGap(containerWidth);
-    const maxStickUp = gap * 0.8;
+    const maxStickUp = gap * 0.4;
     const offset = (index - activeIndex + testimonialsLength) % testimonialsLength;
     const isActive = index === activeIndex;
     const isLeft = (activeIndex - 1 + testimonialsLength) % testimonialsLength === index;
     const isRight = (activeIndex + 1) % testimonialsLength === index;
+    
+    // Responsive scale
+    const baseScale = containerWidth < 640 ? 0.8 : 1;
+
     if (isActive) {
       return {
         zIndex: 3,
         opacity: 1,
         pointerEvents: "auto",
-        transform: `translateX(0px) translateY(0px) scale(1) rotateY(0deg)`,
+        transform: `translateX(0px) translateY(0px) scale(${baseScale}) rotateY(0deg)`,
         transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
       };
     }
     if (isLeft) {
       return {
         zIndex: 2,
-        opacity: 1,
+        opacity: 0.6,
         pointerEvents: "auto",
-        transform: `translateX(-${gap}px) translateY(-${maxStickUp}px) scale(0.85) rotateY(15deg)`,
+        transform: `translateX(-${gap}px) translateY(-${maxStickUp}px) scale(${baseScale * 0.8}) rotateY(12deg)`,
         transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
       };
     }
     if (isRight) {
       return {
         zIndex: 2,
-        opacity: 1,
+        opacity: 0.6,
         pointerEvents: "auto",
-        transform: `translateX(${gap}px) translateY(-${maxStickUp}px) scale(0.85) rotateY(-15deg)`,
+        transform: `translateX(${gap}px) translateY(-${maxStickUp}px) scale(${baseScale * 0.8}) rotateY(-12deg)`,
         transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
       };
     }
@@ -163,113 +158,99 @@ export const CircularTestimonials = ({
       zIndex: 1,
       opacity: 0,
       pointerEvents: "none",
+      transform: `translateX(0px) scale(0.5)`,
       transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
     };
   }
 
-  // Framer Motion variants for quote
-  const quoteVariants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 },
-  };
-
   return (
-    <div className="w-full max-w-[56rem] p-8">
-      <div className="grid gap-20 md:grid-cols-2">
-        {/* Images */}
-        <div className="relative w-full h-[24rem] [perspective:1000px]" ref={imageContainerRef}>
-          {testimonials.map((testimonial, index) => (
-            <img
+    <div className="w-full flex flex-col items-center justify-center">
+      {/* 3D Cards Container */}
+      <div 
+        className="relative w-full flex items-center justify-center h-[380px] [perspective:1000px] overflow-visible" 
+        ref={imageContainerRef}
+      >
+        {testimonials.map((testimonial, index) => {
+          const isActive = index === activeIndex;
+          return (
+            <div
               key={testimonial.src}
-              src={testimonial.src}
-              alt={testimonial.name}
-              className="absolute w-full h-full object-cover rounded-[1.5rem] shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
-              data-index={index}
+              className="absolute w-[380px] h-[380px] rounded-[1.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] bg-zinc-900 border border-white/10 select-none origin-center"
               style={getImageStyle(index)}
-            />
-          ))}
-        </div>
-        {/* Content */}
-        <div className="flex flex-col justify-between">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndex}
-              variants={quoteVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              <h3
-                className="font-bold mb-1"
-                style={{ color: colorName, fontSize: fontSizeName }}
-              >
-                {activeTestimonial.name}
-              </h3>
-              <p
-                className="mb-8"
-                style={{ color: colorDesignation, fontSize: fontSizeDesignation }}
-              >
-                {activeTestimonial.designation}
-              </p>
-              <motion.p
-                className="leading-[1.75]"
-                style={{ color: colorTestimony, fontSize: fontSizeQuote }}
-              >
-                {activeTestimonial.quote.split(" ").map((word, i) => (
-                  <motion.span
-                    key={i}
-                    initial={{
-                      filter: "blur(10px)",
-                      opacity: 0,
-                      y: 5,
-                    }}
-                    animate={{
-                      filter: "blur(0px)",
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    transition={{
-                      duration: 0.22,
-                      ease: "easeInOut",
-                      delay: 0.025 * i,
-                    }}
-                    style={{ display: "inline-block" }}
-                  >
-                    {word}&nbsp;
-                  </motion.span>
-                ))}
-              </motion.p>
-            </motion.div>
-          </AnimatePresence>
-          <div className="flex gap-6 pt-12 md:pt-0">
-            <button
-              className="w-[2.7rem] h-[2.7rem] rounded-full flex items-center justify-center cursor-pointer transition-colors duration-300 border-none"
-              onClick={handlePrev}
-              style={{
-                backgroundColor: hoverPrev ? colorArrowHoverBg : colorArrowBg,
-              }}
-              onMouseEnter={() => setHoverPrev(true)}
-              onMouseLeave={() => setHoverPrev(false)}
-              aria-label="Previous testimonial"
-            >
-              <FaArrowLeft size={28} color={colorArrowFg} />
-            </button>
-            <button
-              className="w-[2.7rem] h-[2.7rem] rounded-full flex items-center justify-center cursor-pointer transition-colors duration-300 border-none"
-              onClick={handleNext}
-              style={{
-                backgroundColor: hoverNext ? colorArrowHoverBg : colorArrowBg,
-              }}
-              onMouseEnter={() => setHoverNext(true)}
-              onMouseLeave={() => setHoverNext(false)}
-              aria-label="Next testimonial"
-            >
-              <FaArrowRight size={28} color={colorArrowFg} />
-            </button>
-          </div>
-        </div>
+              {/* Background Image */}
+              <img
+                src={testimonial.src}
+                alt={testimonial.name}
+                className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+              />
+              
+              {/* Dark Gradient Overlay for Readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/20 z-10" />
+
+              {/* Card Content */}
+              <div className="absolute inset-0 z-20 flex flex-col justify-end p-7 text-left">
+                {/* Title */}
+                <h3
+                  className="font-bold mb-1.5 leading-tight tracking-wide"
+                  style={{ color: colorName, fontSize: fontSizeName }}
+                >
+                  {testimonial.name}
+                </h3>
+                
+                {/* Designation / Subtitle */}
+                <p
+                  className="mb-3 font-semibold uppercase tracking-widest"
+                  style={{ color: colorDesignation, fontSize: fontSizeDesignation }}
+                >
+                  {testimonial.designation}
+                </p>
+
+                {/* Quote / Description inside the card */}
+                <p
+                  className="leading-relaxed line-clamp-3 mb-5"
+                  style={{ color: colorTestimony, fontSize: fontSizeQuote }}
+                >
+                  {testimonial.quote}
+                </p>
+
+                {/* Learn More link */}
+                <div className="flex items-center gap-1.5 text-blue-400 hover:text-blue-300 font-bold text-sm transition-colors cursor-pointer w-fit">
+                  <span>Learn More</span>
+                  <FaArrowRight className="w-3.5 h-3.5 mt-0.5" />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex gap-6 mt-12 z-30">
+        <button
+          className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-300 border border-white/15 text-white"
+          onClick={handlePrev}
+          style={{
+            backgroundColor: hoverPrev ? colorArrowHoverBg : colorArrowBg,
+          }}
+          onMouseEnter={() => setHoverPrev(true)}
+          onMouseLeave={() => setHoverPrev(false)}
+          aria-label="Previous testimonial"
+        >
+          <FaArrowLeft size={18} color={colorArrowFg} />
+        </button>
+        <button
+          className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-300 border border-white/15 text-white"
+          onClick={handleNext}
+          style={{
+            backgroundColor: hoverNext ? colorArrowHoverBg : colorArrowBg,
+          }}
+          onMouseEnter={() => setHoverNext(true)}
+          onMouseLeave={() => setHoverNext(false)}
+          aria-label="Next testimonial"
+        >
+          <FaArrowRight size={18} color={colorArrowFg} />
+        </button>
       </div>
     </div>
   );
