@@ -119,46 +119,82 @@ export const CircularTestimonials = ({
     const gap = calculateGap(containerWidth);
     const maxStickUp = gap * 0.4;
     const offset = (index - activeIndex + testimonialsLength) % testimonialsLength;
-    const isActive = index === activeIndex;
-    const isLeft = (activeIndex - 1 + testimonialsLength) % testimonialsLength === index;
-    const isRight = (activeIndex + 1) % testimonialsLength === index;
     
     // Responsive scale
     const baseScale = containerWidth < 640 ? 0.8 : 1;
 
-    if (isActive) {
+    if (offset === 0) {
+      // Center (Active)
       return {
-        zIndex: 3,
+        zIndex: 10,
         opacity: 1,
         pointerEvents: "auto",
         transform: `translateX(0px) translateY(0px) scale(${baseScale}) rotateY(0deg)`,
         transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
       };
     }
-    if (isLeft) {
+    
+    if (offset === 1) {
+      // Immediate Right
       return {
-        zIndex: 2,
-        opacity: 0.6,
-        pointerEvents: "auto",
-        transform: `translateX(-${gap}px) translateY(-${maxStickUp}px) scale(${baseScale * 0.8}) rotateY(12deg)`,
-        transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
-      };
-    }
-    if (isRight) {
-      return {
-        zIndex: 2,
-        opacity: 0.6,
+        zIndex: 5,
+        opacity: 0.65,
         pointerEvents: "auto",
         transform: `translateX(${gap}px) translateY(-${maxStickUp}px) scale(${baseScale * 0.8}) rotateY(-12deg)`,
         transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
       };
     }
-    // Hide all other images
+    
+    if (offset === testimonialsLength - 1) {
+      // Immediate Left
+      return {
+        zIndex: 5,
+        opacity: 0.65,
+        pointerEvents: "auto",
+        transform: `translateX(-${gap}px) translateY(-${maxStickUp}px) scale(${baseScale * 0.8}) rotateY(12deg)`,
+        transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
+      };
+    }
+
+    if (offset === 2 && testimonialsLength === 4) {
+      // Back center for exactly 4 cards
+      return {
+        zIndex: 2,
+        opacity: 0.35,
+        pointerEvents: "none",
+        transform: `translateX(0px) translateY(-${maxStickUp * 1.6}px) scale(${baseScale * 0.68}) rotateY(0deg)`,
+        transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
+      };
+    }
+
+    if (offset === 2) {
+      // Back Right (for >4 cards)
+      return {
+        zIndex: 2,
+        opacity: 0.3,
+        pointerEvents: "none",
+        transform: `translateX(${gap * 0.5}px) translateY(-${maxStickUp * 1.4}px) scale(${baseScale * 0.7}) rotateY(-6deg)`,
+        transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
+      };
+    }
+
+    if (offset === testimonialsLength - 2) {
+      // Back Left (for >4 cards)
+      return {
+        zIndex: 2,
+        opacity: 0.3,
+        pointerEvents: "none",
+        transform: `translateX(-${gap * 0.5}px) translateY(-${maxStickUp * 1.4}px) scale(${baseScale * 0.7}) rotateY(6deg)`,
+        transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
+      };
+    }
+
+    // Hide any other cards if list is even larger
     return {
       zIndex: 1,
       opacity: 0,
       pointerEvents: "none",
-      transform: `translateX(0px) scale(0.5)`,
+      transform: `translateX(0px) translateY(0px) scale(0.5)`,
       transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
     };
   }
