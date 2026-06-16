@@ -207,7 +207,7 @@ export default function Globe3DDemoSecond() {
               designation: "11px",
               quote: "13px",
             }}
-            className="lg:max-w-[550px] lg:ml-auto lg:translate-x-[45px] xl:translate-x-[90px] transition-transform duration-500"
+            className="lg:max-w-[550px] lg:ml-auto lg:translate-x-[30px] xl:translate-x-[82px] transition-transform duration-500"
           />
         </div>
       </div>
