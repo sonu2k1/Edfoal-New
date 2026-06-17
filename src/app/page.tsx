@@ -8,6 +8,7 @@ import OurServices from "@/components/services/OurServices";
 import WhyChooseUs from "@/components/why-choose-us/WhyChooseUs";
 import Footer from "@/components/footer/Footer";
 import ElevateSection from "@/components/elevate/ElevateSection";
+import IndustriesCover from "@/components/industries/IndustriesCover";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import useLenis from "@/hooks/useLenis";
 
@@ -34,6 +35,9 @@ export default function Home() {
 
       {/* Our Services Section */}
       <OurServices />
+
+      {/* Industries We Cover Section */}
+      <IndustriesCover />
 
       {/* Elevate Section */}
       <ElevateSection />

@@ -68,12 +68,12 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl z-50 transition-all duration-300 flex items-center rounded-full border shadow-lg ${isLight
-            ? scrolled
-              ? "h-16 bg-white/80 backdrop-blur-md border-black/10 shadow-black/5"
-              : "h-20 bg-white/40 backdrop-blur-sm border-black/5 shadow-black/5"
-            : scrolled
-              ? "h-16 bg-black/70 backdrop-blur-md border-white/10 shadow-black/25"
-              : "h-20 bg-black/30 backdrop-blur-sm border-white/5 shadow-black/10"
+          ? scrolled
+            ? "h-16 bg-white/80 backdrop-blur-md border-black/10 shadow-black/5"
+            : "h-20 bg-white/40 backdrop-blur-sm border-black/5 shadow-black/5"
+          : scrolled
+            ? "h-16 bg-black/70 backdrop-blur-md border-white/10 shadow-black/25"
+            : "h-20 bg-black/30 backdrop-blur-sm border-white/5 shadow-black/10"
           }`}
       >
         <div className="w-full px-12 flex items-center justify-between">
@@ -94,8 +94,8 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   className={`text-[13px] transition-colors duration-200 tracking-wide py-2 ${isActive
-                      ? isLight ? "text-black font-bold" : "text-white font-bold"
-                      : isLight ? "text-gray-600 hover:text-black font-semibold" : "text-gray-400 hover:text-white font-semibold"
+                    ? isLight ? "text-black font-bold" : "text-white font-bold"
+                    : isLight ? "text-gray-600 hover:text-black font-semibold" : "text-gray-400 hover:text-white font-semibold"
                     }`}
                 >
                   {link.label}
@@ -115,19 +115,19 @@ export default function Navbar() {
                 style={
                   isLight
                     ? ({
-                        "--ic-card": "#ffffff",
-                        "--ic-card-foreground": "#000000",
-                        "--ic-border": "#000000",
-                        "--ic-foreground": "#000000",
-                        "--ic-background": "#ffffff",
-                      } as React.CSSProperties)
+                      "--ic-card": "#ffffff",
+                      "--ic-card-foreground": "#000000",
+                      "--ic-border": "#000000",
+                      "--ic-foreground": "#000000",
+                      "--ic-background": "#ffffff",
+                    } as React.CSSProperties)
                     : ({
-                        "--ic-card": "#000000",
-                        "--ic-card-foreground": "#ffffff",
-                        "--ic-border": "#ffffff",
-                        "--ic-foreground": "#ffffff",
-                        "--ic-background": "#000000",
-                      } as React.CSSProperties)
+                      "--ic-card": "#000000",
+                      "--ic-card-foreground": "#ffffff",
+                      "--ic-border": "#ffffff",
+                      "--ic-foreground": "#ffffff",
+                      "--ic-background": "#000000",
+                    } as React.CSSProperties)
                 }
                 onClick={() => {
                   const contactElem = document.getElementById("contact");
@@ -144,8 +144,8 @@ export default function Navbar() {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={`md:hidden focus:outline-none p-2 rounded-lg border transition-colors flex items-center justify-center ${isLight
-                  ? "text-black border-black/10 bg-black/5 hover:bg-black/10"
-                  : "text-white border-white/10 bg-white/5 hover:bg-white/10"
+                ? "text-black border-black/10 bg-black/5 hover:bg-black/10"
+                : "text-white border-white/10 bg-white/5 hover:bg-white/10"
                 }`}
             >
               {mobileMenuOpen ? (
