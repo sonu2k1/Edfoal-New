@@ -125,7 +125,7 @@ export default function IndustriesCover() {
     >
       <div
         className="w-full mx-auto"
-        style={{ maxWidth: "1400px",  margin:"50px 0 50px 30px" }}
+        style={{ maxWidth: "1400px", margin: "50px auto" }}
       >
         {/* ── Section header ── */}
         <div className="w-full text-center mb-4">
@@ -147,7 +147,7 @@ export default function IndustriesCover() {
             </span> */}
           </h2>
 
-          <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 leading-relaxed">
+          <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 leading-relaxed" style={{margin:"1rem 0 2rem 22rem "}} >
             From healthcare to fintech, we deliver tailor-made digital products
             and AI-powered platforms that solve real-world challenges across
             diverse sectors.
