@@ -9,6 +9,7 @@ import WhyChooseUs from "@/components/why-choose-us/WhyChooseUs";
 import Footer from "@/components/footer/Footer";
 import ElevateSection from "@/components/elevate/ElevateSection";
 import IndustriesCover from "@/components/industries/IndustriesCover";
+import HowWeWork from "@/components/how-we-work/HowWeWork";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import useLenis from "@/hooks/useLenis";
 
@@ -38,6 +39,9 @@ export default function Home() {
 
       {/* Industries We Cover Section */}
       <IndustriesCover />
+
+      {/* How We Work Section */}
+      <HowWeWork />
 
       {/* Elevate Section */}
       <ElevateSection />
