@@ -57,7 +57,7 @@ function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#about" className="text-sm text-zinc-400 hover:text-white transition-colors">
+                  <Link href="/about" className="text-sm text-zinc-400 hover:text-white transition-colors">
                     About Us
                   </Link>
                 </li>
