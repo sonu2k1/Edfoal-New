@@ -35,7 +35,7 @@ export default function Hero() {
             <br />
            Your Business
             <br />
-            wisdom.
+            wisdom
           </motion.h1>
 
           {/* Dala Subheading Tagline */}
@@ -96,7 +96,7 @@ export default function Hero() {
                   }
                 }}
               >
-                Request Access
+               Start Your AI Journey
               </OriginButton>
             </div>
           </motion.div>
