@@ -31,9 +31,9 @@ export default function Hero() {
               marginBottom: "26px",
             }}
           >
-            Unlock
+           Transform
             <br />
-            collective
+           Your Business
             <br />
             wisdom.
           </motion.h1>
@@ -53,7 +53,7 @@ export default function Hero() {
               marginBottom: "20px",
             }}
           >
-            Stop managing knowledge. Start using it.
+           with Intelligent AI Solutions
           </motion.div>
 
           {/* Paragraph */}
@@ -70,7 +70,7 @@ export default function Hero() {
               marginBottom: "34px",
             }}
           >
-            Plug into your team's shared brainpower. Ask Dala to instantly find anything or anyone from any workplace system. Focus on doing your best work with context, conviction and clarity.
+           Unlock new levels of efficiency, innovation, and customer satisfaction through EdFoal AI’s cutting-edge, custom-tailored AI services. Let us help you evolve with the power of AI.
           </motion.p>
 
           {/* CTA Action button */}
