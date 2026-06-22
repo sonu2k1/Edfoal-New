@@ -11,6 +11,7 @@ export interface MinimalHeroProps {
   footerTag?: string;
   footerHeading?: string;
   footerDesc?: string;
+  isLight?: boolean;
 }
 
 export default function MinimalHero({
@@ -22,6 +23,7 @@ export default function MinimalHero({
   footerTag = "Designed for focus",
   footerHeading = "Composable. Accessible. Production-ready.",
   footerDesc = "Start with sensible defaults, ship without the noise, and scale your UI with confidence. Works across any app architecture.",
+  isLight = false,
 }: MinimalHeroProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
