@@ -147,10 +147,12 @@ export default function IndustriesHoverExpand() {
     <section
       id="industries-explore"
       className="relative w-full overflow-hidden bg-white py-20"
+      
+      
     >
       <div
         className="w-full mx-auto px-5"
-        style={{ maxWidth: "1400px" }}
+        style={{ maxWidth: "1400px", marginTop:"5rem"}}
       >
         {/* Section header */}
         <motion.div
@@ -172,7 +174,7 @@ export default function IndustriesHoverExpand() {
           </div>
 
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight mb-4">
-            Explore Our Industries
+           Industries We Serve
           </h2>
 
           <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 leading-relaxed mt-4 mb-8" style={{margin:"2rem 0 2rem 24rem"}}>
