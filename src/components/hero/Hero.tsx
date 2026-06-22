@@ -31,9 +31,9 @@ export default function Hero() {
               marginBottom: "26px",
             }}
           >
-           Transform
+            Transform
             <br />
-           Your Business
+            Your Business
             <br />
             wisdom
           </motion.h1>
@@ -53,7 +53,7 @@ export default function Hero() {
               marginBottom: "20px",
             }}
           >
-           with Intelligent AI Solutions
+            with Intelligent AI Solutions
           </motion.div>
 
           {/* Paragraph */}
@@ -70,7 +70,7 @@ export default function Hero() {
               marginBottom: "34px",
             }}
           >
-           Unlock new levels of efficiency, innovation, and customer satisfaction through EdFoal AI’s cutting-edge, custom-tailored AI services. Let us help you evolve with the power of AI.
+            Unlock new levels of efficiency, innovation, and customer satisfaction through EdFoal AI’s cutting-edge, custom-tailored AI services. Let us help you evolve with the power of AI.
           </motion.p>
 
           {/* CTA Action button */}
@@ -96,7 +96,7 @@ export default function Hero() {
                   }
                 }}
               >
-               Start Your AI Journey
+                Start Your AI Journey
               </OriginButton>
             </div>
           </motion.div>

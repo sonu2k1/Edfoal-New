@@ -51,9 +51,9 @@ export default function ElevateSection() {
             className="absolute text-4xl sm:text-[2.75rem] lg:text-[2.85rem] font-extrabold text-white leading-[1.15] tracking-tight"
             style={{ top: "85px", left: "48px", maxWidth: "560px" }}
           >
-            We combine human insight
-           
-            with artificial intelligence
+            How Can We Elevate
+            <br />
+            Your Success?
           </h2>
 
           {/* Description — below heading, left-aligned */}
@@ -61,15 +61,13 @@ export default function ElevateSection() {
             className="absolute text-[14px] sm:text-[15px] leading-relaxed"
             style={{
               
-              bottom: "80px",
+              bottom: "9rem",
               left: "48px",
               maxWidth: "480px",
               color: "#fff",
             }}
           >
-            Our consulting team bridges strategic thinking and advanced AI
-            technologies to help companies streamline processes, improve
-            decision-making, and create intelligent digital experiences.
+           Let us unlock new opportunities and drive your business forward with our expert solutions! 
           </p>
 
           {/* CTA Button — positioned where arrow points (right-center) */}
@@ -93,7 +91,7 @@ export default function ElevateSection() {
                 }
               }}
             >
-              Get Started
+              Explore Our Services
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

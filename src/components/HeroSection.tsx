@@ -131,7 +131,7 @@ export default function HeroSection() {
                 <br />
                 collective
                 <br />
-                wisdom.
+                wisdom
               </h1>
 
               <div
@@ -145,7 +145,7 @@ export default function HeroSection() {
                   marginBottom: "20px",
                 }}
               >
-                Stop managing knowledge. Start using it.
+                With Intelligent AI Solutions
               </div>
 
               <p
@@ -163,26 +163,27 @@ export default function HeroSection() {
                 your best work with context, conviction and clarity.
               </p>
 
-            <div className="inline-flex rounded-full w-[160px] h-[40px] items-center justify-center">
-              <OriginButton
-                className="w-full h-full rounded-full px-0 text-sm font-semibold tracking-wide border-[0.5px]"
-                style={{
-                  "--ic-card": "#000000",
-                  "--ic-card-foreground": "#ffffff",
-                  "--ic-border": "#ffffff",
-                  "--ic-foreground": "#ffffff",
-                  "--ic-background": "#000000",
-                } as React.CSSProperties}
-                onClick={() => {
-                  const contactElem = document.getElementById("contact");
-                  if (contactElem) {
-                    contactElem.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-              >
-                Request Access
-              </OriginButton>
-            </div>
+              <div className="inline-flex rounded-full w-[160px] h-[40px] items-center justify-center">
+                <OriginButton
+                  className=" h-full rounded-full px-0 text-sm font-semibold border-[1px]"
+                  style={{
+                    "--ic-card": "#000000",
+                    "--ic-card-foreground": "#ffffff",
+                    "--ic-border": "#ffffff",
+                    "--ic-foreground": "#ffffff",
+                    "--ic-background": "#000000",
+                    width:"10rem"
+                  } as React.CSSProperties}
+                  onClick={() => {
+                    const contactElem = document.getElementById("contact");
+                    if (contactElem) {
+                      contactElem.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                >
+                  Start Your AI Journey
+                </OriginButton>
+              </div>
             </div>
           </section>
 
@@ -222,7 +223,7 @@ export default function HeroSection() {
                   maxWidth: "340px",
                 }}
               >
-                Dala&apos;s bleeding-edge AI search tool automates extracting
+                Efoal&apos;s bleeding-edge AI search tool automates extracting
                 knowledge from across your organisation so that you can take the
                 guesswork out of your work.
               </p>

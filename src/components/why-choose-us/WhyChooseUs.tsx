@@ -59,6 +59,10 @@ export default function WhyChooseUs() {
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight">
             Why Choose Us ?
           </h2>
+          <p className=" text-gray-500 " style={{margin:"2rem 0 0 20rem", color:"black"}}>Unlock the Power of AI for Unmatched Business Growth</p>
+          <p className="text-sm md:text-[16px] text-gray-500 max-w-3xl mx-auto mt-4 leading-relaxed font-medium" style={{margin:"1rem 0 0 20rem"}}>
+            EdFoal AI combines expertise, innovation, and tailored solutions to drive your business forward. We create custom AI systems designed to meet your unique needs, ensuring seamless integration and scalable growth as your business evolves.
+          </p>
         </div>
 
         {/* Cards Grid with Symmetrical Centering */}
