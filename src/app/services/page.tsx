@@ -8,6 +8,7 @@ import Footer from "@/components/footer/Footer";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import useLenis from "@/hooks/useLenis";
+import MinimalHero from "@/components/ui/hero-minimalism";
 
 export default function ServicesPage() {
   // Initialize Lenis scroll smoothing
@@ -43,52 +44,20 @@ export default function ServicesPage() {
       <BackgroundEffects />
       <Navbar />
 
-      {/* Hero Banner Section */}
-      <section
-        style={{ paddingTop: "190px" }}
-        className="relative pb-24 md:pb-32 px-6 md:px-12 flex flex-col items-center text-center overflow-hidden"
-      >
-        {/* Glow overlay */}
-        <div className="absolute inset-0 bg-radial-gradient from-purple-500/10 via-transparent to-transparent pointer-events-none" />
-
-        {/* Grid Overlay */}
-        <div className="absolute inset-0 grid-overlay opacity-30 pointer-events-none" />
-
-        <div className="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-xs font-semibold tracking-[0.25em] text-purple-400 uppercase mb-5"
-          >
-            Our Services
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 leading-tight animate-text"
-          >
+      {/* Hero Section */}
+      <MinimalHero 
+        kicker="Our Services"
+        title={
+          <>
             Custom AI Solutions <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
-              For Your Needs
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
-          >
-            Tailored technologies designed to drive your business forward and address your unique challenges!
-          </motion.p>
-        </div>
-      </section>
+            For Your Needs
+          </>
+        }
+        subtitle="Tailored technologies designed to drive your business forward and address your unique challenges!"
+      />
 
       {/* Exceptional Service Offerings Intro Section */}
-      <section className="w-full max-w-7xl mx-auto relative py-16 md:py-24 px-6 md:px-12">
+      <section id="offerings" className="w-full max-w-7xl mx-auto relative py-16 md:py-24 px-6 md:px-12 scroll-mt-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
           {/* Left Block */}
           <div className="md:col-span-5 flex flex-col gap-4">

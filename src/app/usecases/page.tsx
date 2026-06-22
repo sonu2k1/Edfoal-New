@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer/Footer";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import useLenis from "@/hooks/useLenis";
+import MinimalHero from "@/components/ui/hero-minimalism";
 
 export default function UsecasesPage() {
   // Initialize Lenis scroll smoothing
@@ -75,49 +76,23 @@ export default function UsecasesPage() {
       <BackgroundEffects />
       <Navbar />
 
-      {/* Hero Banner Section */}
-      <section
-        style={{ paddingTop: "190px" }}
-        className="relative pb-24 md:pb-32 px-6 md:px-12 flex flex-col items-center text-center overflow-hidden"
-      >
-        {/* Glow overlay */}
-        <div className="absolute inset-0 bg-radial-gradient from-blue-500/10 via-transparent to-transparent pointer-events-none" />
-
-        {/* Grid Overlay */}
-        <div className="absolute inset-0 grid-overlay opacity-30 pointer-events-none" />
-
-        <div className="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-xs font-semibold tracking-[0.25em] text-blue-400 uppercase mb-5"
-          >
-            Case Studies
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 leading-tight"
-          >
+      {/* Hero Section */}
+      <MinimalHero
+        kicker="Case Studies"
+        title={
+          <>
             Real Results, <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
               Real Impact
             </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
-          >
-            Explore how we're transforming businesses with cutting-edge AI solutions — backed by measurable outcomes.
-          </motion.p>
-        </div>
-      </section>
+          </>
+        }
+        subtitle="Explore how we're transforming businesses with cutting-edge AI solutions — backed by measurable outcomes."
+        showFooter={true}
+        footerTag="Designed for focus"
+        footerHeading="Composable. Accessible. Production-ready."
+        footerDesc="Start with sensible defaults, ship without the noise, and scale your UI with confidence. Works across any app architecture."
+      />
 
       {/* Case Studies Card Grid Section */}
       <section className="w-full max-w-7xl mx-auto relative py-16 md:py-24 px-6 md:px-12">
