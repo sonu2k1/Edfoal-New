@@ -22,7 +22,7 @@ export default function ServicesPage() {
       <ServiceHero />
 
       {/* Intro Section (Light Theme) */}
-      <section data-theme="light" className="relative w-full max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-20 bg-white" style={{margin:"5rem 5rem 0 5rem"}}>
+      <section data-theme="light" className="relative w-full max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-20 bg-white" style={{ margin: "5rem 5rem 0 5rem" }}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-12">
           {/* Left Block */}
           <div className="max-w-md">
@@ -48,9 +48,9 @@ export default function ServicesPage() {
                 className="w-full h-full rounded-full px-0 text-sm font-semibold tracking-wide border-[0.5px] cursor-pointer"
                 style={{
                   "--ic-card": "#ffffff",
-                  "--ic-card-foreground": "#000000",
-                  "--ic-border": "#000000",
-                  "--ic-foreground": "#000000",
+                  "--ic-card-foreground": "#0f172a",
+                  "--ic-border": "#0f172a",
+                  "--ic-foreground": "#0f172a",
                   "--ic-background": "#ffffff",
                 } as React.CSSProperties}
                 onClick={() => {
@@ -65,7 +65,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Showcase Section (Light Theme) */}
-      <section data-theme="light" className="relative bg-white w-full" style={{margin:"10rem"}}>
+      <section data-theme="light" className="relative bg-white w-full" style={{ margin: "10rem" }}>
         <ServicesShowcase isLight={true} />
       </section>
 

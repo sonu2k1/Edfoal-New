@@ -216,7 +216,7 @@ export const CircularTestimonials = ({
   }
 
   return (
-    <div 
+    <div
       className={`w-full flex flex-col items-center justify-center ${className}`}
       style={style}
     >
@@ -238,66 +238,66 @@ export const CircularTestimonials = ({
                 showGradient={false}
                 className="relative w-full h-full rounded-[1.5rem] overflow-hidden shadow-xl bg-white/95 border border-neutral-200/80 dark:border-neutral-200/80 dark:bg-white/95 backdrop-blur-sm"
               >
-              {/* Card Content - matching Realtime tracking style */}
-              <div className="absolute inset-0 z-20 flex flex-col justify-center items-center p-6 text-center gap-y-4">
-                {/* Icon Badge */}
-                <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center">
-                  {testimonial.icon === "globe" && <Globe className="w-5 h-5 text-gray-800" />}
-                  {testimonial.icon === "smile" && <Smile className="w-5 h-5 text-gray-800" />}
-                  {testimonial.icon === "send" && <Send className="w-5 h-5 text-gray-800" />}
-                  {testimonial.icon === "mappin" && <MapPin className="w-5 h-5 text-gray-800" />}
-                  {!testimonial.icon && <Globe className="w-5 h-5 text-gray-800" />}
-                </div>
-
-                {/* Title */}
-                <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight leading-tight">
-                  {testimonial.name}
-                </h3>
-
-                {/* Description */}
-                <p className="text-zinc-500 text-sm leading-relaxed font-normal max-w-[280px]">
-                  {testimonial.quote}
-                </p>
-
-                {/* Feature Bullets */}
-                {testimonial.features && testimonial.features.length > 0 && (
-                  <div className="space-y-2 w-fit text-left flex flex-col items-start mx-auto">
-                    {testimonial.features.map((feature, fIdx) => (
-                      <div key={fIdx} className="flex items-center gap-3 text-gray-700 text-sm font-semibold">
-                        {feature.icon === "smile" && <Smile className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
-                        {feature.icon === "globe" && <Globe className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
-                        {feature.icon === "send" && <Send className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
-                        {feature.icon === "mappin" && <MapPin className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
-                        <span>{feature.text}</span>
-                      </div>
-                    ))}
+                {/* Card Content - matching Realtime tracking style */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-center items-center p-6 text-center gap-y-4">
+                  {/* Icon Badge */}
+                  <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center">
+                    {testimonial.icon === "globe" && <Globe className="w-5 h-5 text-gray-800" />}
+                    {testimonial.icon === "smile" && <Smile className="w-5 h-5 text-gray-800" />}
+                    {testimonial.icon === "send" && <Send className="w-5 h-5 text-gray-800" />}
+                    {testimonial.icon === "mappin" && <MapPin className="w-5 h-5 text-gray-800" />}
+                    {!testimonial.icon && <Globe className="w-5 h-5 text-gray-800" />}
                   </div>
-                )}
 
-                {/* Learn More Button */}
-                <div className="w-full flex justify-center">
-                  <div className="inline-flex rounded-full w-[160px] h-[40px] items-center justify-center">
-                    <OriginButton
-                      className="w-full h-full rounded-full px-0 text-sm font-bold tracking-wide border-0"
-                      style={{
-                        "--ic-card": "#000000",
-                        "--ic-card-foreground": "#ffffff",
-                        "--ic-border": "transparent",
-                        "--ic-foreground": "#ffffff",
-                        "--ic-background": "#000000",
-                      } as React.CSSProperties}
-                      onClick={() => {
-                        const contactElem = document.getElementById("contact");
-                        if (contactElem) {
-                          contactElem.scrollIntoView({ behavior: "smooth" });
-                        }
-                      }}
-                    >
-                      Learn more
-                    </OriginButton>
+                  {/* Title */}
+                  <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                    {testimonial.name}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-zinc-500 text-sm leading-relaxed font-normal max-w-[280px]">
+                    {testimonial.quote}
+                  </p>
+
+                  {/* Feature Bullets */}
+                  {testimonial.features && testimonial.features.length > 0 && (
+                    <div className="space-y-2 w-fit text-left flex flex-col items-start mx-auto">
+                      {testimonial.features.map((feature, fIdx) => (
+                        <div key={fIdx} className="flex items-center gap-3 text-gray-700 text-sm font-semibold">
+                          {feature.icon === "smile" && <Smile className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
+                          {feature.icon === "globe" && <Globe className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
+                          {feature.icon === "send" && <Send className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
+                          {feature.icon === "mappin" && <MapPin className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
+                          <span>{feature.text}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Learn More Button */}
+                  <div className="w-full flex justify-center">
+                    <div className="inline-flex rounded-full w-[160px] h-[40px] items-center justify-center">
+                      <OriginButton
+                        className="w-full h-full rounded-full px-0 text-sm font-bold tracking-wide border-0"
+                        style={{
+                          "--ic-card": "#0f172a",
+                          "--ic-card-foreground": "#ffffff",
+                          "--ic-border": "transparent",
+                          "--ic-foreground": "#ffffff",
+                          "--ic-background": "#0f172a",
+                        } as React.CSSProperties}
+                        onClick={() => {
+                          const contactElem = document.getElementById("contact");
+                          if (contactElem) {
+                            contactElem.scrollIntoView({ behavior: "smooth" });
+                          }
+                        }}
+                      >
+                        Learn more
+                      </OriginButton>
+                    </div>
                   </div>
                 </div>
-              </div>
               </CardSpotlight>
             </div>
           );

@@ -11,9 +11,9 @@ export default function FloatingTriangles() {
 
   // Define color palette matching Edfoal design (Purple, Gold, White, Cyan)
   const colors = useMemo(() => [
-    new THREE.Color("#8b5cf6"), // Purple
-    new THREE.Color("#fbbf24"), // Gold
-    new THREE.Color("#ffffff"), // White
+    new THREE.Color("#e91e63"), // Purple
+    new THREE.Color("#2196F3"), // Gold
+    new THREE.Color("#64B5F6"), // White
     new THREE.Color("#06b6d4"), // Cyan
   ], []);
 

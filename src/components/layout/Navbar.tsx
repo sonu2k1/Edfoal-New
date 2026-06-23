@@ -131,17 +131,17 @@ export default function Navbar() {
                   isLight
                     ? ({
                       "--ic-card": "#ffffff",
-                      "--ic-card-foreground": "#000000",
-                      "--ic-border": "#000000",
-                      "--ic-foreground": "#000000",
+                      "--ic-card-foreground": "#0f172a",
+                      "--ic-border": "#0f172a",
+                      "--ic-foreground": "#0f172a",
                       "--ic-background": "#ffffff",
                     } as React.CSSProperties)
                     : ({
-                      "--ic-card": "#000000",
+                      "--ic-card": "#0f172a",
                       "--ic-card-foreground": "#ffffff",
                       "--ic-border": "#ffffff",
                       "--ic-foreground": "#ffffff",
-                      "--ic-background": "#000000",
+                      "--ic-background": "#0f172a",
                     } as React.CSSProperties)
                 }
                 onClick={() => {
@@ -207,8 +207,8 @@ export default function Navbar() {
                 className="w-full h-12 rounded-full border-none text-[11px] font-black uppercase tracking-[0.18em]"
                 style={{
                   "--ic-card": "#d4ff3f",
-                  "--ic-card-foreground": "#000000",
-                  "--ic-foreground": "#000000",
+                  "--ic-card-foreground": "#0f172a",
+                  "--ic-foreground": "#0f172a",
                   "--ic-background": "#d4ff3f",
                 } as React.CSSProperties}
                 onClick={() => {

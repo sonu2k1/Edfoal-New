@@ -196,11 +196,11 @@ export default function Globe3DDemoSecond() {
               <OriginButton
                 className="w-full h-full rounded-full px-0 text-sm font-bold tracking-wide border-0"
                 style={{
-                  "--ic-card": "#000000",
+                  "--ic-card": "#0f172a",
                   "--ic-card-foreground": "#ffffff",
                   "--ic-border": "transparent",
                   "--ic-foreground": "#ffffff",
-                  "--ic-background": "#000000",
+                  "--ic-background": "#0f172a",
                 } as React.CSSProperties}
                 onClick={() => {
                   const contactElem = document.getElementById("contact");
