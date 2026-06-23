@@ -11,15 +11,15 @@ const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World)
 
 const globeConfig = {
   pointSize: 4,
-  globeColor: "#062056",
+  globeColor: "#ffffff",
   showAtmosphere: true,
-  atmosphereColor: "#FFFFFF",
+  atmosphereColor: "#cbd5e1",
   atmosphereAltitude: 0.1,
-  emissive: "#062056",
+  emissive: "#ffffff",
   emissiveIntensity: 0.1,
   shininess: 0.9,
-  polygonColor: "rgba(255,255,255,0.7)",
-  ambientLight: "#38bdf8",
+  polygonColor: "rgba(15, 23, 42, 0.8)",
+  ambientLight: "#ffffff",
   directionalLeftLight: "#ffffff",
   directionalTopLight: "#ffffff",
   pointLight: "#ffffff",
@@ -30,7 +30,7 @@ const globeConfig = {
   initialPosition: { lat: 22.3193, lng: 114.1694 },
   autoRotate: true,
   autoRotateSpeed: 0.5,
-  cameraZ: 250,
+  cameraZ: 240,
 };
 
 const colors = ["#06b6d4", "#3b82f6", "#6366f1"];

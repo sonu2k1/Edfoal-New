@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { Color, Scene, Fog, PerspectiveCamera, Vector3 } from "three";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { Color, Scene, Fog, PerspectiveCamera, Vector3, Group, Quaternion } from "three";
 import ThreeGlobe from "three-globe";
-import { useThree, Canvas, extend } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { useThree, Canvas, extend, useFrame } from "@react-three/fiber";
+import { OrbitControls, Html } from "@react-three/drei";
 import countries from "@/data/globe.json";
 declare module "@react-three/fiber" {
   interface ThreeElements {
@@ -179,7 +179,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
       .pointColor((e) => (e as { color: string }).color)
       .pointsMerge(true)
       .pointAltitude(0.0)
-      .pointRadius(2);
+      .pointRadius(0.4);
 
     globeRef.current
       .ringsData([])
@@ -247,6 +247,100 @@ export function WebGLRendererConfig() {
   return null;
 }
 
+function latLngToVector3(lat: number, lng: number, radius: number): Vector3 {
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lng + 180) * (Math.PI / 180);
+
+  const x = -(radius * Math.sin(phi) * Math.cos(theta));
+  const z = radius * Math.sin(phi) * Math.sin(theta);
+  const y = radius * Math.cos(phi);
+
+  return new Vector3(x, y, z);
+}
+
+const GLOBE_LABELS = [
+  {
+    text: "MENA",
+    lat: 25.0,
+    lng: 43.0,
+  },
+  {
+    text: "ASIA",
+    lat: 41.0,
+    lng: 105.0,
+  },
+  {
+    text: "APAC",
+    lat: -25.0,
+    lng: 133.0,
+  },
+];
+
+interface GlobeLabelProps {
+  text: string;
+  lat: number;
+  lng: number;
+}
+
+function GlobeLabel({ text, lat, lng }: GlobeLabelProps) {
+  const [isVisible, setIsVisible] = useState(true);
+  const { camera } = useThree();
+
+  const surfacePos = useMemo(() => latLngToVector3(lat, lng, 101.5), [lat, lng]);
+  const labelPos = useMemo(() => latLngToVector3(lat, lng, 108), [lat, lng]);
+
+  const direction = useMemo(() => surfacePos.clone().normalize(), [surfacePos]);
+
+  const { lineCenter, lineQuaternion } = useMemo(() => {
+    const center = surfacePos.clone().lerp(labelPos, 0.5);
+    const dir = labelPos.clone().sub(surfacePos).normalize();
+    const quat = new Quaternion();
+    quat.setFromUnitVectors(new Vector3(0, 1, 0), dir);
+    return { lineCenter: center, lineQuaternion: quat };
+  }, [surfacePos, labelPos]);
+
+  useFrame(() => {
+    const cameraDir = camera.position.clone().normalize();
+    const dot = direction.dot(cameraDir);
+    setIsVisible(dot > 0.15);
+  });
+
+  return (
+    <group>
+      {/* Small dark navy pin dot on the surface */}
+      <mesh position={surfacePos}>
+        <sphereGeometry args={[1.2, 16, 16]} />
+        <meshBasicMaterial color="#0b2559" />
+      </mesh>
+
+      {/* Thin line pointing radially outwards */}
+      <mesh position={lineCenter} quaternion={lineQuaternion}>
+        <cylinderGeometry args={[0.08, 0.08, surfacePos.distanceTo(labelPos), 8]} />
+        <meshBasicMaterial color="#0b2559" transparent opacity={0.6} />
+      </mesh>
+
+      {/* The HTML Label Badge */}
+      <group position={labelPos}>
+        <Html
+          transform
+          center
+          sprite
+          distanceFactor={180}
+          style={{
+            pointerEvents: isVisible ? "auto" : "none",
+            opacity: isVisible ? 1 : 0,
+            transition: "opacity 0.2s ease-out",
+          }}
+        >
+          <div className="bg-[#0f172a] text-white px-2.5 py-1 rounded-md text-[9px] font-extrabold tracking-wider font-sans shadow-lg select-none border border-[#1e293b] text-center whitespace-nowrap min-w-[55px] uppercase">
+            {text}
+          </div>
+        </Html>
+      </group>
+    </group>
+  );
+}
+
 export function World(props: WorldProps) {
   const { globeConfig } = props;
   const scene = new Scene();
@@ -270,6 +364,9 @@ export function World(props: WorldProps) {
         intensity={0.8}
       />
       <Globe {...props} />
+      {GLOBE_LABELS.map((label, idx) => (
+        <GlobeLabel key={idx} text={label.text} lat={label.lat} lng={label.lng} />
+      ))}
       <OrbitControls
         enablePan={false}
         enableZoom={false}
