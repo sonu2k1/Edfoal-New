@@ -253,7 +253,7 @@ export function World(props: WorldProps) {
   scene.fog = new Fog(0xffffff, 400, 2000);
   const currentCameraZ = globeConfig.cameraZ || cameraZ;
   return (
-    <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 180, 1800)}>
+    <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 0.1, 2000)}>
       <WebGLRendererConfig />
       <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
       <directionalLight

@@ -30,7 +30,7 @@ const globeConfig = {
   initialPosition: { lat: 22.3193, lng: 114.1694 },
   autoRotate: true,
   autoRotateSpeed: 0.5,
-  cameraZ: 175,
+  cameraZ: 250,
 };
 
 const colors = ["#06b6d4", "#3b82f6", "#6366f1"];
@@ -273,7 +273,7 @@ export default function Globe3DDemoSecond() {
       </div>
 
       {/* Globe Canvas positioned absolutely like the original */}
-      <div className="absolute w-full -bottom-[260px] md:-bottom-[350px] h-[550px] md:h-[55rem] z-10 left-0">
+      <div className="absolute w-full -bottom-[150px] md:-bottom-[220px] h-[450px] md:h-[42rem] z-10 left-0">
         <World data={sampleArcs} globeConfig={globeConfig} />
       </div>
     </div>
