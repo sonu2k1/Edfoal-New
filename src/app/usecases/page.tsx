@@ -71,9 +71,27 @@ export default function UsecasesPage() {
   ];
 
   return (
-    <main className="relative min-h-screen bg-black text-white selection:bg-purple-500/30 selection:text-purple-200 overflow-hidden">
-      {/* Background gradients, grid and noise */}
-      <BackgroundEffects />
+    <main className="relative min-h-screen bg-white text-zinc-900 selection:bg-purple-500/10 selection:text-purple-900 overflow-hidden">
+      {/* Light Background Gradients & Grid */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-white -z-50 pointer-events-none select-none">
+        {/* Light Grid Overlay */}
+        <div 
+          className="absolute inset-0 opacity-70"
+          style={{
+            backgroundSize: "50px 50px",
+            backgroundImage: "linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px)"
+          }}
+        />
+
+        {/* Noise overlay */}
+        <div className="noise-overlay" />
+
+        {/* Soft violet/blue gradient blurs adapted for white theme */}
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(139,92,246,0.04),transparent_50%)]" />
+        
+        <div className="absolute top-[15%] left-[10%] w-[350px] h-[350px] rounded-full bg-purple-400/5 blur-[120px]" />
+        <div className="absolute bottom-[20%] right-[15%] w-[450px] h-[450px] rounded-full bg-indigo-400/5 blur-[140px]" />
+      </div>
       <Navbar />
 
       {/* Hero Section */}
@@ -91,14 +109,14 @@ export default function UsecasesPage() {
       />
 
       {/* Case Studies Card Grid Section */}
-      <section className="w-full max-w-7xl mx-auto relative py-16 md:py-24 px-6 md:px-12">
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
+      <section data-theme="light" className="w-full max-w-7xl mx-auto relative py-16 md:py-24 px-6 md:px-12">
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24" style={{margin:"2rem 0 0 20rem "}}>
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-xs font-semibold tracking-widest text-blue-400 uppercase mb-4"
+            className="text-xs font-semibold tracking-widest text-blue-600 uppercase mb-4"
           >
             What We've Built
           </motion.div>
@@ -107,7 +125,8 @@ export default function UsecasesPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-6"
+            className="text-3xl md:text-5xl font-bold text-zinc-950 tracking-tight mb-6"
+            style={{margin:"10px"}}
           >
             Our Case Studies
           </motion.h2>
@@ -116,7 +135,8 @@ export default function UsecasesPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-gray-400 text-lg leading-relaxed max-w-xl mx-auto"
+            className="text-zinc-600 text-lg leading-relaxed max-w-xl mx-auto"
+            style={{margin:"0 0 2rem 0"}}
           >
             Each project below represents a real engagement with measurable outcomes. Click to explore the full story.
           </motion.p>
@@ -132,13 +152,13 @@ export default function UsecasesPage() {
               viewport={{ once: true, margin: "-55px" }}
               transition={{ duration: 0.6, delay: (index % 3) * 0.15 }}
               whileHover={{ y: -8 }}
-              className="glass-panel rounded-3xl overflow-hidden border border-white/5 hover:border-blue-500/20 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+              className="bg-white/70 backdrop-blur-md rounded-3xl overflow-hidden border border-zinc-200/80 hover:border-blue-500/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer"
               onClick={() => window.location.href = study.href}
             >
               <div>
                 {/* Image Wrapper */}
-                <div className="h-56 w-full overflow-hidden relative border-b border-white/5 bg-zinc-950">
-                  <div className="absolute inset-0 bg-black/40 z-10 transition-opacity duration-300 group-hover:bg-black/20" />
+                <div className="h-56 w-full overflow-hidden relative border-b border-zinc-100 bg-zinc-50">
+                  <div className="absolute inset-0 bg-black/5 z-10 transition-opacity duration-300 group-hover:bg-black/0" />
                   <img
                     src={study.image}
                     alt={study.title}
@@ -152,15 +172,15 @@ export default function UsecasesPage() {
                   <span className="text-[11px] font-bold tracking-wider text-zinc-500 uppercase block mb-3">
                     {study.industry}
                   </span>
-                  <h3 className="text-xl font-bold text-white mb-3 tracking-wide group-hover:text-blue-300 transition-colors leading-snug">
+                  <h3 className="text-xl font-bold text-zinc-900 mb-3 tracking-wide group-hover:text-blue-600 transition-colors leading-snug">
                     {study.title}
                   </h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed mb-6 font-normal">
+                  <p className="text-zinc-600 text-sm leading-relaxed mb-6 font-normal">
                     {study.description}
                   </p>
 
                   {/* Stat Badge */}
-                  <div className="inline-flex bg-blue-500/10 text-blue-300 border border-blue-500/20 px-3.5 py-1.5 rounded-full text-xs font-semibold">
+                  <div className="inline-flex bg-blue-50/80 text-blue-600 border border-blue-100 px-3.5 py-1.5 rounded-full text-xs font-semibold">
                     {study.stat}
                   </div>
                 </div>
@@ -168,10 +188,10 @@ export default function UsecasesPage() {
 
               {/* Action Area */}
               <div className="px-8 pb-8 pt-0">
-                <hr className="border-white/5 mb-5" />
+                <hr className="border-zinc-100 mb-5" />
                 <a
                   href={study.href}
-                  className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-white/95 group-hover:text-blue-400 transition-colors duration-200 uppercase"
+                  className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-zinc-800 group-hover:text-blue-600 transition-colors duration-200 uppercase"
                 >
                   Read case study <FiArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                 </a>
