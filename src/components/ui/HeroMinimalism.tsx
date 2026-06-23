@@ -17,7 +17,7 @@ export interface MinimalHeroProps {
 export default function MinimalHero({
   showNavbar = false,
   kicker = "Introducing",
-  title = <>Build fast.<br/>Ship clean.</>,
+  title = <>Build fast.<br />Ship clean.</>,
   subtitle = "A minimal React starter focused on clarity, speed, and maintainability.",
   showFooter = true,
   footerTag = "Designed for focus",
@@ -130,7 +130,7 @@ export default function MinimalHero({
   height: 100vh;
   overflow: hidden;
 
-  --bg: #0a0a0a;
+  --bg: #0f172a;
   --fg: #fafafa;
   --muted: #a1a1aa;
   --border: #27272a;

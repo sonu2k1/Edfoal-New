@@ -168,12 +168,12 @@ export default function HeroSection() {
                 <OriginButton
                   className=" h-full rounded-full px-0 text-sm font-semibold border-[1px]"
                   style={{
-                    "--ic-card": "#000000",
+                    "--ic-card": "#0f172a",
                     "--ic-card-foreground": "#ffffff",
                     "--ic-border": "#ffffff",
                     "--ic-foreground": "#ffffff",
-                    "--ic-background": "#000000",
-                    width:"10rem"
+                    "--ic-background": "#0f172a",
+                    width: "10rem"
                   } as React.CSSProperties}
                   onClick={() => {
                     const contactElem = document.getElementById("contact");

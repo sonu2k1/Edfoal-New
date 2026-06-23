@@ -7,7 +7,7 @@ import { OriginButton } from "@/components/ui/OriginButton";
 
 function Footer() {
   return (
-    <footer className="h-[500px] flex items-center px-4 md:px-6 bg-black border-t border-zinc-900 relative overflow-hidden">
+    <footer className="h-[500px] flex items-center px-4 md:px-6 bg-[#0f172a] border-t border-zinc-900 relative overflow-hidden">
       <div className="container mx-auto z-10" style={{ marginTop: "-120px" }}>
         <div className="flex flex-col md:flex-row justify-between gap-8">
           <div className="mb-8 md:mb-0 max-w-sm">
@@ -29,11 +29,11 @@ function Footer() {
                   <OriginButton
                     className="w-full h-full rounded-full px-0 text-sm font-semibold tracking-wide border-[0.5px]"
                     style={{
-                      "--ic-card": "#000000",
+                      "--ic-card": "#0f172a",
                       "--ic-card-foreground": "#ffffff",
                       "--ic-border": "#ffffff",
                       "--ic-foreground": "#ffffff",
-                      "--ic-background": "#000000",
+                      "--ic-background": "#0f172a",
                     } as React.CSSProperties}
                   >
                     Send us a mail
@@ -125,7 +125,14 @@ function Footer() {
       {/* Big Watermark at the absolute bottom */}
       <div className="absolute bottom-0 left-0 w-full flex items-center justify-center z-0 pointer-events-none">
         <h1 className="text-center text-5xl md:text-8xl lg:text-[10rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-zinc-800 to-zinc-950 select-none tracking-tight leading-none">
-          EDFOAL
+          {/* <img
+      src="https://ik.imagekit.io/edfoalImage/assets/image/footerlogo.png"
+      alt="Edfoal"
+      width={1000}
+      height={220}
+  
+    /> */}
+          Edfoal
         </h1>
       </div>
     </footer>

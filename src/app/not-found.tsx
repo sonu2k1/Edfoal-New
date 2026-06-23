@@ -105,9 +105,9 @@ export default function NotFound({
                 className="w-full h-full rounded-full px-0 text-sm font-semibold tracking-wide border-[0.5px]"
                 style={{
                   "--ic-card": "#ffffff",
-                  "--ic-card-foreground": "#000000",
-                  "--ic-border": "#000000",
-                  "--ic-foreground": "#000000",
+                  "--ic-card-foreground": "#0f172a",
+                  "--ic-border": "#0f172a",
+                  "--ic-foreground": "#0f172a",
                   "--ic-background": "#ffffff",
                 } as React.CSSProperties}
               >

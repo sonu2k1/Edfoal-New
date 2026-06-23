@@ -123,12 +123,12 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
               transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
               className={cn(
                 "rounded-3xl p-8 md:p-10 z-10 max-w-xl w-full relative overflow-hidden transition-all duration-300",
-                isLight 
-                  ? "bg-white/95 border border-zinc-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.06)] backdrop-blur-xl" 
+                isLight
+                  ? "bg-white/95 border border-zinc-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.06)] backdrop-blur-xl"
                   : "bg-zinc-900/60 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)]",
                 isEven ? "md:ml-[-80px]" : "md:mr-[-80px]"
               )}
-              style={{padding:"2rem", margin:"-2rem"}}
+              style={{ padding: "2rem", margin: "-2rem" }}
             >
               {/* Highlight Aura */}
               <div className={cn(
@@ -140,8 +140,8 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
               <div className="mb-6 flex items-start gap-4">
                 <div className={cn(
                   "p-2.5 rounded-xl border transition-colors",
-                  isLight 
-                    ? "bg-purple-50 border-purple-100 text-purple-600" 
+                  isLight
+                    ? "bg-purple-50 border-purple-100 text-purple-600"
                     : "bg-purple-500/10 border-purple-500/20 text-purple-400"
                 )}>
                   <IconComponent className="w-6 h-6" />
@@ -198,19 +198,19 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
                   style={
                     isLight
                       ? ({
-                          "--ic-card": "#ffffff",
-                          "--ic-card-foreground": "#000000",
-                          "--ic-border": "#000000",
-                          "--ic-foreground": "#000000",
-                          "--ic-background": "#ffffff",
-                        } as React.CSSProperties)
+                        "--ic-card": "#ffffff",
+                        "--ic-card-foreground": "#0f172a",
+                        "--ic-border": "#0f172a",
+                        "--ic-foreground": "#0f172a",
+                        "--ic-background": "#ffffff",
+                      } as React.CSSProperties)
                       : ({
-                          "--ic-card": "#000000",
-                          "--ic-card-foreground": "#ffffff",
-                          "--ic-border": "#ffffff",
-                          "--ic-foreground": "#ffffff",
-                          "--ic-background": "#000000",
-                        } as React.CSSProperties)
+                        "--ic-card": "#0f172a",
+                        "--ic-card-foreground": "#ffffff",
+                        "--ic-border": "#ffffff",
+                        "--ic-foreground": "#ffffff",
+                        "--ic-background": "#0f172a",
+                      } as React.CSSProperties)
                   }
                   onClick={() => router.push(service.href)}
                 >

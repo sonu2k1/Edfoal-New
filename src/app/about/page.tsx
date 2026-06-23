@@ -5,7 +5,6 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import AboutHero from "@/components/sections/about/AboutHero";
-import Team from "@/components/sections/about/Team";
 import AboutUs from "@/components/sections/about/AboutUs";
 import useLenis from "@/hooks/useLenis";
 
@@ -20,14 +19,11 @@ export default function AboutPage() {
       {/* Floating glass navbar */}
       <Navbar />
 
-      {/* Hero Section */}
-      <AboutHero />
-
       {/* About Us — 3D Spline Section */}
       <AboutUs />
 
-      {/* Team Section */}
-      <Team />
+      {/* About Hero Section */}
+      <AboutHero />
 
       {/* Footer */}
       <Footer />

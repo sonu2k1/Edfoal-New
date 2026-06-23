@@ -1,88 +1,120 @@
 "use client";
-import { Globe3D, GlobeMarker } from "@/components/ui/Globe3D";
+import dynamic from "next/dynamic";
 import { Globe, Smile, MousePointer2, ChevronRight, MapPin, Send } from "lucide-react";
 import { OriginButton } from "@/components/ui/OriginButton";
 import { CardSpotlight } from "@/components/ui/CardSpotlight";
 import { CircularTestimonials } from "@/components/sections/home/CircularTestimonials";
 
-const sampleMarkers: GlobeMarker[] = [
+const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), {
+  ssr: false,
+});
+
+const globeConfig = {
+  pointSize: 4,
+  globeColor: "#ffffff",
+  showAtmosphere: true,
+  atmosphereColor: "#cbd5e1",
+  atmosphereAltitude: 0.1,
+  emissive: "#ffffff",
+  emissiveIntensity: 0.1,
+  shininess: 0.9,
+  polygonColor: "rgba(15, 23, 42, 0.8)",
+  ambientLight: "#ffffff",
+  directionalLeftLight: "#ffffff",
+  directionalTopLight: "#ffffff",
+  pointLight: "#ffffff",
+  arcTime: 1000,
+  arcLength: 0.9,
+  rings: 1,
+  maxRings: 3,
+  initialPosition: { lat: 22.3193, lng: 114.1694 },
+  autoRotate: true,
+  autoRotateSpeed: 0.5,
+  cameraZ: 240,
+};
+
+const colors = ["#06b6d4", "#3b82f6", "#6366f1"];
+const sampleArcs = [
   {
-    lat: 40.7128,
-    lng: -74.006,
-    src: "https://assets.aceternity.com/avatars/1.webp",
-    label: "New York",
+    order: 1,
+    startLat: -19.885592,
+    startLng: -43.951191,
+    endLat: -22.9068,
+    endLng: -43.1729,
+    arcAlt: 0.1,
+    color: colors[0],
   },
   {
-    lat: 51.5074,
-    lng: -0.1278,
-    src: "https://assets.aceternity.com/avatars/2.webp",
-    label: "London",
+    order: 1,
+    startLat: 28.6139,
+    startLng: 77.209,
+    endLat: 3.139,
+    endLng: 101.6869,
+    arcAlt: 0.2,
+    color: colors[1],
   },
   {
-    lat: 35.6762,
-    lng: 139.6503,
-    src: "https://assets.aceternity.com/avatars/3.webp",
-    label: "Tokyo",
+    order: 1,
+    startLat: -19.885592,
+    startLng: -43.951191,
+    endLat: -1.303396,
+    endLng: 36.852443,
+    arcAlt: 0.5,
+    color: colors[2],
   },
   {
-    lat: -33.8688,
-    lng: 151.2093,
-    src: "https://assets.aceternity.com/avatars/4.webp",
-    label: "Sydney",
+    order: 2,
+    startLat: 1.3521,
+    startLng: 103.8198,
+    endLat: 35.6762,
+    endLng: 139.6503,
+    arcAlt: 0.2,
+    color: colors[0],
   },
   {
-    lat: 48.8566,
-    lng: 2.3522,
-    src: "https://assets.aceternity.com/avatars/5.webp",
-    label: "Paris",
+    order: 2,
+    startLat: 51.5072,
+    startLng: -0.1276,
+    endLat: 3.139,
+    endLng: 101.6869,
+    arcAlt: 0.3,
+    color: colors[1],
   },
   {
-    lat: 28.6139,
-    lng: 77.209,
-    src: "https://assets.aceternity.com/avatars/6.webp",
-    label: "New Delhi",
+    order: 2,
+    startLat: -15.785493,
+    startLng: -47.909029,
+    endLat: 36.162809,
+    endLng: -115.119411,
+    arcAlt: 0.3,
+    color: colors[2],
   },
   {
-    lat: 55.7558,
-    lng: 37.6173,
-    src: "https://assets.aceternity.com/avatars/7.webp",
-    label: "Moscow",
+    order: 3,
+    startLat: -33.8688,
+    startLng: 151.2093,
+    endLat: 22.3193,
+    endLng: 114.1694,
+    arcAlt: 0.3,
+    color: colors[0],
   },
   {
-    lat: -22.9068,
-    lng: -43.1729,
-    src: "https://assets.aceternity.com/avatars/8.webp",
-    label: "Rio de Janeiro",
+    order: 3,
+    startLat: 21.3099,
+    startLng: -157.8581,
+    endLat: 40.7128,
+    endLng: -74.006,
+    arcAlt: 0.3,
+    color: colors[1],
   },
   {
-    lat: 31.2304,
-    lng: 121.4737,
-    src: "https://assets.aceternity.com/avatars/9.webp",
-    label: "Shanghai",
-  },
-  {
-    lat: 25.2048,
-    lng: 55.2708,
-    src: "https://assets.aceternity.com/avatars/10.webp",
-    label: "Dubai",
-  },
-  {
-    lat: -34.6037,
-    lng: -58.3816,
-    src: "https://assets.aceternity.com/avatars/11.webp",
-    label: "Buenos Aires",
-  },
-  {
-    lat: 1.3521,
-    lng: 103.8198,
-    src: "https://assets.aceternity.com/avatars/12.webp",
-    label: "Singapore",
-  },
-  {
-    lat: 37.5665,
-    lng: 126.978,
-    src: "https://assets.aceternity.com/avatars/13.webp",
-    label: "Seoul",
+    order: 3,
+    startLat: -6.2088,
+    startLng: 106.8456,
+    endLat: 51.5072,
+    endLng: -0.1276,
+    arcAlt: 0.3,
+    color: colors[2],
   },
 ];
 
@@ -196,11 +228,11 @@ export default function Globe3DDemoSecond() {
               <OriginButton
                 className="w-full h-full rounded-full px-0 text-sm font-bold tracking-wide border-0"
                 style={{
-                  "--ic-card": "#000000",
+                  "--ic-card": "#0f172a",
                   "--ic-card-foreground": "#ffffff",
                   "--ic-border": "transparent",
                   "--ic-foreground": "#ffffff",
-                  "--ic-background": "#000000",
+                  "--ic-background": "#0f172a",
                 } as React.CSSProperties}
                 onClick={() => {
                   const contactElem = document.getElementById("contact");
@@ -241,24 +273,9 @@ export default function Globe3DDemoSecond() {
       </div>
 
       {/* Globe Canvas positioned absolutely like the original */}
-      <Globe3D
-        className="absolute -bottom-[550px] -left-0 h-[1200px]"
-        markers={sampleMarkers}
-        config={{
-          atmosphereColor: "#4da6ff",
-          atmosphereIntensity: 20,
-          bumpScale: 5,
-          autoRotateSpeed: 0.3,
-        }}
-        onMarkerClick={(marker) => {
-          console.log("Clicked marker:", marker.label);
-        }}
-        onMarkerHover={(marker) => {
-          if (marker) {
-            console.log("Hovering:", marker.label);
-          }
-        }}
-      />
+      <div className="absolute w-full -bottom-[150px] md:-bottom-[220px] h-[450px] md:h-[42rem] z-10 left-0">
+        <World data={sampleArcs} globeConfig={globeConfig} />
+      </div>
     </div>
   );
 }

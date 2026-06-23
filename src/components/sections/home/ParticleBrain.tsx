@@ -236,7 +236,7 @@ const brainShaderMaterial = new THREE.ShaderMaterial({
       vec3  baseColor = vColor * edgeBright * shimmer * flicker * depthDim;
       
       // Blend base color with a brilliant golden yellow outline on the silhouette edge
-      vec3 gold = vec3(1.0, 0.72, 0.16); // #ffb829
+      vec3 gold = vec3(0.129, 0.588, 0.953); // #2196F3
       vec3 finalColor = mix(baseColor * 1.5, gold * edgeBright * 1.6, rim * 0.85);
 
       float a   = vAlpha * edge * 0.85;
@@ -359,9 +359,9 @@ function BrainParticles({ animState }: ParticleBrainProps) {
       return low;
     };
 
-    const cWhite  = new THREE.Color("#ffffff");
-    const cAmber  = new THREE.Color("#ffb829");
-    const cPurple = new THREE.Color("#8052ff");
+    const cWhite  = new THREE.Color("#64B5F6");
+    const cAmber  = new THREE.Color("#2196F3");
+    const cPurple = new THREE.Color("#e91e63");
     const cCyan   = new THREE.Color("#00d4ff");
     const rng = () => Math.random();
 
