@@ -99,15 +99,18 @@ const Gallery4 = ({
     const container = carouselApi.rootNode();
     const handleWheel = (e: WheelEvent) => {
       const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-      const delta = isHorizontalScroll ? e.deltaX : e.deltaY;
 
-      if (Math.abs(delta) > 5) {
-        if (delta > 0 && carouselApi.canScrollNext()) {
-          e.preventDefault();
-          carouselApi.scrollNext();
-        } else if (delta < 0 && carouselApi.canScrollPrev()) {
-          e.preventDefault();
-          carouselApi.scrollPrev();
+      if (isHorizontalScroll) {
+        // Prevent default browser behavior for horizontal scroll on the cards
+        e.preventDefault();
+
+        const delta = e.deltaX;
+        if (Math.abs(delta) > 5) {
+          if (delta > 0) {
+            carouselApi.scrollNext();
+          } else if (delta < 0) {
+            carouselApi.scrollPrev();
+          }
         }
       }
     };
