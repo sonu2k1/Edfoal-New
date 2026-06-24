@@ -189,10 +189,10 @@ export default function AboutUsSection() {
         </motion.div>
 
         <motion.div className="text-center max-w-4xl mx-auto mb-16 text-zinc-800 space-y-6 text-base md:text-lg leading-relaxed font-normal" variants={itemVariants}>
-          <p>
+          <p className="mx-auto text-center max-w-none">
             At EdFoal AI, we are passionate about leveraging the transformative power of artificial intelligence to help businesses succeed. Founded with the vision of making AI accessible and impactful, we specialize in designing tailored AI solutions that reduce costs, save time, and enhance overall efficiency. Our mission is simple: to empower businesses with intelligent tools that solve their unique challenges and create new opportunities for growth.
           </p>
-          <p>
+          <p className="mx-auto text-center max-w-none">
             We understand that no two businesses are the same, which is why we take a personalized approach to every project. Our team of AI experts works closely with clients to understand their specific needs, design innovative AI systems, and implement seamless solutions that integrate perfectly into existing operations. Whether you're looking to automate processes, gain actionable insights from data, or develop a completely custom AI solution, EdFoal AI is your trusted partner in driving results. We help companies of all sizes unlock their full potential and stay competitive in today’s rapidly evolving marketplace.
           </p>
         </motion.div>
@@ -397,7 +397,7 @@ function ServiceItem({ icon, secondaryIcon, title, description, variants, delay,
         </h3>
       </motion.div>
       <motion.p
-        className="text-sm text-zinc-600 leading-relaxed px-4"
+        className="text-sm text-zinc-600 leading-relaxed px-4 mx-auto text-center max-w-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: delay + 0.4 }}
