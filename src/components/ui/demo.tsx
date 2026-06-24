@@ -1,6 +1,7 @@
 import { Flower } from "lucide-react";
 import { FaGithub as Github, FaXTwitter as Twitter, FaYoutube as Youtube } from "react-icons/fa6";
 import { AnimatedDock } from "@/components/ui/animated-dock";
+import AboutUsSection from "@/components/ui/about-us-section";
 
 const Demo = () => {
   return (
@@ -33,4 +34,8 @@ const Demo = () => {
   );
 };
 
-export { Demo };
+const DemoOne = () => {
+  return <AboutUsSection />;
+};
+
+export { Demo, DemoOne };
