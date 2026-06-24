@@ -1,9 +1,53 @@
 "use client";
 import * as React from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import { Mail, Phone, Clock } from "lucide-react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
+
+interface FooterSocialLinkProps {
+  item: { label: string; href: string };
+  mouseX: MotionValue<number>;
+}
+
+function FooterSocialLink({ item, mouseX }: FooterSocialLinkProps) {
+  const ref = useRef<HTMLAnchorElement>(null);
+
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    return val - bounds.x - bounds.width / 2;
+  });
+
+  const scaleSync = useTransform(distance, [-100, 0, 100], [1, 1.6, 1]);
+  const scale = useSpring(scaleSync, {
+    mass: 0.1,
+    stiffness: 150,
+    damping: 12,
+  });
+
+  return (
+    <motion.a
+      ref={ref}
+      href={item.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ scale }}
+      className="inline-block hover:text-[#e2d59f] transition-colors origin-center cursor-pointer"
+    >
+      {item.label}
+    </motion.a>
+  );
+}
 
 function Footer() {
+  const mouseX = useMotionValue(Infinity);
+
   return (
     <footer className="relative bg-[#030914] border-t border-zinc-900 overflow-hidden select-none h-[445px]">
       {/* Watermark — centered within the 445px footer */}
@@ -35,19 +79,20 @@ function Footer() {
               At EdFoal AI, we create tailored AI solutions to reduce costs, save
               time, and enhance business efficiency for growth.
             </p>
-            <div className="flex gap-6 mt-7 text-white font-bold text-[15px]">
+            <motion.div 
+              onMouseMove={(e) => mouseX.set(e.pageX)}
+              onMouseLeave={() => mouseX.set(Infinity)}
+              className="flex gap-6 mt-7 text-white font-bold text-[15px] items-center"
+            >
               {[
                 { label: "Fb.", href: "https://facebook.com" },
                 { label: "Tw.", href: "https://twitter.com" },
                 { label: "Li.", href: "https://linkedin.com" },
                 { label: "In.", href: "https://instagram.com" },
-              ].map(({ label, href }) => (
-                <Link key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  className="hover:text-white/60 transition-colors">
-                  {label}
-                </Link>
+              ].map((item) => (
+                <FooterSocialLink key={item.label} item={item} mouseX={mouseX} />
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Right — 3 Columns */}
