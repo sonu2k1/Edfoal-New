@@ -16,7 +16,7 @@ export function RobotHero({ kicker, title, subtitle, id }: RobotHeroProps) {
   return (
     <section
       id={id}
-      className="w-full h-full relative overflow-hidden bg-white"
+      className="w-full h-full relative overflow-hidden bg-black"
       style={{ padding: "10px 10px 0px 10px" }}
     >
       <div

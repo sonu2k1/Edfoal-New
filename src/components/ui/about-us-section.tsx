@@ -124,6 +124,7 @@ export default function AboutUsSection() {
     <section
       id="about-section"
       ref={sectionRef}
+      data-theme="light"
       className="w-full py-24 px-4 bg-white text-zinc-900 overflow-hidden relative"
     >
       {/* Decorative background elements */}
