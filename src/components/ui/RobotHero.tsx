@@ -2,7 +2,7 @@
 
 import React from "react";
 import { SplineScene } from "@/components/ui/Splite";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card";
 import { Spotlight } from "@/components/ui/Spotlight";
 
 interface RobotHeroProps {

@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, ReactNode } from "react";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card";
 
 interface ComponentProps {
   title: string;

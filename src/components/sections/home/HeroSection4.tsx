@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { InfiniteSlider } from '@/components/ui/InfiniteSlider'
 import { ProgressiveBlur } from '@/components/ui/ProgressiveBlur'
 import { cn } from '@/lib/utils'
