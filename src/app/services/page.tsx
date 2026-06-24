@@ -22,7 +22,7 @@ export default function ServicesPage() {
       <ServiceHero />
 
       {/* Intro Section (Light Theme) */}
-      <section data-theme="light" className="relative w-full max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-20 bg-white mt-12 md:mt-20">
+      <section data-theme="light" className="relative w-full max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-20 bg-white mt-12 md:mt-1">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-12">
           {/* Left Block */}
           <div className="max-w-md">
