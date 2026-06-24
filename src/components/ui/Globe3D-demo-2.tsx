@@ -175,14 +175,14 @@ const serviceTestimonials = [
 
 export default function Globe3DDemoSecond() {
   return (
-    <div className="relative my-8 h-[800px] w-full max-w-[1400px] overflow-hidden rounded-3xl bg-white p-8 md:p-16 shadow-sm shadow-black/5 flex flex-col justify-start items-start">
+    <div className="relative my-8 h-200 w-full max-w-350 overflow-hidden rounded-3xl bg-white p-8 md:p-16 shadow-sm shadow-black/5 flex flex-col justify-start items-start">
       {/* Top Row: Left card + Right circular testimonials */}
       <div className="relative z-10 w-full flex flex-col lg:flex-row items-start justify-between gap-8">
         {/* Left: Realtime Tracking Card */}
         <CardSpotlight
           color="#f4f4f5"
           showGradient={false}
-          className="relative z-10 text-gray-900 dark:text-gray-900 rounded-3xl border border-neutral-200/80 dark:border-neutral-200/80 bg-white/95 dark:bg-white/95 backdrop-blur-sm shadow-2xl overflow-hidden w-full max-w-[380px] h-[380px] flex flex-col justify-center gap-y-5 items-center p-6 text-center shrink-0"
+          className="relative z-10 text-gray-900 dark:text-gray-900 rounded-3xl border border-neutral-200/80 dark:border-neutral-200/80 bg-white/95 dark:bg-white/95 backdrop-blur-sm shadow-2xl overflow-hidden w-full max-w-95 h-95 flex flex-col justify-center gap-y-5 items-center p-6 text-center shrink-0"
         >
           {/* Header Section */}
           <div className="relative z-20 flex flex-col items-center">
@@ -192,7 +192,7 @@ export default function Globe3DDemoSecond() {
             </div>
 
             {/* Title */}
-            <h3 className="mb-1 text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
+            <h3 className="mb-1 text-2xl font-extrabold text-gray-900 tracking-tight leading-tight">
               Realtime tracking
             </h3>
 
@@ -222,29 +222,6 @@ export default function Globe3DDemoSecond() {
             </div>
           </div>
 
-          {/* Action Button */}
-          <div className="relative z-20 w-full flex justify-center">
-            <div className="inline-flex rounded-full w-[160px] h-[40px] items-center justify-center">
-              <OriginButton
-                className="w-full h-full rounded-full px-0 text-sm font-bold tracking-wide border-0"
-                style={{
-                  "--ic-card": "#0f172a",
-                  "--ic-card-foreground": "#ffffff",
-                  "--ic-border": "transparent",
-                  "--ic-foreground": "#ffffff",
-                  "--ic-background": "#0f172a",
-                } as React.CSSProperties}
-                onClick={() => {
-                  const contactElem = document.getElementById("contact");
-                  if (contactElem) {
-                    contactElem.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-              >
-                Learn more
-              </OriginButton>
-            </div>
-          </div>
         </CardSpotlight>
 
         {/* Right: Circular Testimonials Cards */}

@@ -82,12 +82,12 @@
   --radius-card: 24px;
 }
 
-/* Base resets */
+/* Base resets
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
+} */
 
 html,
 body {
@@ -101,11 +101,11 @@ body {
 }
 
 /* Typography styles */
-p {
+/* p {
   color: var(--color-ash);
   font-weight: var(--weight-regular);
   max-width: 60ch;
-}
+} */
 
 .eyebrow {
   font-size: var(--text-caption-size);
