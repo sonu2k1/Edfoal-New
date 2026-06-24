@@ -124,7 +124,7 @@ export default function AboutUsSection() {
     <section
       id="about-section"
       ref={sectionRef}
-      className="w-full py-24 px-4 bg-gradient-to-b from-[#F2F2EB] to-[#F8F8F2] text-zinc-900 overflow-hidden relative"
+      className="w-full py-24 px-4 bg-white text-zinc-900 overflow-hidden relative"
     >
       {/* Decorative background elements */}
       <motion.div
@@ -217,7 +217,7 @@ export default function AboutUsSection() {
           </div>
 
           {/* Center Image */}
-          <div className="flex justify-center items-center order-first md:order-none mb-8 md:mb-0">
+          <div className="flex justify-center items-center order-first md:order-none mb-9 md:mb-0">
             <motion.div className="relative w-full max-w-xs" variants={itemVariants}>
               <motion.div
                 className="rounded-md overflow-hidden shadow-xl"
@@ -431,7 +431,7 @@ function StatCounter({ icon, value, label, suffix, delay }: StatCounterProps) {
 
   return (
     <motion.div
-      className="bg-white/50 backdrop-blur-sm p-6 rounded-xl flex flex-col items-center text-center group hover:bg-white transition-colors duration-300"
+      className="bg-zinc-50/50 border border-zinc-100/80 p-6 rounded-xl flex flex-col items-center text-center group hover:bg-white hover:shadow-md transition-all duration-300"
       variants={{
         hidden: { opacity: 0, y: 20 },
         visible: {
