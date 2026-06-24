@@ -49,40 +49,38 @@ function Footer() {
   const mouseX = useMotionValue(Infinity);
 
   return (
-    <footer className="relative bg-[#030914] border-t border-zinc-900 overflow-hidden select-none h-[445px]">
-      {/* Watermark — centered within the 445px footer */}
+    <footer className="relative bg-[#030914] border-t border-zinc-900 overflow-hidden select-none">
+      {/* Watermark — purely decorative, scales with the section instead of a fixed-height parent */}
       <div
         aria-hidden="true"
         className="pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0"
-        style={{margin:"4.6rem 0 0 0"}}
       >
         <span className="text-[16vw] font-black tracking-tight leading-none whitespace-nowrap text-white/[0.035]">
           EdFoal
         </span>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col justify-between px-6 md:px-12 lg:px-20 pt-12 pb-6">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-16 pb-6 md:px-12 lg:px-20">
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
 
           {/* Left — Logo, Description, Socials */}
-          <div className="lg:col-span-4 flex flex-col" style={{margin:"3rem 0 0 6rem"}}>
-            <Link href="/" className="mb-5">
+          <div className="flex flex-col lg:col-span-4">
+            <Link href="/" className="mb-4 inline-block">
               <img
                 src="https://ik.imagekit.io/edfoalImage/assets/image/footerlogo.png"
                 alt="Edfoal Logo"
                 className="h-7 w-auto object-contain"
-                style={{marginBottom:"1rem"}}
               />
             </Link>
-            <p className="text-zinc-400 text-[13.5px] leading-relaxed max-w-[280px]" style={{marginBottom:"1rem"}}>
+            <p className="mb-4 max-w-[280px] text-[13.5px] leading-relaxed text-zinc-400">
               At EdFoal AI, we create tailored AI solutions to reduce costs, save
               time, and enhance business efficiency for growth.
             </p>
-            <motion.div 
+            <motion.div
               onMouseMove={(e) => mouseX.set(e.pageX)}
               onMouseLeave={() => mouseX.set(Infinity)}
-              className="flex gap-6 mt-7 text-white font-bold text-[15px] items-center"
+              className="mt-3 flex items-center gap-6 text-[15px] font-bold text-white"
             >
               {[
                 { label: "Fb.", href: "https://facebook.com" },
@@ -96,11 +94,11 @@ function Footer() {
           </div>
 
           {/* Right — 3 Columns */}
-          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-10" style={{margin:"3rem 0 0 25rem"}}>
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-3 lg:col-span-8">
 
             {/* Our Pages */}
             <div>
-              <h3 className="text-[#e2d59f] font-semibold text-[14px] mb-5 tracking-wide" style={{marginBottom:"1rem"}}>
+              <h3 className="mb-4 text-[14px] font-semibold tracking-wide text-[#e2d59f]">
                 Our Pages
               </h3>
               <ul className="space-y-3.5">
@@ -108,11 +106,11 @@ function Footer() {
                   { label: "Home", href: "/" },
                   { label: "About Us", href: "/about" },
                   { label: "Our Services", href: "/services" },
-                  { label: "usecases", href: "/usecases" },
+                  { label: "Usecases", href: "/usecases" },
                   { label: "Contact Us", href: "/contact" },
                 ].map(({ label, href }) => (
                   <li key={label}>
-                    <Link href={href} className="text-zinc-400 hover:text-white text-[13.5px] transition-colors">
+                    <Link href={href} className="text-[13.5px] text-zinc-400 transition-colors hover:text-white">
                       {label}
                     </Link>
                   </li>
@@ -122,13 +120,13 @@ function Footer() {
 
             {/* Services */}
             <div>
-              <h3 className="text-[#e2d59f] font-semibold text-[14px] mb-5 tracking-wide" style={{marginBottom:"1rem"}}>
+              <h3 className="mb-4 text-[14px] font-semibold tracking-wide text-[#e2d59f]">
                 Services
               </h3>
               <ul className="space-y-3.5">
                 {["Services 1", "Services 2", "Services 3", "Services 4"].map((item) => (
                   <li key={item}>
-                    <Link href="/services" className="text-zinc-400 hover:text-white text-[13.5px] transition-colors">
+                    <Link href="/services" className="text-[13.5px] text-zinc-400 transition-colors hover:text-white">
                       {item}
                     </Link>
                   </li>
@@ -138,32 +136,35 @@ function Footer() {
 
             {/* Contact Us */}
             <div>
-              <h3 className="text-[#e2d59f] font-semibold text-[14px] mb-5 tracking-wide" style={{marginBottom:"1rem"}}>
+              <h3 className="mb-4 text-[14px] font-semibold tracking-wide text-[#e2d59f]">
                 Contact Us
               </h3>
               <div className="space-y-5">
-                <div className="flex items-start gap-3" style={{margin:"0 0 1rem -1rem"}}>
-                  <Mail className="w-4 h-4 text-[#e2d59f] shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3">
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#e2d59f]" />
                   <div>
-                    <p className="text-white font-semibold text-[13px] leading-tight">Send Mail</p>
-                    <Link href="mailto:Info@satext.com"
-                      className="text-zinc-400 hover:text-white text-[14.5px] transition-colors mt-0.5 block">
-                      Info@satext.com
+                    <p className="text-[13px] font-semibold leading-tight text-white">Send Mail</p>
+                    {/* TODO: confirm the real EdFoal contact email — current domain looks like a leftover placeholder */}
+                    <Link
+                      href="mailto:info@edfoal.com"
+                      className="mt-0.5 block text-[14.5px] text-zinc-400 transition-colors hover:text-white"
+                    >
+                      info@edfoal.com
                     </Link>
                   </div>
                 </div>
-                <div className="flex items-start gap-3" style={{margin:"0 0 1rem -1rem"}}>
-                  <Phone className="w-4 h-4 text-[#e2d59f] shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3">
+                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#e2d59f]" />
                   <div>
-                    <p className="text-white font-semibold text-[13px] leading-tight">Call Us</p>
-                    <p className="text-zinc-400 text-[12.5px] mt-0.5">+91	&nbsp;1234567890</p>
+                    <p className="text-[13px] font-semibold leading-tight text-white">Call Us</p>
+                    <p className="mt-0.5 text-[12.5px] text-zinc-400">+91 1234567890</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3" style={{margin:"0 0 1rem -1rem"}}>
-                  <Clock className="w-4 h-4 text-[#e2d59f] shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3">
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#e2d59f]" />
                   <div>
-                    <p className="text-white font-semibold text-[13px] leading-tight">Opening Hours</p>
-                    <p className="text-zinc-400 text-[12.5px] mt-0.5">Mon - Fri, <br />9:00 - 20:00</p>
+                    <p className="text-[13px] font-semibold leading-tight text-white">Opening Hours</p>
+                    <p className="mt-0.5 text-[12.5px] text-zinc-400">Mon - Fri, <br />9:00 - 20:00</p>
                   </div>
                 </div>
               </div>
@@ -172,8 +173,8 @@ function Footer() {
         </div>
 
         {/* Divider + Copyright */}
-        <div className="border-t border-zinc-800/50 pt-5 flex items-center justify-center">
-          <p className="text-zinc-500 text-xs">
+        <div className="mt-12 flex items-center justify-center border-t border-zinc-800/50 pt-5">
+          <p className="text-xs text-zinc-500">
             Your Company - 2024 All right Reserved
           </p>
         </div>

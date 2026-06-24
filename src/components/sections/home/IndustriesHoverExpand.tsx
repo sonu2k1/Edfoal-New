@@ -51,13 +51,13 @@ const HoverExpandPanel = ({
       transition={{ duration: 0.5, delay: 0.2 }}
       className={cn("relative w-full", className)}
     >
-      <div className="flex w-full items-center justify-center gap-1.5">
+      <div className="flex w-full items-center justify-center gap-2">
         {images.map((image, index) => (
           <motion.div
             key={index}
             className="relative cursor-pointer overflow-hidden rounded-3xl"
             animate={{
-              width: activeImage === index ? "28rem" : "5rem",
+              width: activeImage === index ? "40rem" : "5rem",
               height: "26rem",
             }}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
@@ -146,13 +146,10 @@ export default function IndustriesHoverExpand() {
   return (
     <section
       id="industries-explore"
-      className="relative w-full overflow-hidden bg-white py-20"
-      
-      
+      className="relative w-full overflow-hidden bg-white"
     >
       <div
         className="w-full mx-auto px-5"
-        style={{ maxWidth: "1400px", marginTop:"5rem"}}
       >
         {/* Section header */}
         <motion.div
@@ -163,21 +160,21 @@ export default function IndustriesHoverExpand() {
           className="w-full text-center mb-12"
         >
           {/* Pill badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-gray-200 bg-gray-50 mb-8">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
             <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-600" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E2076D]" />
             </span>
-            <span className="text-xs font-semibold tracking-widest text-gray-600 uppercase leading-none">
-              Explore
+            <span className="text-sm font-semibold tracking-widest text-gray-600 leading-none">
+              Industries Cover
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight mb-4">
+          <h2 className="text-5xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight">
            Industries We Serve
           </h2>
 
-          <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 leading-relaxed mt-4 mb-8" style={{margin:"2rem 0 2rem 24rem"}}>
+          <p className="max-w-4xl mx-auto text-gray-500 leading-relaxed">
             Discover the wide range of industries we serve, delivering innovative solutions tailored to meet their unique challenges and goals.
           </p>
         </motion.div>

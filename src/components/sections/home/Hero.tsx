@@ -77,7 +77,7 @@ export default function HeroSection() {
         className="relative rounded-xl overflow-hidden"
         style={{
           width: "100%",
-          maxWidth: "1450px",
+          maxWidth: "100vw",
           height: "180vh",
           background: "#080808",
           marginLeft: "auto",
@@ -99,7 +99,7 @@ export default function HeroSection() {
           className="relative z-10"
           style={{
             width: "92%",
-            maxWidth: "1280px",
+            maxWidth: "100%",
             marginLeft: "auto",
             marginRight: "auto",
             paddingLeft: "max(16px, 2.5vw)",
