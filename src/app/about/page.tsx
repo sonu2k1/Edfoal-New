@@ -4,7 +4,6 @@ import React from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
-import AboutHero from "@/components/sections/about/AboutHero";
 import AboutUs from "@/components/sections/about/AboutUs";
 import AboutUsSection from "@/components/ui/about-us-section";
 import useLenis from "@/hooks/useLenis";
@@ -22,9 +21,6 @@ export default function AboutPage() {
 
       {/* About Us — 3D Spline Section */}
       <AboutUs />
-
-      {/* About Hero Section */}
-      <AboutHero />
 
       {/* Interactive Capabilities & Stats Section */}
       <AboutUsSection />

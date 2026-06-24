@@ -169,15 +169,17 @@ export default function AboutUsSection() {
       >
         <motion.div className="flex flex-col items-center mb-6" variants={itemVariants}>
           <motion.span
-            className="text-[#88734C] font-medium mb-2 flex items-center gap-2"
+            className="text-[#88734C] font-semibold tracking-[0.2em] mb-2 flex items-center gap-2 text-xs uppercase"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Zap className="w-4 h-4" />
-            DISCOVER OUR STORY
+            ABOUT US
           </motion.span>
-          <h2 className="text-4xl md:text-5xl font-light mb-4 text-center">About Us</h2>
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-center text-zinc-950 tracking-tight leading-[1.15]">
+            Who We Are at EdFoal AI
+          </h2>
           <motion.div
             className="w-24 h-1 bg-[#88734C]"
             initial={{ width: 0 }}
@@ -186,10 +188,14 @@ export default function AboutUsSection() {
           ></motion.div>
         </motion.div>
 
-        <motion.p className="text-center max-w-2xl mx-auto mb-16 text-[#202e44]/80" variants={itemVariants}>
-          We are a passionate team of AI engineers, researchers, and developers dedicated to building highly efficient,
-          custom AI systems that streamline workflows and automate core business operations.
-        </motion.p>
+        <motion.div className="text-center max-w-4xl mx-auto mb-16 text-[#202e44]/80 space-y-6 text-base md:text-lg leading-relaxed font-normal" variants={itemVariants}>
+          <p>
+            At EdFoal AI, we are passionate about leveraging the transformative power of artificial intelligence to help businesses succeed. Founded with the vision of making AI accessible and impactful, we specialize in designing tailored AI solutions that reduce costs, save time, and enhance overall efficiency. Our mission is simple: to empower businesses with intelligent tools that solve their unique challenges and create new opportunities for growth.
+          </p>
+          <p>
+            We understand that no two businesses are the same, which is why we take a personalized approach to every project. Our team of AI experts works closely with clients to understand their specific needs, design innovative AI systems, and implement seamless solutions that integrate perfectly into existing operations. Whether you're looking to automate processes, gain actionable insights from data, or develop a completely custom AI solution, EdFoal AI is your trusted partner in driving results. We help companies of all sizes unlock their full potential and stay competitive in today’s rapidly evolving marketplace.
+          </p>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
           {/* Left Column */}
@@ -221,8 +227,8 @@ export default function AboutUsSection() {
                 whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000&auto=format&fit=crop"
-                  alt="Modern AI Technology"
+                  src="https://ik.imagekit.io/edfoalImage/assets/image/abouthero.png"
+                  alt="Professional in suit"
                   className="w-full h-full object-cover"
                 />
                 <motion.div
