@@ -102,8 +102,8 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className={cn(
-                "w-full md:w-[460px] h-[280px] md:h-[460px] rounded-3xl overflow-hidden shrink-0 shadow-2xl relative group",
-                isLight ? "bg-zinc-100 border border-zinc-200" : "bg-zinc-950 border border-white/10"
+                "w-full md:w-[458px] h-[300px] md:h-[458px] rounded-[2rem] overflow-hidden shrink-0 shadow-2xl relative group z-10",
+                isLight ? "bg-zinc-100 border border-zinc-200/50" : "bg-zinc-950 border border-white/10"
               )}
             >
               <div className="absolute inset-0 bg-black/10 z-10 transition-opacity duration-300 group-hover:bg-black/5" />
@@ -122,13 +122,12 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
               className={cn(
-                "rounded-3xl p-8 md:p-10 z-10 max-w-xl w-full relative overflow-hidden transition-all duration-300",
+                "rounded-[2rem] p-5 md:pt-5 md:pb-4 md:px-6 w-full md:w-[576px] md:h-[322px] relative overflow-hidden transition-all duration-300 z-20",
                 isLight
-                  ? "bg-white/95 border border-zinc-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.06)] backdrop-blur-xl"
-                  : "bg-zinc-900/60 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)]",
-                isEven ? "md:ml-[-80px]" : "md:mr-[-80px]"
+                  ? "bg-white border border-zinc-200/30 shadow-[0_20px_50px_rgba(0,0,0,0.04)]"
+                  : "bg-zinc-900 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)]",
+                isEven ? "md:-ml-[160px]" : "md:-mr-[160px]"
               )}
-              style={{ padding: "2rem", margin: "-2rem" }}
             >
               {/* Highlight Aura */}
               <div className={cn(
@@ -137,25 +136,25 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
               )} />
 
               {/* Title Header */}
-              <div className="mb-6 flex items-start gap-4">
+              <div className="mb-2 flex items-center gap-3">
                 <div className={cn(
-                  "p-2.5 rounded-xl border transition-colors",
+                  "p-1.5 rounded-xl border transition-colors shrink-0",
                   isLight
                     ? "bg-purple-50 border-purple-100 text-purple-600"
                     : "bg-purple-500/10 border-purple-500/20 text-purple-400"
                 )}>
-                  <IconComponent className="w-6 h-6" />
+                  <IconComponent className="w-5 h-5" />
                 </div>
                 <div>
                   <h2 className={cn(
-                    "text-2xl font-bold mb-1 tracking-tight transition-colors",
+                    "text-md md:text-lg font-bold tracking-tight transition-colors mb-0.5",
                     isLight ? "text-zinc-900" : "text-white"
                   )}>
                     {service.name}
                   </h2>
                   <p className={cn(
-                    "text-xs font-semibold uppercase tracking-wider transition-colors",
-                    isLight ? "text-purple-600" : "text-purple-400"
+                    "text-[9px] font-bold uppercase tracking-[0.15em] transition-colors",
+                    isLight ? "text-zinc-400" : "text-zinc-500"
                   )}>
                     {service.title}
                   </p>
@@ -164,28 +163,28 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
 
               {/* Description */}
               <p className={cn(
-                "text-sm leading-relaxed mb-6 font-normal transition-colors",
-                isLight ? "text-zinc-600" : "text-zinc-300"
+                "text-xs md:text-[12px] leading-relaxed mb-2.5 font-normal transition-colors",
+                isLight ? "text-zinc-400" : "text-zinc-300"
               )}>
                 {service.description}
               </p>
 
               {/* Feature Bullets */}
               <div className={cn(
-                "rounded-xl border p-4 mb-6 transition-colors",
-                isLight ? "bg-zinc-50 border-zinc-100" : "bg-zinc-950/40 border border-white/5"
+                "rounded-xl border py-2 px-3 mb-2.5 transition-colors",
+                isLight ? "bg-[#fcfcfc] border-zinc-200/40" : "bg-zinc-950/40 border border-white/5"
               )}>
-                <ul className="space-y-2">
+                <ul className="space-y-0.5">
                   {service.bullets.map((bullet, bulletIdx) => (
                     <li
                       key={bulletIdx}
                       className={cn(
-                        "flex items-start gap-2.5 text-xs transition-colors",
-                        isLight ? "text-zinc-600" : "text-zinc-400"
+                        "flex items-start gap-1.5 text-xs md:text-[11px] transition-colors",
+                        isLight ? "text-zinc-600 font-medium" : "text-zinc-400"
                       )}
                     >
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 text-purple-500/70 shrink-0" />
-                      <span className="leading-relaxed">{bullet}</span>
+                      <CheckCircle2 className="mt-0.5 h-3 w-3 text-purple-500 shrink-0" />
+                      <span className="leading-tight">{bullet}</span>
                     </li>
                   ))}
                 </ul>
@@ -194,7 +193,7 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
               {/* Action Button */}
               <div className="flex">
                 <OriginButton
-                  className="w-[160px] h-[40px] rounded-full px-0 text-sm font-semibold tracking-wide border-[0.5px] cursor-pointer"
+                  className="w-[145px] h-[38px] rounded-full px-0 text-[13px] font-semibold tracking-wide border cursor-pointer"
                   style={
                     isLight
                       ? ({
