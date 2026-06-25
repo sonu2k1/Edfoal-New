@@ -155,7 +155,7 @@ export default function IndustriesCover() {
         </div>
 
         {/* ── Interactive grid ── */}
-        <div className="h-[700px] md:h-[800px] w-full">
+        <div className="h-175 md:h-200 w-full">
           <LayoutGrid cards={industryCards} />
         </div>
       </div>

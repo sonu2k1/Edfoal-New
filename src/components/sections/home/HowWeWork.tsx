@@ -73,17 +73,16 @@ const steps = [
 function ProcessMockup() {
   return (
     <div
-      className="w-full rounded-2xl overflow-hidden flex flex-col"
+      className="flex w-full flex-col overflow-hidden rounded-2xl"
       style={{ background: "#ffffff", height: "auto", marginBottom: "2rem" }}
     >
       {/* Mockup top bar */}
       <div
-        className="flex items-center gap-3 px-5 border-b shrink-0"
+        className="flex min-h-10 flex-wrap items-center gap-2 border-b px-3 py-2 sm:flex-nowrap sm:gap-3 sm:px-5"
         style={{
-          height: "42px",
           background: "#fefefeff",
           borderColor: "#f0f0f0",
-          margin:"1rem"
+          margin: "clamp(0.5rem, 2vw, 1rem)"
         }}
       >
         <div className="flex gap-1.5">
@@ -91,17 +90,17 @@ function ProcessMockup() {
           <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b" }} />
           <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#22c55e" }} />
         </div>
-        <div className="flex gap-1 ml-3">
+        <div className="flex max-w-full gap-1 overflow-x-auto sm:ml-3">
           {["Overview", "Messages", "Task Board", "Calendar", "Activity"].map(
             (tab, i) => (
               <span
                 key={tab}
-                className="px-3 py-0.5 rounded-full text-xs font-semibold"
+                className="shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold sm:px-3"
                 style={{
                   background: i === 0 ? "#7c3aed" : "transparent",
                   color: i === 0 ? "#fff" : "#9ca3af",
                   fontSize: 9,
-                  margin:"5px",
+                  margin: "5px",
                 }}
               >
                 {tab}
@@ -109,15 +108,15 @@ function ProcessMockup() {
             )
           )}
         </div>
-        <div className="ml-auto flex gap-1.5">
+        <div className="ml-auto hidden gap-1.5 sm:flex">
           <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#fbbf24" }} />
           <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#818cf8" }} />
         </div>
       </div>
 
       {/* Mockup body */}
-      <div className="p-5 flex-1 flex flex-col justify-start gap-4" style={{ background: "#ffffffff", margin:"1.5rem" }}>
-        <div className="flex flex-col md:flex-row items-start justify-between gap-3" >
+      <div className="flex flex-1 flex-col justify-start gap-4 p-3 sm:p-5" style={{ background: "#ffffffff", margin: "clamp(0.75rem, 3vw, 1.5rem)" }}>
+        <div className="flex flex-col items-start justify-between gap-3 md:flex-row" >
           <div>
             <p style={{ fontSize: 9, color: "#9ca3af", margin: "0 0 2px" }}>
               Thursday, September 26, 2024
@@ -136,7 +135,7 @@ function ProcessMockup() {
               Edfoal, Let&apos;s Build
             </h3>
           </div>
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex flex-wrap gap-2">
             {[
               { icon: "+", label: "New Task", bg: "#111827", color: "#fff" },
               { icon: "👤", label: "Invite", bg: "#f3f4f6", color: "#374151" },
@@ -162,13 +161,13 @@ function ProcessMockup() {
         </div>
 
         {/* Three column cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {/* Card 1: Performance gauge */}
           <div
             className="rounded-xl p-4 flex flex-col gap-2"
-            style={{ border: "1px solid #f0f0f0"  }}
+            style={{ border: "1px solid #f0f0f0" }}
           >
-            <div className="flex items-center justify-between" style={{margin:"10px"}} >
+            <div className="flex items-center justify-between" style={{ margin: "10px" }} >
               <span style={{ fontSize: 10, fontWeight: 700, color: "#374151" }}>
                 Project Performance
               </span>
@@ -176,7 +175,7 @@ function ProcessMockup() {
                 View All
               </span>
             </div>
-            <p style={{ fontSize: 8, color: "#9ca3af", margin:"10px" }}>
+            <p style={{ fontSize: 8, color: "#9ca3af", margin: "10px" }}>
               Monthly Analysis Report
             </p>
             <div className="flex flex-col items-center justify-center py-3">
@@ -192,7 +191,7 @@ function ProcessMockup() {
               </div>
               <p style={{ fontSize: 8, color: "#9ca3af", margin: "4px 0 0", textAlign: "center" }}>Projects Completed</p>
             </div>
-            <div className="flex gap-2 justify-center">
+            <div className="flex flex-wrap justify-center gap-2">
               {[
                 { dot: "#7c3aed", label: "Completed" },
                 { dot: "#fbbf24", label: "In Progress" },
@@ -211,11 +210,11 @@ function ProcessMockup() {
             className="rounded-xl p-4 flex flex-col gap-2"
             style={{ border: "1px solid #f0f0f0" }}
           >
-            <div style={{margin:"0 10px"}}>
+            <div style={{ margin: "0 10px" }}>
               <span style={{ fontSize: 10, fontWeight: 700, color: "#374151" }}>Build Website Landing Page</span>
               <p style={{ fontSize: 8, color: "#9ca3af", margin: "2px 0 0" }}>5 Tasks to complete</p>
             </div>
-            <div className="rounded-lg p-3 flex flex-col gap-1.5" style={{ background: "#f9fafb", flex: 1, margin:"10px" }}>
+            <div className="rounded-lg p-3 flex flex-col gap-1.5" style={{ background: "#f9fafb", flex: 1, margin: "10px" }}>
               <p style={{ fontSize: 9, fontWeight: 700, color: "#374151", margin: 0 }}>Refresh the web design</p>
               <p style={{ fontSize: 8, color: "#9ca3af", margin: 0 }}>After the latest product updates and pricing changes</p>
               <div className="flex items-center gap-2 mt-1">
@@ -232,8 +231,8 @@ function ProcessMockup() {
                 ))}
               </div>
               <div className="flex gap-1">
-                <span className="rounded-full px-2 py-0.5" style={{ fontSize: 8, background: "#fef3c7", color: "#d97706", fontWeight: 700,marginLeft:"5px" }}>UI/UX</span>
-                <span className="rounded-full px-2 py-0.5" style={{ fontSize: 8, background: "#dcfce7", color: "#16a34a", fontWeight: 700,marginRight:"10px" }}>New</span>
+                <span className="rounded-full px-2 py-0.5" style={{ fontSize: 8, background: "#fef3c7", color: "#d97706", fontWeight: 700, marginLeft: "5px" }}>UI/UX</span>
+                <span className="rounded-full px-2 py-0.5" style={{ fontSize: 8, background: "#dcfce7", color: "#16a34a", fontWeight: 700, marginRight: "10px" }}>New</span>
               </div>
             </div>
           </div>
@@ -243,7 +242,7 @@ function ProcessMockup() {
             className="rounded-xl p-4 flex flex-col gap-2"
             style={{ border: "1px solid #f0f0f0" }}
           >
-            <div className="flex flex-col gap-1" style={{margin:"10px"}}>
+            <div className="flex flex-col gap-1" style={{ margin: "10px" }}>
               <span style={{ fontSize: 10, fontWeight: 700, color: "#374151" }}>Team</span>
               <div className="flex gap-1 flex-wrap">
                 {[
@@ -266,13 +265,13 @@ function ProcessMockup() {
               </div>
             </div>
             <div className="flex flex-col gap-1.5 mt-1">
-              <div className="rounded-xl rounded-tl-sm px-2.5 py-1.5" style={{ background: "#fef3c7", alignSelf: "flex-start", maxWidth: "85%", margin:"10px" }}>
+              <div className="rounded-xl rounded-tl-sm px-2.5 py-1.5" style={{ background: "#fef3c7", alignSelf: "flex-start", maxWidth: "85%", margin: "10px" }}>
                 <p style={{ fontSize: 8, color: "#92400e", fontWeight: 600, margin: 0 }}>Hey! How is it going? 🙌</p>
               </div>
-              <div className="rounded-xl rounded-tl-sm px-2.5 py-1.5" style={{ background: "#fef3c7", alignSelf: "flex-start", maxWidth: "85%", margin:"10px" }}>
+              <div className="rounded-xl rounded-tl-sm px-2.5 py-1.5" style={{ background: "#fef3c7", alignSelf: "flex-start", maxWidth: "85%", margin: "10px" }}>
                 <p style={{ fontSize: 8, color: "#92400e", fontWeight: 600, margin: 0 }}>I have a new task in design today. Let me know when done ✅</p>
               </div>
-              <div className="rounded-xl rounded-tr-sm px-2.5 py-1.5" style={{ background: "#fbbf24", alignSelf: "flex-end", maxWidth: "80%", margin:"10px" }}>
+              <div className="rounded-xl rounded-tr-sm px-2.5 py-1.5" style={{ background: "#fbbf24", alignSelf: "flex-end", maxWidth: "80%", margin: "10px" }}>
                 <p style={{ fontSize: 8, color: "#fff", fontWeight: 700, margin: 0 }}>Sure thing Diana 👍</p>
               </div>
             </div>
@@ -280,13 +279,13 @@ function ProcessMockup() {
         </div>
 
         {/* Row 2: Analytics & Status */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           {/* Card 4: Development Activity */}
           <div
             className="rounded-xl p-4 flex flex-col justify-between md:col-span-2 gap-2"
-            style={{ border: "1px solid #f0f0f0"}}
+            style={{ border: "1px solid #f0f0f0" }}
           >
-            <div className="flex items-center justify-between" style={{margin:"10px"}}>
+            <div className="flex items-center justify-between" style={{ margin: "10px" }}>
               <div>
                 <span style={{ fontSize: 10, fontWeight: 700, color: "#374151" }}>
                   Development Activity
@@ -341,7 +340,7 @@ function ProcessMockup() {
             </div>
 
             {/* X-axis ticks */}
-            <div className="flex justify-between px-2.5" style={{ fontSize: 7, color: "#9ca3af", fontWeight: 500, margin:"10px" }}>
+            <div className="flex justify-between px-2.5" style={{ fontSize: 7, color: "#9ca3af", fontWeight: 500, margin: "10px" }}>
               <span>Mon</span>
               <span>Tue</span>
               <span>Wed</span>
@@ -352,8 +351,8 @@ function ProcessMockup() {
             </div>
 
             {/* Footer Status Log */}
-            <div className="flex items-center justify-between border-t pt-2" style={{ borderColor: "#f3f4f6" }}>
-              <div className="flex items-center gap-1.5" style={{margin:"10px"}}>
+            <div className="flex flex-col justify-between gap-2 border-t pt-2 sm:flex-row sm:items-center" style={{ borderColor: "#f3f4f6" }}>
+              <div className="flex items-center gap-1.5" style={{ margin: "10px" }}>
                 <div style={{ width: 14, height: 14, borderRadius: "50%", background: "#7c3aed", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 7, fontWeight: 800, color: "#fff" }}>
                   R
                 </div>
@@ -361,7 +360,7 @@ function ProcessMockup() {
                   <span style={{ fontWeight: 600, color: "#111827" }}>Richard</span> pushed 4 commits to <code className="bg-gray-100 px-1 py-0.5 rounded text-purple-600 font-mono" style={{ fontSize: 7 }}>main</code>
                 </span>
               </div>
-              <span style={{ fontSize: 7, color: "#9ca3af", margin:"10px" }}>3 mins ago</span>
+              <span style={{ fontSize: 7, color: "#9ca3af", margin: "10px" }}>3 mins ago</span>
             </div>
           </div>
 
@@ -371,7 +370,7 @@ function ProcessMockup() {
             style={{ border: "1px solid #f0f0f0" }}
           >
             <div>
-              <span style={{ fontSize: 10, fontWeight: 700, color: "#374151", margin:"10px" }}>
+              <span style={{ fontSize: 10, fontWeight: 700, color: "#374151", margin: "10px" }}>
                 Active Integrations
               </span>
               <p style={{ fontSize: 8, color: "#9ca3af", marginLeft: "10px" }}>
@@ -379,7 +378,7 @@ function ProcessMockup() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-1.5" style={{margin:"10px"}}> 
+            <div className="flex flex-col gap-1.5" style={{ margin: "10px" }}>
               {[
                 {
                   name: "GitHub",
@@ -490,81 +489,56 @@ export default function HowWeWork() {
   return (
     <section
       id="how-we-work"
-      className="relative w-full bg-white overflow-hidden"
-      style={{ padding: "90px 0 100px" }}
+      className="relative w-full overflow-hidden bg-white px-4 py-12 sm:px-6 sm:py-14 md:py-16 lg:px-8 lg:pb-25 lg:pt-22.5"
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
+      <div className="mx-auto w-full max-w-360">
 
         {/* ── Static section header ── */}
-        <div className="text-center" style={{ marginBottom: "52px" }}>
-          <div
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-gray-200 bg-gray-50"
-            style={{ marginBottom: "20px" }}
-          >
+        <div className="text-center">
+          <div className="mt-3 inline-flex items-center gap-2.5 rounded-full border border-gray-200 bg-gray-50 px-4 py-2">
             <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1D6ACF]" />
             </span>
-            <span className="text-xs font-semibold tracking-widest text-gray-600 uppercase leading-none">
-              Our Process
+            <span className="text-sm font-semibold leading-none tracking-widest text-gray-600">
+              How We Work
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+          <h2 className="mt-4 text-[clamp(2.25rem,9vw,3rem)] font-bold leading-tight tracking-tight text-gray-900 md:text-5xl">
             How We{" "}
             <span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage: "linear-gradient(90deg, #d97706 0%, #fbbf24 50%, #f59e0b 100%)",
-              }}
+              className="bg-clip-text text-transparent bg-[linear-gradient(90deg,#1D6ACF_0%,#E2076D_50%,#1D6ACF_100%)]"
             >
               Work
             </span>
           </h2>
-          <p
-            className="text-gray-500 text-base md:text-lg leading-relaxed"
-            style={{ maxWidth: "520px", margin: "14px auto 0" }}
-          >
+          <p className="mx-auto mb-8 mt-3 max-w-4xl text-sm leading-relaxed text-gray-500 sm:text-base lg:mb-4">
             A transparent, battle-tested process that turns your vision into
             exceptional digital products — faster, smarter, better.
           </p>
         </div>
 
         {/* ── Static yellow container with step cards ── */}
-        <div
-          className="relative rounded-3xl overflow-visible w-full"
-          style={{
-            background: "linear-gradient(140deg, #fde68a 0%, #fbbf24 40%, #f59e0b 100%)",
-            padding: "36px 36px 0 36px",
-            maxWidth: "1152px",
-            minHeight: "465px",
-            margin: "0 auto",
-          }}
-        >
+        <div className="relative mx-auto w-full overflow-visible rounded-3xl bg-[linear-gradient(140deg,#fde68a_0%,#fbbf24_40%,#f59e0b_100%)] px-4 pt-4 sm:px-6 sm:pt-6 lg:min-h-116.25 lg:px-9 lg:pt-9">
           {/* Decorative blobs */}
-          <div className="absolute pointer-events-none select-none" style={{ width: 340, height: 340, borderRadius: "50%", background: "rgba(255,255,255,0.12)", top: -120, right: -80 }} />
-          <div className="absolute pointer-events-none select-none" style={{ width: 220, height: 220, borderRadius: "50%", background: "rgba(255,255,255,0.10)", bottom: 60, left: -60 }} />
-          <svg className="absolute pointer-events-none select-none" style={{ top: 10, left: -30, opacity: 0.18 }} width="220" height="220" viewBox="0 0 220 220" fill="none">
+          <div className="pointer-events-none absolute -right-20 -top-30 hidden h-85 w-85 select-none rounded-full bg-white/12 md:block" />
+          <div className="pointer-events-none absolute -left-15 bottom-15 hidden h-55 w-55 select-none rounded-full bg-white/10 md:block" />
+          <svg className="pointer-events-none absolute hidden select-none md:block" style={{ top: 10, left: -30, opacity: 0.18 }} width="220" height="220" viewBox="0 0 220 220" fill="none">
             <path d="M110 10 C160 10, 210 60, 210 110 C210 160, 160 210, 110 210 C60 210, 10 160, 10 110 C10 60, 60 10, 110 10 Z" fill="#fff" />
           </svg>
-          <svg className="absolute pointer-events-none select-none" style={{ bottom: 40, right: -40, opacity: 0.14 }} width="260" height="200" viewBox="0 0 260 200" fill="none">
+          <svg className="pointer-events-none absolute hidden select-none md:block" style={{ bottom: 40, right: -40, opacity: 0.14 }} width="260" height="200" viewBox="0 0 260 200" fill="none">
             <ellipse cx="130" cy="100" rx="130" ry="100" fill="#fff" />
           </svg>
 
           {/* ── 4 Step cards (static) ── */}
           <div
-            className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4"
-            style={{ marginBottom: "32px" }}
+            className="relative z-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4"
           >
             {steps.map((step) => (
               <div
                 key={step.id}
-                className="rounded-2xl flex flex-col gap-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                style={{
-                  background: "#ffffff",
-                  padding: "20px 18px",
-                  boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
-                }}
+                className="flex flex-col gap-3 rounded-2xl bg-white px-4 py-4 shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:px-4.5 sm:py-5"
               >
                 <div
                   className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
@@ -573,11 +547,11 @@ export default function HowWeWork() {
                   {step.icon}
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900" style={{ fontSize: "13px", lineHeight: 1.35, margin: 0 }}>
+                  <h3 className="m-0 text-[13px] font-bold leading-[1.35] text-gray-900">
                     {step.title}
                   </h3>
                 </div>
-                <p style={{ fontSize: "11px", color: "#6b7280", lineHeight: 1.6, margin: 0 }}>
+                <p className="m-0 text-[11px] leading-[1.6] text-gray-500">
                   {step.description}
                 </p>
               </div>
@@ -585,15 +559,16 @@ export default function HowWeWork() {
           </div>
 
           {/* ── Scroll-animated dashboard mockup ── */}
-          <div ref={mockupRef} className="relative z-10" style={{ maxWidth: "920px", margin: "0 auto", perspective: "1000px" }}>
+          <div
+            ref={mockupRef}
+            className="relative z-10 mx-auto mt-5 w-full max-w-230 overflow-hidden perspective-[1000px] sm:mt-6 lg:overflow-visible"
+          >
             <motion.div
               style={{
                 rotateX: rotate,
                 scale,
-                boxShadow:
-                  "0 32px 80px rgba(0,0,0,0.16), 0 8px 24px rgba(0,0,0,0.08)",
               }}
-              className="rounded-2xl overflow-hidden"
+              className="overflow-hidden rounded-2xl shadow-[0_24px_60px_rgba(0,0,0,0.14),0_8px_24px_rgba(0,0,0,0.08)] lg:shadow-[0_32px_80px_rgba(0,0,0,0.16),0_8px_24px_rgba(0,0,0,0.08)]"
             >
               <ProcessMockup />
             </motion.div>

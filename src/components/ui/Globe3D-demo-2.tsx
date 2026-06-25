@@ -175,14 +175,14 @@ const serviceTestimonials = [
 
 export default function Globe3DDemoSecond() {
   return (
-    <div className="relative my-8 h-[800px] w-full max-w-[1400px] overflow-hidden rounded-3xl bg-white p-8 md:p-16 shadow-sm shadow-black/5 flex flex-col justify-start items-start">
+    <div className="relative my-4 flex min-h-[960px] w-full max-w-[1400px] flex-col items-start justify-start overflow-hidden rounded-3xl bg-white p-4 shadow-sm shadow-black/5 sm:my-6 sm:min-h-[980px] sm:p-6 md:min-h-[940px] md:p-8 lg:my-8 lg:h-[800px] lg:min-h-0 lg:p-12 xl:p-16">
       {/* Top Row: Left card + Right circular testimonials */}
-      <div className="relative z-10 w-full flex flex-col lg:flex-row items-start justify-between gap-8">
+      <div className="relative z-10 flex w-full flex-col items-center justify-between gap-6 lg:flex-row lg:items-start lg:gap-8">
         {/* Left: Realtime Tracking Card */}
         <CardSpotlight
           color="#f4f4f5"
           showGradient={false}
-          className="relative z-10 text-gray-900 dark:text-gray-900 rounded-3xl border border-neutral-200/80 dark:border-neutral-200/80 bg-white/95 dark:bg-white/95 backdrop-blur-sm shadow-2xl overflow-hidden w-full max-w-[380px] h-[380px] flex flex-col justify-center gap-y-5 items-center p-6 text-center shrink-0"
+          className="relative z-10 flex min-h-[320px] w-full max-w-88 shrink-0 flex-col items-center justify-center gap-y-5 overflow-hidden rounded-3xl border border-neutral-200/80 bg-white/95 p-5 text-center text-gray-900 shadow-2xl backdrop-blur-sm dark:border-neutral-200/80 dark:bg-white/95 dark:text-gray-900 sm:h-[360px] sm:max-w-92 sm:p-6 lg:h-95 lg:max-w-95"
         >
           {/* Header Section */}
           <div className="relative z-20 flex flex-col items-center">
@@ -192,63 +192,40 @@ export default function Globe3DDemoSecond() {
             </div>
 
             {/* Title */}
-            <h3 className="mb-1 text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
+            <h3 className="mb-1 text-[clamp(1.5rem,7vw,1.75rem)] font-extrabold leading-tight tracking-tight text-gray-900">
               Realtime tracking
             </h3>
 
             {/* Subtitle */}
-            <p className="text-zinc-600 text-md leading-relaxed font-normal max-w-[280px]">
+            <p className="max-w-[280px] text-sm font-normal leading-relaxed text-zinc-600 sm:text-base">
               Watch visitors arrive and interact with your site as it happens.
             </p>
           </div>
 
           {/* Feature bullets */}
-          <div className="relative z-20 space-y-2.5 w-fit text-left flex flex-col items-start mx-auto">
-            <div className="flex items-center gap-3 text-gray-700 text-sm font-semibold">
+          <div className="relative z-20 mx-auto flex w-fit flex-col items-start space-y-2.5 text-left">
+            <div className="flex items-center gap-3 text-sm font-semibold text-gray-700">
               <Smile className="w-[18px] h-[18px] text-blue-500 shrink-0" />
               <span>AI-Driven Automation</span>
             </div>
-            <div className="flex items-center gap-3 text-gray-700 text-sm font-semibold">
+            <div className="flex items-center gap-3 text-sm font-semibold text-gray-700">
               <Globe className="w-[18px] h-[18px] text-blue-500 shrink-0" />
               <span>Custom AI Systems</span>
             </div>
-            <div className="flex items-center gap-3 text-gray-700 text-sm font-semibold">
+            <div className="flex items-center gap-3 text-sm font-semibold text-gray-700">
               <Send className="w-[18px] h-[18px] text-blue-500 shrink-0" />
               <span>Customer Feedback Intelligence</span>
             </div>
-            <div className="flex items-center gap-3 text-gray-700 text-sm font-semibold">
+            <div className="flex items-center gap-3 text-sm font-semibold text-gray-700">
               <MapPin className="w-[18px] h-[18px] text-blue-500 shrink-0" />
               <span>Knowledge Base Optimization</span>
             </div>
           </div>
 
-          {/* Action Button */}
-          <div className="relative z-20 w-full flex justify-center">
-            <div className="inline-flex rounded-full w-[160px] h-[40px] items-center justify-center">
-              <OriginButton
-                className="w-full h-full rounded-full px-0 text-sm font-bold tracking-wide border-0"
-                style={{
-                  "--ic-card": "#0f172a",
-                  "--ic-card-foreground": "#ffffff",
-                  "--ic-border": "transparent",
-                  "--ic-foreground": "#ffffff",
-                  "--ic-background": "#0f172a",
-                } as React.CSSProperties}
-                onClick={() => {
-                  const contactElem = document.getElementById("contact");
-                  if (contactElem) {
-                    contactElem.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-              >
-                Learn more
-              </OriginButton>
-            </div>
-          </div>
         </CardSpotlight>
 
         {/* Right: Circular Testimonials Cards */}
-        <div className="relative z-10 flex-1 flex items-start justify-end overflow-visible rounded-2xl min-h-[380px] lg:pr-12">
+        <div className="relative z-10 flex min-h-[330px] w-full flex-1 items-start justify-center overflow-visible rounded-2xl sm:min-h-[360px] md:min-h-[380px] lg:justify-end lg:pr-12">
           <CircularTestimonials
             testimonials={serviceTestimonials}
             autoplay={true}
@@ -267,13 +244,13 @@ export default function Globe3DDemoSecond() {
               designation: "11px",
               quote: "13px",
             }}
-            className="lg:max-w-[550px] lg:ml-auto lg:translate-x-[30px] xl:translate-x-[82px] transition-transform duration-500"
+            className="mx-auto max-w-full transition-transform duration-500 lg:ml-auto lg:max-w-[550px] lg:translate-x-[30px] xl:translate-x-[82px]"
           />
         </div>
       </div>
 
       {/* Globe Canvas positioned absolutely like the original */}
-      <div className="absolute w-full -bottom-[150px] md:-bottom-[220px] h-[450px] md:h-[42rem] z-10 left-0">
+      <div className="absolute bottom-[-90px] left-0 z-10 h-[340px] w-full sm:bottom-[-120px] sm:h-[420px] md:bottom-[-180px] md:h-[600px] lg:bottom-[-220px] lg:h-168">
         <World data={sampleArcs} globeConfig={globeConfig} />
       </div>
     </div>

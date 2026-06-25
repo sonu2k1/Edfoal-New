@@ -22,7 +22,7 @@ export default function ServicesPage() {
       <ServiceHero />
 
       {/* Intro Section (Light Theme) */}
-      <section data-theme="light" className="relative w-full max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-20 bg-white" style={{ margin: "5rem 5rem 0 5rem" }}>
+      <section data-theme="light" className="relative w-full max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-2 bg-white mt-1 md:mt-1">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-12">
           {/* Left Block */}
           <div className="max-w-md">
@@ -65,7 +65,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Showcase Section (Light Theme) */}
-      <section data-theme="light" className="relative bg-white w-full" style={{ margin: "10rem" }}>
+      <section data-theme="light" className="relative bg-white w-full py-16 md:py-24">
         <ServicesShowcase isLight={true} />
       </section>
 

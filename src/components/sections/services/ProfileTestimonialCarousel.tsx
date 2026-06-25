@@ -73,7 +73,7 @@ export function TestimonialCarousel({ className }: TestimonialCarouselProps) {
   const IconComponent = currentService.icon;
 
   return (
-    <div className={cn("w-full max-w-5xl mx-auto px-4 py-12 relative z-10", className)}>
+    <div className={cn("w-full max-w-5xl mx-auto px-4 py-12 relative z-10")}>
       {/* Desktop layout */}
       <div className='hidden md:flex relative items-center justify-center py-8'>
         {/* Avatar / Image */}

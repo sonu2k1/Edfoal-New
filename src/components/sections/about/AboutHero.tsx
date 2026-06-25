@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export default function AboutHero() {
   return (
     <section className="relative w-full bg-white py-20 md:py-28 px-6 md:px-12 lg:px-20 overflow-hidden" >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10" style={{margin:" 10rem"}}>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10" >
         
         {/* Left Column: Image with frame & shadow */}
         <motion.div
