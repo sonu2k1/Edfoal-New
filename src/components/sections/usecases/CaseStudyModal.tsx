@@ -406,17 +406,18 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
   useEffect(() => {
     if (caseStudyId) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      document.documentElement.style.overflow = "unset";
     }
     return () => {
       document.body.style.overflow = "unset";
+      document.documentElement.style.overflow = "unset";
     };
   }, [caseStudyId]);
 
-  if (!caseStudyId) return null;
-
-  const study = caseStudiesData[caseStudyId] || caseStudiesData["1"];
+  const study = caseStudyId ? (caseStudiesData[caseStudyId] || caseStudiesData["1"]) : null;
 
   return (
     <AnimatePresence>
@@ -684,6 +685,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
           </div>
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   );
 };
