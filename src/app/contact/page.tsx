@@ -2,50 +2,23 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, ArrowRight, Phone, MessageCircle, MapPin } from "lucide-react";
+import { CheckCircle, ArrowRight } from "lucide-react";
+import { FaFacebook, FaXTwitter, FaLinkedin, FaYoutube } from "react-icons/fa6";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { MinimalistHero } from "@/components/ui/minimalist-hero";
 import useLenis from "@/hooks/useLenis";
-import MinimalHero from "@/components/ui/HeroMinimalism";
 
 const GOOGLE_SHEETS_URL = "";
 
-const SERVICES = [
-  { id: "automation",  label: "Automation" },
-  { id: "tailored_ai", label: "Tailored AI" },
-  { id: "analytics",   label: "Analytics" },
-  { id: "consulting",  label: "Consulting" },
-  { id: "integration", label: "Integration" },
-  { id: "other",       label: "Other" },
-];
-
-const SOCIAL_LINKS = [
-  {
-    label: "Facebook", href: "#",
-    svg: <svg viewBox="0 0 24 24" fill="currentColor" width={18} height={18}><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>,
-  },
-  {
-    label: "X", href: "#",
-    svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" width={18} height={18}><path d="M4 4l16 16M20 4 4 20" /></svg>,
-  },
-  {
-    label: "LinkedIn", href: "#",
-    svg: <svg viewBox="0 0 24 24" fill="currentColor" width={18} height={18}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" /><circle cx="4" cy="4" r="2" /></svg>,
-  },
-  {
-    label: "YouTube", href: "#",
-    svg: <svg viewBox="0 0 24 24" fill="currentColor" width={18} height={18}><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z" /></svg>,
-  },
-];
-
-/* Shared input style — inline styles override global dark CSS */
+/* ── shared input style — inline overrides globals.css dark theme ── */
 const inputStyle: React.CSSProperties = {
   width: "100%",
-  height: "48px",
+  height: "40px",
   backgroundColor: "#ffffff",
   border: "1px solid #D1D5DB",
-  borderRadius: "8px",
-  padding: "0 16px",
+  borderRadius: "6px",
+  padding: "0 12px",
   fontSize: "14px",
   color: "#111827",
   outline: "none",
@@ -53,41 +26,49 @@ const inputStyle: React.CSSProperties = {
 };
 
 const labelStyle: React.CSSProperties = {
-  display: "block",
   fontSize: "14px",
-  fontWeight: 500,
   color: "#374151",
-  marginBottom: "6px",
+  fontWeight: 400,
+  whiteSpace: "nowrap",
+};
+
+const rowStyle: React.CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "140px 1fr",
+  alignItems: "center",
+  marginBottom: "16px",
+  gap: "12px",
 };
 
 export default function ContactPage() {
   useLenis();
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+    fullName: "",
+    workEmail: "",
     phone: "",
-    message: "",
-    services: [] as string[],
+    company: "",
+    geoFocus: "",
+    potentialUsecase: "",
+    protectData: false,
   });
 
   const [isSubmitting,  setIsSubmitting]  = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError,   setSubmitError]   = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const toggleService = (id: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      services: prev.services.includes(id)
-        ? prev.services.filter((s) => s !== id)
-        : [...prev.services, id],
-    }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    if (type === "checkbox") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: (e.target as HTMLInputElement).checked,
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -97,14 +78,16 @@ export default function ContactPage() {
     try {
       if (GOOGLE_SHEETS_URL) {
         const body = new FormData(e.currentTarget);
-        body.append("services", formData.services.join(", "));
         const res = await fetch(GOOGLE_SHEETS_URL, { method: "POST", body });
         if (!res.ok) throw new Error("Submission failed. Please try again.");
       } else {
         await new Promise((r) => setTimeout(r, 1500));
       }
       setSubmitSuccess(true);
-      setFormData({ firstName: "", lastName: "", email: "", phone: "", message: "", services: [] });
+      setFormData({
+        fullName: "", workEmail: "", phone: "",
+        company: "", geoFocus: "", potentialUsecase: "", protectData: false,
+      });
     } catch (err: unknown) {
       setSubmitError(err instanceof Error ? err.message : "Failed to submit. Please try again.");
     } finally {
@@ -113,414 +96,277 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden" style={{ backgroundColor: "#000000" }}>
+    <main style={{ backgroundColor: "#ffffff", minHeight: "100vh" }}>
       <Navbar />
 
-      <MinimalHero
-        kicker="Contact Us"
-        title={<span className="text-[#f5e1b8]">Tailored AI Solutions</span>}
-        subtitle="Explore how we're transforming businesses with cutting-edge AI solutions tailored just for you!"
-        showFooter={false}
-      />
+      {/* ── Hero Banner ── */}
+      <div className="relative">
+        <MinimalistHero
+          mainText="Explore how we're transforming businesses with cutting-edge AI solutions tailored just for you! Reach out to our AI strategy and engineering team to get started."
+          readMoreLink="#contact-form"
+          imageSrc="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800"
+          imageAlt="Contact Edfoal AI Solutions"
+          overlayText={{ part1: "get in", part2: "touch." }}
+          socialLinks={[
+            { icon: FaFacebook, href: "#" },
+            { icon: FaXTwitter, href: "#" },
+            { icon: FaLinkedin, href: "#" },
+            { icon: FaYoutube, href: "#" },
+          ]}
+          locationText="Edfoal AI Solutions"
+          hideHeader={true}
+          hideFooter={true}
+          className="mx-1.5 mt-1.5 w-auto rounded-xl bg-[#001427] text-white sm:mx-2.5 sm:mt-2.5"
+        />
+        {/* Fade from dark hero into white content below */}
+        <div
+          className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none"
+          style={{ height: "120px", background: "linear-gradient(to top, #ffffff, transparent)" }}
+        />
+      </div>
 
-      {/* ── Contact Section ── */}
+      {/* ── Contact Form ── */}
       <section
-        className="relative z-10 w-full mx-auto"
-        style={{
-          maxWidth: "1200px",
-          padding: "80px 40px",
-        }}
+        id="contact-form"
+        style={{ backgroundColor: "#ffffff", padding: "64px 24px 80px" }}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            backgroundColor: "#ffffff",
-            border: "1px solid #E5E7EB",
-            borderRadius: "20px",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.08)",
-            overflow: "hidden",
-          }}
-          className="flex-col lg:flex-row"
-        >
+        <div style={{ maxWidth: "580px", margin: "0 auto" }}>
 
-          {/* ══════════════════════════
-              LEFT SIDEBAR
-          ══════════════════════════ */}
-          <div
-            className="flex-shrink-0 w-full lg:w-[30%] flex flex-col justify-between"
-            style={{
-              backgroundColor: "#F8F9FA",
-              borderRight: "1px solid #E5E7EB",
-              padding: "48px 40px",
-            }}
-          >
-            <div>
-              {/* Heading */}
-              <h2 style={{ fontSize: "22px", fontWeight: 700, color: "#111827", marginBottom: "12px", lineHeight: 1.3 }}>
-                Get in touch
-              </h2>
-              <p style={{ fontSize: "14px", color: "#6B7280", lineHeight: 1.7, marginBottom: "40px", maxWidth: "none" }}>
-                We&apos;d love to hear from you. Our friendly team is always here to chat.
-              </p>
+          {/* Heading */}
+          <div style={{ textAlign: "center", marginBottom: "48px" }}>
+            <h1 style={{
+              fontSize: "clamp(2rem, 5vw, 2.5rem)",
+              fontWeight: 700,
+              color: "#111827",
+              marginBottom: "14px",
+              lineHeight: 1.2,
+            }}>
+              Get in <span style={{ color: "#2563EB" }}>Touch</span>
+            </h1>
+            <p style={{ fontSize: "14px", color: "#6B7280", lineHeight: 1.7, maxWidth: "none" }}>
+              Tailored technologies designed to drive your business forward and address your unique challenges.
+            </p>
+          </div>
 
-              {/* Contact items */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+          {/* Form / Success */}
+          <AnimatePresence mode="wait">
+            {!submitSuccess ? (
+              <motion.form
+                key="form"
+                onSubmit={handleSubmit}
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.2 } }}
+              >
 
-                {/* Chat to us */}
-                <div style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                  <div style={{
-                    width: "40px", height: "40px", borderRadius: "50%",
-                    backgroundColor: "#ffffff", border: "1px solid #E5E7EB",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0, marginTop: "2px",
-                  }}>
-                    <MessageCircle size={17} color="#6B7280" />
-                  </div>
-                  <div>
-                    <p style={{ fontSize: "14px", fontWeight: 600, color: "#111827", marginBottom: "4px", maxWidth: "none" }}>Chat to us</p>
-                    <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "6px", lineHeight: 1.5, maxWidth: "none" }}>Our friendly team is here to help.</p>
-                    <a href="mailto:info@edfoal.com" style={{ fontSize: "13px", fontWeight: 600, color: "#111827", textDecoration: "none" }}>
-                      info@edfoal.com
-                    </a>
-                  </div>
+                {/* Full Name */}
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Full Name</label>
+                  <input
+                    name="fullName" type="text"
+                    placeholder="Enter your full name"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    required
+                    style={inputStyle}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
+                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                  />
                 </div>
 
-                {/* Office */}
-                <div style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                  <div style={{
-                    width: "40px", height: "40px", borderRadius: "50%",
-                    backgroundColor: "#ffffff", border: "1px solid #E5E7EB",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0, marginTop: "2px",
-                  }}>
-                    <MapPin size={17} color="#6B7280" />
-                  </div>
-                  <div>
-                    <p style={{ fontSize: "14px", fontWeight: 600, color: "#111827", marginBottom: "4px", maxWidth: "none" }}>Office</p>
-                    <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "6px", lineHeight: 1.5, maxWidth: "none" }}>Come say hello at our office HQ.</p>
-                    <p style={{ fontSize: "13px", fontWeight: 600, color: "#111827", maxWidth: "none" }}>Global Remote Support</p>
-                  </div>
+                {/* Work Email */}
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Work Email</label>
+                  <input
+                    name="workEmail" type="email"
+                    placeholder="Enter your work email"
+                    value={formData.workEmail}
+                    onChange={handleChange}
+                    required
+                    style={inputStyle}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
+                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                  />
                 </div>
 
                 {/* Phone */}
-                <div style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                  <div style={{
-                    width: "40px", height: "40px", borderRadius: "50%",
-                    backgroundColor: "#ffffff", border: "1px solid #E5E7EB",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0, marginTop: "2px",
-                  }}>
-                    <Phone size={17} color="#6B7280" />
-                  </div>
-                  <div>
-                    <p style={{ fontSize: "14px", fontWeight: 600, color: "#111827", marginBottom: "4px", maxWidth: "none" }}>Phone</p>
-                    <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "6px", lineHeight: 1.5, maxWidth: "none" }}>Mon–Fri from 9am to 8pm.</p>
-                    <p style={{ fontSize: "13px", fontWeight: 600, color: "#111827", maxWidth: "none" }}>9:00 – 20:00</p>
-                  </div>
+                <div style={{ ...rowStyle, marginBottom: "24px" }}>
+                  <label style={labelStyle}>Phone</label>
+                  <input
+                    name="phone" type="tel"
+                    placeholder="Enter your phone number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    style={inputStyle}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
+                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                  />
                 </div>
 
-              </div>
-            </div>
+                {/* Helper text */}
+                <p style={{
+                  fontSize: "12px", color: "#9CA3AF", textAlign: "center",
+                  fontStyle: "italic", marginBottom: "16px", maxWidth: "none",
+                }}>
+                  For a more tailored demo, please tell us about your company (optional)
+                </p>
 
-            {/* Social icons — bottom */}
-            <div style={{ display: "flex", gap: "20px", marginTop: "48px", paddingTop: "32px", borderTop: "1px solid #E5E7EB" }}>
-              {SOCIAL_LINKS.map(({ svg, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "#9CA3AF", transition: "color 0.2s" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#374151")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "#9CA3AF")}
-                >
-                  {svg}
-                </a>
-              ))}
-            </div>
-          </div>
+                {/* Company */}
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Company</label>
+                  <input
+                    name="company" type="text"
+                    placeholder="Enter your company name"
+                    value={formData.company}
+                    onChange={handleChange}
+                    style={inputStyle}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
+                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                  />
+                </div>
 
-          {/* ══════════════════════════
-              RIGHT FORM AREA
-          ══════════════════════════ */}
-          <div className="flex-1" style={{ backgroundColor: "#ffffff" }}>
-            <AnimatePresence mode="wait">
+                {/* Geo Focus */}
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Geo Focus</label>
+                  <input
+                    name="geoFocus" type="text"
+                    placeholder="Enter your company's location"
+                    value={formData.geoFocus}
+                    onChange={handleChange}
+                    style={inputStyle}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
+                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                  />
+                </div>
 
-              {/* Form */}
-              {!submitSuccess ? (
-                <motion.div
-                  key="form"
-                  initial={{ opacity: 1 }}
-                  exit={{ opacity: 0, transition: { duration: 0.2 } }}
-                  style={{ padding: "48px 56px" }}
-                >
-                  {/* Heading */}
-                  <h2 style={{ fontSize: "36px", fontWeight: 700, color: "#111827", marginBottom: "8px", lineHeight: 1.2 }}>
-                    Level up your brand
-                  </h2>
-                  <p style={{ fontSize: "14px", color: "#6B7280", marginBottom: "40px", lineHeight: 1.6, maxWidth: "none" }}>
-                    You can reach us anytime via{" "}
-                    <a href="mailto:info@edfoal.com" style={{ fontWeight: 600, color: "#111827", textDecoration: "none" }}>
-                      info@edfoal.com
-                    </a>
+                {/* Potential Usecase */}
+                <div style={{ ...rowStyle, alignItems: "flex-start", marginBottom: "24px" }}>
+                  <label style={{ ...labelStyle, paddingTop: "8px" }}>Potential Usecase</label>
+                  <textarea
+                    name="potentialUsecase"
+                    placeholder="Describe"
+                    value={formData.potentialUsecase}
+                    onChange={handleChange}
+                    rows={4}
+                    style={{
+                      ...inputStyle,
+                      height: "auto",
+                      padding: "8px 12px",
+                      resize: "none",
+                      lineHeight: 1.6,
+                      fontFamily: "inherit",
+                    }}
+                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
+                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                  />
+                </div>
+
+                {/* Checkbox */}
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "24px" }}>
+                  <input
+                    type="checkbox"
+                    id="protectData"
+                    name="protectData"
+                    checked={formData.protectData}
+                    onChange={handleChange}
+                    style={{ width: "15px", height: "15px", cursor: "pointer", accentColor: "#2563EB" }}
+                  />
+                  <label htmlFor="protectData" style={{ fontSize: "14px", color: "#374151", cursor: "pointer" }}>
+                    I want to protect my data
+                  </label>
+                </div>
+
+                {submitError && (
+                  <p style={{
+                    fontSize: "13px", color: "#DC2626",
+                    backgroundColor: "#FEF2F2", border: "1px solid #FECACA",
+                    borderRadius: "6px", padding: "10px 14px",
+                    marginBottom: "16px", maxWidth: "none",
+                  }}>
+                    {submitError}
                   </p>
+                )}
 
-                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-
-                    {/* First name + Last name */}
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-                      <div>
-                        <label style={labelStyle}>
-                          First name <span style={{ color: "#7C3AED" }}>*</span>
-                        </label>
-                        <input
-                          id="firstName" name="firstName" type="text"
-                          placeholder="First name"
-                          value={formData.firstName}
-                          onChange={handleChange}
-                          required
-                          style={inputStyle}
-                          onFocus={(e) => { e.currentTarget.style.borderColor = "#7C3AED"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(124,58,237,0.1)"; }}
-                          onBlur={(e) => { e.currentTarget.style.borderColor = "#D1D5DB"; e.currentTarget.style.boxShadow = "none"; }}
-                        />
-                      </div>
-                      <div>
-                        <label style={labelStyle}>
-                          Last name <span style={{ color: "#7C3AED" }}>*</span>
-                        </label>
-                        <input
-                          id="lastName" name="lastName" type="text"
-                          placeholder="Last name"
-                          value={formData.lastName}
-                          onChange={handleChange}
-                          required
-                          style={inputStyle}
-                          onFocus={(e) => { e.currentTarget.style.borderColor = "#7C3AED"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(124,58,237,0.1)"; }}
-                          onBlur={(e) => { e.currentTarget.style.borderColor = "#D1D5DB"; e.currentTarget.style.boxShadow = "none"; }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                      <label style={labelStyle}>
-                        Email <span style={{ color: "#7C3AED" }}>*</span>
-                      </label>
-                      <input
-                        id="email" name="email" type="email"
-                        placeholder="you@company.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        style={inputStyle}
-                        onFocus={(e) => { e.currentTarget.style.borderColor = "#7C3AED"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(124,58,237,0.1)"; }}
-                        onBlur={(e) => { e.currentTarget.style.borderColor = "#D1D5DB"; e.currentTarget.style.boxShadow = "none"; }}
-                      />
-                    </div>
-
-                    {/* Phone */}
-                    <div>
-                      <label style={labelStyle}>Phone number</label>
-                      <div style={{ display: "flex", gap: "8px" }}>
-                        <div style={{
-                          display: "flex", alignItems: "center", gap: "6px",
-                          height: "48px", padding: "0 12px",
-                          backgroundColor: "#ffffff", border: "1px solid #D1D5DB",
-                          borderRadius: "8px", fontSize: "14px", color: "#374151",
-                          whiteSpace: "nowrap", userSelect: "none", flexShrink: 0,
-                        }}>
-                          🇺🇸 US ▾
-                        </div>
-                        <input
-                          id="phone" name="phone" type="tel"
-                          placeholder="+1 (555) 000-0000"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          style={{ ...inputStyle, flex: 1 }}
-                          onFocus={(e) => { e.currentTarget.style.borderColor = "#7C3AED"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(124,58,237,0.1)"; }}
-                          onBlur={(e) => { e.currentTarget.style.borderColor = "#D1D5DB"; e.currentTarget.style.boxShadow = "none"; }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Message */}
-                    <div>
-                      <label style={labelStyle}>
-                        Message <span style={{ color: "#7C3AED" }}>*</span>
-                      </label>
-                      <textarea
-                        id="message" name="message"
-                        placeholder="Leave us a message..."
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                        rows={5}
-                        style={{
-                          width: "100%",
-                          minHeight: "120px",
-                          backgroundColor: "#ffffff",
-                          border: "1px solid #D1D5DB",
-                          borderRadius: "8px",
-                          padding: "12px 16px",
-                          fontSize: "14px",
-                          color: "#111827",
-                          outline: "none",
-                          resize: "none",
-                          boxSizing: "border-box",
-                          fontFamily: "inherit",
-                          lineHeight: 1.6,
-                        }}
-                        onFocus={(e) => { e.currentTarget.style.borderColor = "#7C3AED"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(124,58,237,0.1)"; }}
-                        onBlur={(e) => { e.currentTarget.style.borderColor = "#D1D5DB"; e.currentTarget.style.boxShadow = "none"; }}
-                      />
-                    </div>
-
-                    {/* Services */}
-                    <div>
-                      <p style={{ fontSize: "14px", fontWeight: 500, color: "#374151", marginBottom: "16px", maxWidth: "none" }}>
-                        Services
-                      </p>
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px 32px" }}>
-                        {SERVICES.map((s) => (
-                          <label
-                            key={s.id}
-                            onClick={() => toggleService(s.id)}
-                            style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }}
-                          >
-                            <div style={{
-                              width: "16px", height: "16px", borderRadius: "4px",
-                              border: `1.5px solid ${formData.services.includes(s.id) ? "#7C3AED" : "#D1D5DB"}`,
-                              backgroundColor: formData.services.includes(s.id) ? "#7C3AED" : "#ffffff",
-                              display: "flex", alignItems: "center", justifyContent: "center",
-                              flexShrink: 0, transition: "all 0.15s",
-                            }}>
-                              {formData.services.includes(s.id) && (
-                                <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                                  <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                              )}
-                            </div>
-                            <span style={{ fontSize: "14px", color: "#6B7280", userSelect: "none" }}>{s.label}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-
-                    {submitError && (
-                      <p style={{ fontSize: "14px", color: "#DC2626", padding: "12px 16px", borderRadius: "8px", backgroundColor: "#FEF2F2", border: "1px solid #FECACA", maxWidth: "none" }}>
-                        {submitError}
-                      </p>
-                    )}
-
-                    {/* Submit button — centered, fixed width */}
-                    <div style={{ display: "flex", justifyContent: "center", paddingTop: "8px" }}>
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        style={{
-                          width: "220px",
-                          height: "48px",
-                          background: isSubmitting ? "#a78bfa" : "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)",
-                          color: "#ffffff",
-                          fontWeight: 600,
-                          fontSize: "14px",
-                          borderRadius: "10px",
-                          border: "none",
-                          cursor: isSubmitting ? "not-allowed" : "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "8px",
-                          transition: "transform 0.2s, box-shadow 0.2s",
-                          boxShadow: "0 4px 14px rgba(124,58,237,0.35)",
-                        }}
-                        onMouseEnter={(e) => {
-                          if (!isSubmitting) {
-                            e.currentTarget.style.transform = "scale(1.03)";
-                            e.currentTarget.style.boxShadow = "0 8px 24px rgba(124,58,237,0.45)";
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = "scale(1)";
-                          e.currentTarget.style.boxShadow = "0 4px 14px rgba(124,58,237,0.35)";
-                        }}
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <div style={{
-                              width: "16px", height: "16px",
-                              border: "2px solid rgba(255,255,255,0.3)",
-                              borderTopColor: "#ffffff",
-                              borderRadius: "50%",
-                              animation: "spin 0.7s linear infinite",
-                            }} />
-                            Submitting...
-                          </>
-                        ) : (
-                          "Get started"
-                        )}
-                      </button>
-                    </div>
-
-                  </form>
-                </motion.div>
-
-              ) : (
-                /* Success state */
-                <motion.div
-                  key="success"
-                  initial={{ scale: 0.96, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.45 }}
+                {/* Submit button */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
                   style={{
-                    padding: "48px 56px",
-                    display: "flex", flexDirection: "column",
-                    alignItems: "center", justifyContent: "center",
-                    minHeight: "520px", textAlign: "center",
+                    width: "100%",
+                    height: "44px",
+                    backgroundColor: "#1e3a8a",
+                    color: "#ffffff",
+                    fontSize: "15px",
+                    fontWeight: 600,
+                    border: "none",
+                    borderRadius: "6px",
+                    cursor: isSubmitting ? "not-allowed" : "pointer",
+                    transition: "background-color 0.2s",
+                    letterSpacing: "0.01em",
+                    opacity: isSubmitting ? 0.75 : 1,
+                  }}
+                  onMouseEnter={(e) => { if (!isSubmitting) e.currentTarget.style.backgroundColor = "#1d4ed8"; }}
+                  onMouseLeave={(e) => { if (!isSubmitting) e.currentTarget.style.backgroundColor = "#1e3a8a"; }}
+                >
+                  {isSubmitting ? "Submitting…" : "Contact Us"}
+                </button>
+
+                <p style={{
+                  fontSize: "11px", color: "#9CA3AF", textAlign: "center",
+                  marginTop: "12px", maxWidth: "none",
+                }}>
+                  Field marked with * are required to complete demo
+                </p>
+
+              </motion.form>
+
+            ) : (
+
+              <motion.div
+                key="success"
+                initial={{ scale: 0.96, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.4 }}
+                style={{
+                  display: "flex", flexDirection: "column",
+                  alignItems: "center", textAlign: "center",
+                  padding: "48px 0",
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.1 }}
+                  style={{
+                    width: "72px", height: "72px", borderRadius: "50%",
+                    backgroundColor: "#F0FDF4", border: "1px solid #BBF7D0",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    marginBottom: "24px",
                   }}
                 >
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.15 }}
-                    style={{
-                      width: "80px", height: "80px", borderRadius: "50%",
-                      backgroundColor: "#F0FDF4", border: "1px solid #BBF7D0",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      marginBottom: "32px",
-                    }}
-                  >
-                    <CheckCircle size={40} color="#22C55E" />
-                  </motion.div>
-                  <h2 style={{ fontSize: "28px", fontWeight: 800, color: "#111827", marginBottom: "12px" }}>
-                    Thank You!
-                  </h2>
-                  <p style={{ fontSize: "15px", color: "#6B7280", maxWidth: "360px", lineHeight: 1.7, marginBottom: "40px" }}>
-                    Your inquiry has been received. Our team will review your requirements and get back to you shortly.
-                  </p>
-                  <button
-                    onClick={() => setSubmitSuccess(false)}
-                    style={{
-                      display: "flex", alignItems: "center", gap: "8px",
-                      fontSize: "13px", fontWeight: 600, color: "#7C3AED",
-                      background: "none", border: "none", cursor: "pointer",
-                    }}
-                  >
-                    <span>Send another message</span>
-                    <ArrowRight size={16} />
-                  </button>
+                  <CheckCircle size={36} color="#22C55E" />
                 </motion.div>
-              )}
+                <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#111827", marginBottom: "10px" }}>
+                  Thank You!
+                </h2>
+                <p style={{ fontSize: "14px", color: "#6B7280", lineHeight: 1.7, marginBottom: "32px", maxWidth: "340px" }}>
+                  Your message has been received. Our team will review your request and get back to you shortly.
+                </p>
+                <button
+                  onClick={() => setSubmitSuccess(false)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: "8px",
+                    fontSize: "13px", fontWeight: 600, color: "#2563EB",
+                    background: "none", border: "none", cursor: "pointer",
+                  }}
+                >
+                  <span>Send another message</span>
+                  <ArrowRight size={15} />
+                </button>
+              </motion.div>
 
-            </AnimatePresence>
-          </div>
-
-        </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </section>
 
       <Footer />

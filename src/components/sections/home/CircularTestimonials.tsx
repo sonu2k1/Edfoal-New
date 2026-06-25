@@ -222,7 +222,7 @@ export const CircularTestimonials = ({
     >
       {/* 3D Cards Container */}
       <div
-        className="relative w-full flex items-center justify-center h-[380px] [perspective:1000px] overflow-visible"
+        className="relative flex h-[320px] w-full items-center justify-center overflow-visible perspective-[1000px] sm:h-[360px] md:h-[380px]"
         ref={imageContainerRef}
       >
         {testimonials.map((testimonial, index) => {
@@ -230,16 +230,16 @@ export const CircularTestimonials = ({
           return (
             <div
               key={testimonial.src}
-              className="absolute w-[380px] h-[380px] select-none origin-center"
+              className="absolute h-[320px] w-[min(82vw,320px)] origin-center select-none sm:h-[340px] sm:w-[340px] md:h-[380px] md:w-[380px]"
               style={getImageStyle(index)}
             >
               <CardSpotlight
                 color="#f4f4f5"
                 showGradient={false}
-                className="relative w-full h-full rounded-[1.5rem] overflow-hidden shadow-xl bg-white/95 border border-neutral-200/80 dark:border-neutral-200/80 dark:bg-white/95 backdrop-blur-sm"
+                className="relative w-full h-full rounded-3xl overflow-hidden shadow-xl bg-white/95 border border-neutral-200/80 dark:border-neutral-200/80 dark:bg-white/95 backdrop-blur-sm"
               >
                 {/* Card Content - matching Realtime tracking style */}
-                <div className="absolute inset-0 z-20 flex flex-col justify-center items-center p-6 text-center gap-y-4">
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-y-3 p-4 text-center sm:gap-y-4 sm:p-6">
                   {/* Icon Badge */}
                   <div className="w-10 h-10 rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center">
                     {testimonial.icon === "globe" && <Globe className="w-5 h-5 text-gray-800" />}
@@ -250,20 +250,20 @@ export const CircularTestimonials = ({
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                  <h3 className="text-xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-2xl">
                     {testimonial.name}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-zinc-500 text-sm leading-relaxed font-normal max-w-[280px]">
+                  <p className="max-w-[280px] text-xs font-normal leading-relaxed text-zinc-500 sm:text-sm">
                     {testimonial.quote}
                   </p>
 
                   {/* Feature Bullets */}
                   {testimonial.features && testimonial.features.length > 0 && (
-                    <div className="space-y-2 w-fit text-left flex flex-col items-start mx-auto">
+                    <div className="mx-auto flex w-fit flex-col items-start space-y-1.5 text-left sm:space-y-2">
                       {testimonial.features.map((feature, fIdx) => (
-                        <div key={fIdx} className="flex items-center gap-3 text-gray-700 text-sm font-semibold">
+                        <div key={fIdx} className="flex items-center gap-2 text-xs font-semibold text-gray-700 sm:gap-3 sm:text-sm">
                           {feature.icon === "smile" && <Smile className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
                           {feature.icon === "globe" && <Globe className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
                           {feature.icon === "send" && <Send className="w-[18px] h-[18px] text-blue-500 shrink-0" />}
@@ -276,9 +276,9 @@ export const CircularTestimonials = ({
 
                   {/* Learn More Button */}
                   <div className="w-full flex justify-center">
-                    <div className="inline-flex rounded-full w-[160px] h-[40px] items-center justify-center">
+                    <div className="inline-flex h-10 w-36 items-center justify-center rounded-full sm:w-[160px]">
                       <OriginButton
-                        className="w-full h-full rounded-full px-0 text-sm font-bold tracking-wide border-0"
+                        className="h-full w-full rounded-full border-0 px-0 text-xs font-bold tracking-wide sm:text-sm"
                         style={{
                           "--ic-card": "#0f172a",
                           "--ic-card-foreground": "#ffffff",
