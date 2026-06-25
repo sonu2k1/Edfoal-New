@@ -30,7 +30,7 @@ const services: ServiceItem[] = [
     description:
       "Unlock smarter workflows with intelligent automation that adapts to your business. We don't just replace manual tasks, we reimagine them to be faster, scalable, and insight-driven.",
     imageUrl: "https://edfoal.com/assets/image/service1.jpg",
-    href: "/services/automation",
+    href: "/contact",
     icon: Zap,
     bullets: [
       "Intelligent workflow orchestration and routing",
@@ -46,7 +46,7 @@ const services: ServiceItem[] = [
     description:
       "No off-the-shelf shortcuts — we build AI that is purpose-built for your business goals. From concept to deployment, every solution is custom-trained to think and execute exactly the way your organization works.",
     imageUrl: "https://ik.imagekit.io/edfoalImage/assets/image/service2.jpg",
-    href: "/services/tailored-ai-solutions",
+    href: "/contact",
     icon: Sparkles,
     bullets: [
       "Custom Large Language Model (LLM) training and fine-tuning",
@@ -62,7 +62,7 @@ const services: ServiceItem[] = [
     description:
       "Bridge the gap between possibility and performance. Our consultancy turns AI from a buzzword into a strategic business asset, guiding you from ideation to implementation with absolute clarity and measurable impact.",
     imageUrl: "https://ik.imagekit.io/edfoalImage/assets/image/service3.jpg",
-    href: "/services/ai-consultancy",
+    href: "/contact",
     icon: Layers,
     bullets: [
       "AI roadmap planning and technical feasibility assessment",
@@ -126,7 +126,7 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
                 isLight
                   ? "bg-white border border-zinc-200/30 shadow-[0_20px_50px_rgba(0,0,0,0.04)]"
                   : "bg-zinc-900 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)]",
-                isEven ? "md:-ml-[160px]" : "md:-mr-[160px]"
+                isEven ? "md:-ml-[50px]" : "md:-mr-[50px]"
               )}
             >
               {/* Highlight Aura */}
