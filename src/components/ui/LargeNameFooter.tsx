@@ -1,109 +1,138 @@
 "use client";
+
 import * as React from "react";
 import Link from "next/link";
-import { Icons } from "@/components/ui/Icons";
-import { Button } from "@/components/ui/Button";
-import { OriginButton } from "@/components/ui/OriginButton";
+
+const PAGES = [
+  { label: "Home",         href: "/" },
+  { label: "About Us",     href: "/about" },
+  { label: "Our Services", href: "/services" },
+  { label: "Contact Us",   href: "/contact" },
+];
+
+const SERVICES = [
+  { label: "Automation",           href: "/services" },
+  { label: "Tailored AI Solutions", href: "/services" },
+  { label: "AI Consultancy",        href: "/services" },
+];
+
+const linkClass =
+  "text-sm text-zinc-400 hover:text-white transition-colors duration-200 leading-relaxed";
 
 function Footer() {
   return (
-    <footer className="h-[500px] flex items-center px-4 md:px-6 bg-[#0f172a] border-t border-zinc-900 relative overflow-hidden">
-      <div className="container mx-auto z-10" style={{ marginTop: "-120px" }}>
-        <div className="flex flex-col md:flex-row justify-between gap-8">
-          <div className="mb-8 md:mb-0 max-w-sm">
-            <Link href="/" className="flex items-center gap-2">
+    <footer
+      className="relative overflow-hidden"
+      style={{ backgroundColor: "#0B132B" }}
+    >
+      {/* ── Faded watermark ── */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 left-0 w-full flex items-end justify-center pointer-events-none select-none z-0"
+      >
+        <span
+          className="font-bold tracking-tight leading-none"
+          style={{
+            fontSize: "clamp(80px, 16vw, 220px)",
+            background: "linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(255,255,255,0))",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          EDFOAL
+        </span>
+      </div>
+
+      {/* ── Main content ── */}
+      <div
+        className="relative z-10 mx-auto"
+        style={{ maxWidth: "1200px", padding: "72px 40px 0" }}
+      >
+        {/* 4-column grid */}
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
+          style={{ gap: "48px" }}
+        >
+
+          {/* ── Col 1: Brand ── */}
+          <div style={{ gridColumn: "span 1" }}>
+            <Link href="/" className="inline-block mb-6">
               <img
                 src="https://ik.imagekit.io/edfoalImage/assets/image/footerlogo.png"
-                alt="Edfoal Logo"
-                className="h-[28px] w-auto object-contain"
+                alt="EdFoal Logo"
+                style={{ height: "28px", width: "auto", objectFit: "contain" }}
               />
             </Link>
 
-            <p className="text-zinc-400 text-sm leading-relaxed " style={{ margin: "20px 0 " }}>
-              At EdFoal AI, we create tailored AI solutions to reduce costs, save time, and enhance business efficiency for growth.
-            </p>
-
-            <div className="mt-4">
-              <Link href="mailto:info@edfoal.com">
-                <div className="rounded-full w-[160px] h-[40px] flex items-center justify-center" style={{ margin: "20px 0 " }}>
-                  <OriginButton
-                    className="w-full h-full rounded-full px-0 text-sm font-semibold tracking-wide border-[0.5px]"
-                    style={{
-                      "--ic-card": "#0f172a",
-                      "--ic-card-foreground": "#ffffff",
-                      "--ic-border": "#ffffff",
-                      "--ic-foreground": "#ffffff",
-                      "--ic-background": "#0f172a",
-                    } as React.CSSProperties}
-                  >
-                    Send us a mail
-                  </OriginButton>
-                </div>
-              </Link>
-            </div>
-
-            <p className="text-xs text-zinc-500 mt-5">
-              © {new Date().getFullYear()} Edfoal. All rights reserved.
+            <p
+              className="text-zinc-400 text-sm leading-relaxed"
+              style={{ maxWidth: "260px", marginBottom: "0" }}
+            >
+              At EdFoal AI, we create tailored AI solutions to reduce costs,
+              save time, and enhance business efficiency for growth.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="font-semibold text-white mb-4">Pages</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="#" className="text-sm text-zinc-400 hover:text-white transition-colors">
-                    Home
+          {/* ── Col 2: Pages ── */}
+          <div>
+            <h3
+              className="font-semibold text-white"
+              style={{ fontSize: "15px", marginBottom: "20px" }}
+            >
+              Pages
+            </h3>
+            <ul style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {PAGES.map((p) => (
+                <li key={p.label}>
+                  <Link href={p.href} className={linkClass}>
+                    {p.label}
                   </Link>
                 </li>
-                <li>
-                  <Link href="/about" className="text-sm text-zinc-400 hover:text-white transition-colors">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#services" className="text-sm text-zinc-400 hover:text-white transition-colors">
-                    Our Services
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-sm text-zinc-400 hover:text-white transition-colors">
-                    Contact Us
-                  </Link>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
+          </div>
 
-            <div>
-              <h3 className="font-semibold text-white mb-4">Services</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="#services" className="text-sm text-zinc-400 hover:text-white transition-colors">
-                    Automation
+          {/* ── Col 3: Services ── */}
+          <div>
+            <h3
+              className="font-semibold text-white"
+              style={{ fontSize: "15px", marginBottom: "20px" }}
+            >
+              Services
+            </h3>
+            <ul style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {SERVICES.map((s) => (
+                <li key={s.label}>
+                  <Link href={s.href} className={linkClass}>
+                    {s.label}
                   </Link>
                 </li>
-                <li>
-                  <Link href="#services" className="text-sm text-zinc-400 hover:text-white transition-colors">
-                    Tailored AI Solutions
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#services" className="text-sm text-zinc-400 hover:text-white transition-colors">
-                    AI Consultancy
-                  </Link>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
+          </div>
 
+          {/* ── Col 4: Socials + Hours (two mini-columns) ── */}
+          <div
+            className="grid grid-cols-2"
+            style={{ gap: "32px" }}
+          >
+            {/* Socials */}
             <div>
-              <h3 className="font-semibold text-white mb-4">Socials</h3>
-              <ul className="space-y-2">
+              <h3
+                className="font-semibold text-white"
+                style={{ fontSize: "15px", marginBottom: "20px" }}
+              >
+                Socials
+              </h3>
+              <ul style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 <li>
                   <Link
-                    href="https://linkedin.com"
+                    href="https://linkedin.com/company/edfoal"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-zinc-400 hover:text-white transition-colors"
+                    className={linkClass}
                   >
                     LinkedIn
                   </Link>
@@ -111,29 +140,54 @@ function Footer() {
               </ul>
             </div>
 
+            {/* Hours */}
             <div>
-              <h3 className="font-semibold text-white mb-4">Hours</h3>
-              <ul className="space-y-2 text-sm text-zinc-400">
-                <li>Mon - Fri</li>
-                <li className="font-semibold text-zinc-200">9:00 - 20:00</li>
+              <h3
+                className="font-semibold text-white"
+                style={{ fontSize: "15px", marginBottom: "20px" }}
+              >
+                Hours
+              </h3>
+              <ul style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                <li className="text-sm text-zinc-400">Mon - Fri</li>
+                <li
+                  className="text-sm text-zinc-200"
+                  style={{ fontWeight: 700 }}
+                >
+                  9:00 - 20:00
+                </li>
               </ul>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Big Watermark at the absolute bottom */}
-      <div className="absolute bottom-0 left-0 w-full flex items-center justify-center z-0 pointer-events-none">
-        <h1 className="text-center text-5xl md:text-8xl lg:text-[10rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-zinc-800 to-zinc-950 select-none tracking-tight leading-none">
-          {/* <img
-      src="https://ik.imagekit.io/edfoalImage/assets/image/footerlogo.png"
-      alt="Edfoal"
-      width={1000}
-      height={220}
-  
-    /> */}
-          Edfoal
-        </h1>
+        </div>
+
+        {/* ── Gold divider ── */}
+        <div
+          style={{
+            height: "1px",
+            background: "linear-gradient(to right, transparent, #C9A84C, transparent)",
+            margin: "56px 0 0",
+          }}
+        />
+
+        {/* ── Copyright ── */}
+        <div
+          style={{
+            padding: "20px 0 24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <p
+            className="text-xs text-zinc-500"
+            style={{ maxWidth: "none" }}
+          >
+            © 2026 EdFoal. All rights reserved.
+          </p>
+        </div>
+
       </div>
     </footer>
   );
