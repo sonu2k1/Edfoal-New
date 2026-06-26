@@ -418,29 +418,37 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
   }, [caseStudyId]);
 
   const study = caseStudyId ? (caseStudiesData[caseStudyId] || caseStudiesData["1"]) : null;
-  if (!study) return null;
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden p-2 sm:p-4 md:p-6">
-        
-        {/* Backdrop overlay */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="absolute inset-0 bg-black/60 backdrop-blur-md cursor-pointer"
-        />
+      {caseStudyId && study && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden p-2 sm:p-4 md:p-6">
+          
+          {/* Backdrop overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/60 backdrop-blur-md cursor-pointer"
+          />
 
-        {/* Modal dialog box */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 30 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 30 }}
-          transition={{ type: "spring", duration: 0.5 }}
-          className="relative z-10 flex h-[92dvh] w-full max-w-5xl flex-col overflow-y-auto rounded-3xl bg-white text-zinc-900 shadow-2xl pointer-events-auto sm:h-[90dvh] md:h-[85vh] md:rounded-[2.5rem]"
-        >
+          {/* Modal dialog box */}
+          <motion.div
+            initial={{ scale: 0, rotate: "180deg" }}
+            animate={{
+              scale: 1,
+              rotate: "0deg",
+              transition: {
+                type: "spring",
+                bounce: 0.25,
+              },
+            }}
+            exit={{ scale: 0, rotate: "180deg" }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative z-10 flex h-[92dvh] w-full max-w-5xl flex-col overflow-y-auto rounded-3xl bg-white text-zinc-900 shadow-2xl pointer-events-auto sm:h-[90dvh] md:h-[85vh] md:rounded-[2.5rem]"
+            data-lenis-prevent
+          >
           {/* Close button */}
           <button
             onClick={onClose}
@@ -451,7 +459,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
           </button>
 
           {/* Scrolling Modal Content */}
-          <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 sm:py-8 md:p-12">
+          <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 sm:py-8 md:p-12" data-lenis-prevent>
             
             {/* Mockup Banner Image */}
             <div className="relative mb-8 mt-8 aspect-4/3 overflow-hidden rounded-3xl border border-zinc-200/50 bg-zinc-50 shadow-md sm:aspect-video md:mb-10 md:mt-6 md:aspect-21/9 md:rounded-4xl">
@@ -686,6 +694,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
           </div>
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   );
 };
