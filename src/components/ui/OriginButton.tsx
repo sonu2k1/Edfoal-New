@@ -132,15 +132,14 @@ const OriginButton = React.forwardRef<HTMLButtonElement, OriginButtonProps>(
 
       measure();
 
-      const observer = new ResizeObserver(measure);
-      observer.observe(node);
+      window.addEventListener("resize", measure);
 
       const fonts = document.fonts;
       if (fonts?.ready) {
         fonts.ready.then(measure).catch(() => undefined);
       }
 
-      return () => observer.disconnect();
+      return () => window.removeEventListener("resize", measure);
     }, []);
 
     const updateOrigin = React.useCallback((x: number, y: number) => {
