@@ -3,6 +3,8 @@
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX } from "react-icons/fi";
+import Link from "next/link";
+import { OriginButton } from "@/components/ui/OriginButton";
 
 // TypeScript Interfaces for the Case Study Data Structure
 interface ProblemSection {
@@ -679,13 +681,20 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({
                       {study.sections.cta.text}
                     </h3>
                   </div>
-                  <a 
-                    href={study.sections.cta.href}
-                    onClick={onClose}
-                    className="bg-blue-600 text-white font-extrabold text-xs py-3.5 px-6 rounded-full shadow-lg hover:bg-blue-700 active:scale-95 transition-all duration-300 shrink-0 text-center w-full md:w-auto"
-                  >
-                    {study.sections.cta.buttonText}
-                  </a>
+                  <Link href={study.sections.cta.href} className="w-full md:w-auto shrink-0" onClick={onClose}>
+                    <OriginButton
+                      className="h-12 w-full rounded-full border-[0.5px] px-8 text-sm font-semibold tracking-wide"
+                      style={{
+                        "--ic-card": "#2563eb",
+                        "--ic-card-foreground": "#ffffff",
+                        "--ic-border": "#2563eb",
+                        "--ic-foreground": "#1d4ed8",
+                        "--ic-background": "#ffffff",
+                      } as React.CSSProperties}
+                    >
+                      {study.sections.cta.buttonText}
+                    </OriginButton>
+                  </Link>
                 </div>
               )}
 

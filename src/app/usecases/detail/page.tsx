@@ -7,6 +7,8 @@ import { FiArrowLeft } from "react-icons/fi";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import useLenis from "@/hooks/useLenis";
+import Link from "next/link";
+import { OriginButton } from "@/components/ui/OriginButton";
 
 // TypeScript Interfaces for the Case Study Data Structure
 interface ProblemSection {
@@ -683,12 +685,20 @@ function CaseStudyDetailContent() {
                   {study.sections.cta.text}
                 </h3>
               </div>
-              <a 
-                href={study.sections.cta.href}
-                className="w-full shrink-0 rounded-full bg-blue-600 px-8 py-4 text-center text-sm font-extrabold text-white shadow-lg transition-all duration-300 hover:bg-blue-700 active:scale-95 md:w-auto"
-              >
-                {study.sections.cta.buttonText}
-              </a>
+              <Link href={study.sections.cta.href} className="w-full md:w-auto shrink-0">
+                <OriginButton
+                  className="h-12 w-full rounded-full border-[0.5px] px-8 text-sm font-semibold tracking-wide"
+                  style={{
+                    "--ic-card": "#2563eb",
+                    "--ic-card-foreground": "#ffffff",
+                    "--ic-border": "#2563eb",
+                    "--ic-foreground": "#1d4ed8",
+                    "--ic-background": "#ffffff",
+                  } as React.CSSProperties}
+                >
+                  {study.sections.cta.buttonText}
+                </OriginButton>
+              </Link>
             </div>
           )}
 
