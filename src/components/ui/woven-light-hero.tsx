@@ -3,18 +3,21 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import * as THREE from 'three';
+import { OriginButton } from "@/components/ui/OriginButton";
 
 interface WovenLightHeroProps {
   kicker?: string;
   titleLines?: string[];
   subtitle?: string;
+  onGetStartedClick?: () => void;
 }
 
 // --- Main Hero Component ---
 export const WovenLightHero: React.FC<WovenLightHeroProps> = ({
   kicker = "Case Studies",
   titleLines = ["Real Results,", "Real Impact"],
-  subtitle = "Explore how we're transforming businesses with cutting-edge AI solutions — backed by measurable outcomes."
+  subtitle = "Explore how we're transforming businesses with cutting-edge AI solutions — backed by measurable outcomes.",
+  onGetStartedClick
 }) => {
   const textControls = useAnimation();
   const buttonControls = useAnimation();

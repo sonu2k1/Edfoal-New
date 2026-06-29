@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import useLenis from "@/hooks/useLenis";
@@ -8,11 +8,20 @@ import { useRouter } from "next/navigation";
 import { OriginButton } from "@/components/ui/OriginButton";
 import ServiceHero from "@/components/sections/services/ServiceHero";
 import { ServicesShowcase } from "@/components/sections/services/ServiceList";
+import { GetStartedModal } from "@/components/sections/usecases/GetStartedModal";
 
 export default function ServicesPage() {
   const router = useRouter();
   // Initialize Lenis scroll smoothing
   useLenis();
+
+  const [isGetStartedOpen, setIsGetStartedOpen] = useState(false);
+  const [selectedServiceTab, setSelectedServiceTab] = useState<string>("tailored-ai");
+
+  const handleGetStartedClick = (tabId: string) => {
+    setSelectedServiceTab(tabId);
+    setIsGetStartedOpen(true);
+  };
 
   return (
     <main className="relative min-h-screen bg-white text-zinc-900 selection:bg-purple-500/20 selection:text-purple-900 overflow-hidden">
@@ -66,8 +75,15 @@ export default function ServicesPage() {
 
       {/* Services Showcase Section (Light Theme) */}
       <section data-theme="light" className="relative bg-white w-full py-16 md:py-24">
-        <ServicesShowcase isLight={true} />
+        <ServicesShowcase isLight={true} onGetStartedClick={handleGetStartedClick} />
       </section>
+
+      {/* Get Started Services Modal Overlay */}
+      <GetStartedModal
+        isOpen={isGetStartedOpen}
+        onClose={() => setIsGetStartedOpen(false)}
+        serviceId={selectedServiceTab}
+      />
 
       <Footer />
     </main>

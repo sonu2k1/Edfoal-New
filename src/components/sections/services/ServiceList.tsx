@@ -76,9 +76,10 @@ const services: ServiceItem[] = [
 
 export interface ServicesShowcaseProps {
   isLight?: boolean;
+  onGetStartedClick?: (tabId: string) => void;
 }
 
-export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
+export function ServicesShowcase({ isLight = false, onGetStartedClick }: ServicesShowcaseProps) {
   const router = useRouter();
 
   return (
@@ -211,7 +212,15 @@ export function ServicesShowcase({ isLight = false }: ServicesShowcaseProps) {
                         "--ic-background": "#0f172a",
                       } as React.CSSProperties)
                   }
-                  onClick={() => router.push(service.href)}
+                  onClick={() => {
+                    if (onGetStartedClick) {
+                      const tabId = service.name === "Automation" ? "automation" :
+                                    service.name === "Tailored AI Solutions" ? "tailored-ai" : "consultancy";
+                      onGetStartedClick(tabId);
+                    } else {
+                      router.push(service.href);
+                    }
+                  }}
                 >
                   Get Started <ArrowRight className="w-4 h-4 ml-1" />
                 </OriginButton>
