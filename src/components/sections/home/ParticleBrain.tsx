@@ -6,6 +6,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { useInView } from "framer-motion";
 import FloatingTriangles from "./FloatingTriangles";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -543,9 +544,13 @@ function BrainParticles({ animState }: ParticleBrainProps) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function CanvasBrainInner({ animState }: ParticleBrainProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: "200px" });
+
   return (
-    <div className="w-full h-full relative overflow-visible select-none pointer-events-none">
+    <div ref={containerRef} className="w-full h-full relative overflow-visible select-none pointer-events-none">
       <Canvas
+        frameloop={isInView ? "always" : "never"}
         camera={{ position: [0, 0, 3.6], fov: 60 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent", overflow: "visible", width: "100%", height: "100%" }}

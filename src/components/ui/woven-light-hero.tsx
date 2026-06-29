@@ -167,7 +167,7 @@ const WovenCanvas = () => {
     const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     // --- Woven Silk ---
-    const particleCount = 50000;
+    const particleCount = 12000;
     const positions = new Float32Array(particleCount * 3);
     const originalPositions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -222,30 +222,42 @@ const WovenCanvas = () => {
     };
     window.addEventListener('mousemove', handleMouseMove);
 
+    // Pre-allocate vectors to avoid GC churn in the rendering loop
+    const currentPos = new THREE.Vector3();
+    const originalPos = new THREE.Vector3();
+    const velocity = new THREE.Vector3();
+    const direction = new THREE.Vector3();
+    const returnForce = new THREE.Vector3();
+    const mouseWorld = new THREE.Vector3();
+    
+    let active = true;
+    let animationFrameId: number;
+
     const animate = () => {
-        requestAnimationFrame(animate);
+        if (!active) return;
+        animationFrameId = requestAnimationFrame(animate);
         const elapsedTime = clock.getElapsedTime();
         
-        const mouseWorld = new THREE.Vector3(mouse.x * 3, mouse.y * 3, 0);
+        mouseWorld.set(mouse.x * 3, mouse.y * 3, 0);
 
         for (let i = 0; i < particleCount; i++) {
             const ix = i * 3;
             const iy = i * 3 + 1;
             const iz = i * 3 + 2;
 
-            const currentPos = new THREE.Vector3(positions[ix], positions[iy], positions[iz]);
-            const originalPos = new THREE.Vector3(originalPositions[ix], originalPositions[iy], originalPositions[iz]);
-            const velocity = new THREE.Vector3(velocities[ix], velocities[iy], velocities[iz]);
+            currentPos.set(positions[ix], positions[iy], positions[iz]);
+            originalPos.set(originalPositions[ix], originalPositions[iy], originalPositions[iz]);
+            velocity.set(velocities[ix], velocities[iy], velocities[iz]);
 
             const dist = currentPos.distanceTo(mouseWorld);
             if (dist < 1.5) {
                 const force = (1.5 - dist) * 0.01;
-                const direction = new THREE.Vector3().subVectors(currentPos, mouseWorld).normalize();
-                velocity.add(direction.multiplyScalar(force));
+                direction.subVectors(currentPos, mouseWorld).normalize();
+                velocity.addScaledVector(direction, force);
             }
 
             // Return to original position
-            const returnForce = new THREE.Vector3().subVectors(originalPos, currentPos).multiplyScalar(0.001);
+            returnForce.subVectors(originalPos, currentPos).multiplyScalar(0.001);
             velocity.add(returnForce);
             
             // Damping
@@ -276,6 +288,10 @@ const WovenCanvas = () => {
     window.addEventListener('resize', handleResize);
 
     return () => {
+        active = false;
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+        }
         window.removeEventListener('resize', handleResize);
         window.removeEventListener('mousemove', handleMouseMove);
         mount.removeChild(renderer.domElement);

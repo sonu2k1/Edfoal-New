@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import React, { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { useInView } from "framer-motion";
 
 export const CanvasRevealEffect = ({
   animationSpeed = 0.4,
@@ -290,10 +291,18 @@ const ShaderMaterial = ({
 };
 
 const Shader: React.FC<ShaderProps> = ({ source, uniforms, maxFps = 60 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: "200px" });
+
   return (
-    <Canvas className="absolute inset-0  h-full w-full">
-      <ShaderMaterial source={source} uniforms={uniforms} maxFps={maxFps} />
-    </Canvas>
+    <div ref={containerRef} className="absolute inset-0 h-full w-full">
+      <Canvas
+        frameloop={isInView ? "always" : "never"}
+        className="absolute inset-0 h-full w-full"
+      >
+        <ShaderMaterial source={source} uniforms={uniforms} maxFps={maxFps} />
+      </Canvas>
+    </div>
   );
 };
 interface ShaderProps {
