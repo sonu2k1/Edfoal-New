@@ -348,36 +348,36 @@ export function World(props: WorldProps) {
   const currentCameraZ = globeConfig.cameraZ || cameraZ;
   return (
     <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 0.1, 2000)}>
-      <WebGLRendererConfig />
-      <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
-      <directionalLight
-        color={globeConfig.directionalLeftLight}
-        position={new Vector3(-400, 100, 400)}
-      />
-      <directionalLight
-        color={globeConfig.directionalTopLight}
-        position={new Vector3(-200, 500, 200)}
-      />
-      <pointLight
-        color={globeConfig.pointLight}
-        position={new Vector3(-200, 500, 200)}
-        intensity={0.8}
-      />
-      <Globe {...props} />
-      {GLOBE_LABELS.map((label, idx) => (
-        <GlobeLabel key={idx} text={label.text} lat={label.lat} lng={label.lng} />
-      ))}
-      <OrbitControls
-        enablePan={false}
-        enableZoom={false}
-        minDistance={currentCameraZ}
-        maxDistance={currentCameraZ}
-        autoRotateSpeed={1}
-        autoRotate={true}
-        minPolarAngle={Math.PI / 3.5}
-        maxPolarAngle={Math.PI - Math.PI / 3}
-      />
-    </Canvas>
+        <WebGLRendererConfig />
+        <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
+        <directionalLight
+          color={globeConfig.directionalLeftLight}
+          position={new Vector3(-400, 100, 400)}
+        />
+        <directionalLight
+          color={globeConfig.directionalTopLight}
+          position={new Vector3(-200, 500, 200)}
+        />
+        <pointLight
+          color={globeConfig.pointLight}
+          position={new Vector3(-200, 500, 200)}
+          intensity={0.8}
+        />
+        <Globe {...props} />
+        {GLOBE_LABELS.map((label, idx) => (
+          <GlobeLabel key={idx} text={label.text} lat={label.lat} lng={label.lng} />
+        ))}
+        <OrbitControls
+          enablePan={false}
+          enableZoom={false}
+          minDistance={currentCameraZ}
+          maxDistance={currentCameraZ}
+          autoRotateSpeed={1}
+          autoRotate={true}
+          minPolarAngle={Math.PI / 3.5}
+          maxPolarAngle={Math.PI - Math.PI / 3}
+        />
+      </Canvas>
   );
 }
 
