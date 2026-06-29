@@ -6,10 +6,8 @@ import {
   MessageSquare,
   MapPin,
   Phone,
-  Globe,
   CheckCircle,
   ArrowRight,
-  Check,
 } from "lucide-react";
 import { FaFacebook, FaXTwitter, FaLinkedin, FaYoutube } from "react-icons/fa6";
 import { OriginButton } from "@/components/ui/OriginButton";
@@ -27,13 +25,13 @@ export default function ContactPage() {
   useLenis();
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    countryCode: "US",
+    fullName: "",
+    workEmail: "",
     phone: "",
-    message: "",
-    services: [] as string[],
+    company: "",
+    geoFocus: "",
+    potentialUsecase: "",
+    protectData: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,20 +39,15 @@ export default function ContactPage() {
   const [submitError, setSubmitError] = useState("");
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleServiceChange = (serviceName: string) => {
-    setFormData((prev) => {
-      const alreadySelected = prev.services.includes(serviceName);
-      const updatedServices = alreadySelected
-        ? prev.services.filter((s) => s !== serviceName)
-        : [...prev.services, serviceName];
-      return { ...prev, services: updatedServices };
-    });
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: checked }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +59,7 @@ export default function ContactPage() {
       if (GOOGLE_SHEETS_URL) {
         const formElement = e.currentTarget;
         const body = new FormData(formElement);
-        body.set("services", formData.services.join(", "));
+        body.set("protectData", formData.protectData ? "Yes" : "No");
 
         const response = await fetch(GOOGLE_SHEETS_URL, {
           method: "POST",
@@ -76,29 +69,29 @@ export default function ContactPage() {
         if (response.ok) {
           setSubmitSuccess(true);
           setFormData({
-            firstName: "",
-            lastName: "",
-            email: "",
-            countryCode: "US",
+            fullName: "",
+            workEmail: "",
             phone: "",
-            message: "",
-            services: [],
+            company: "",
+            geoFocus: "",
+            potentialUsecase: "",
+            protectData: false,
           });
         } else {
-          throw new Error("Unable to submit to sheet. Please check script configuration.");
+          throw new Error("Unable to submit. Please check script configuration.");
         }
       } else {
         // Simulation/Mock submission
         await new Promise((resolve) => setTimeout(resolve, 1500));
         setSubmitSuccess(true);
         setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          countryCode: "US",
+          fullName: "",
+          workEmail: "",
           phone: "",
-          message: "",
-          services: [],
+          company: "",
+          geoFocus: "",
+          potentialUsecase: "",
+          protectData: false,
         });
       }
     } catch (err: unknown) {
@@ -107,15 +100,6 @@ export default function ContactPage() {
       setIsSubmitting(false);
     }
   };
-
-  const serviceOptions = [
-    "Website design",
-    "Content creation",
-    "UX design",
-    "Strategy & consulting",
-    "User research",
-    "Other",
-  ];
 
   return (
     <main className="relative min-h-screen bg-white text-zinc-900 selection:bg-purple-500/10 selection:text-purple-900 overflow-hidden">
@@ -171,7 +155,7 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12">
               
               {/* Left Column: Info Sidebar */}
-              <div className="flex flex-col justify-between border-b border-zinc-200 bg-zinc-50 p-5 sm:p-8 md:p-10 lg:col-span-5 lg:border-b-0 lg:border-r lg:p-12">
+              <div className="flex flex-col justify-between border-b border-zinc-200 bg-zinc-50/50 p-5 sm:p-8 md:p-10 lg:col-span-5 lg:border-b-0 lg:border-r lg:p-12">
                 <div>
                   {/* Heading */}
                   <h1 className="mb-3 text-[clamp(2rem,8vw,2.75rem)] font-bold leading-tight tracking-tight text-zinc-950 md:text-4xl">
@@ -244,25 +228,6 @@ export default function ContactPage() {
                     </div>
                   </div>
                 </div>
-
-                {/* Social Icons Footer */}
-                <div className="mt-10 flex items-center gap-5 text-zinc-400 md:mt-16">
-                  <a href="#" className="hover:text-purple-600 transition-colors" aria-label="Facebook">
-                    <FaFacebook className="w-5 h-5" />
-                  </a>
-                  <a href="#" className="hover:text-purple-600 transition-colors" aria-label="X">
-                    <FaXTwitter className="w-5 h-5" />
-                  </a>
-                  <a href="#" className="hover:text-purple-600 transition-colors" aria-label="LinkedIn">
-                    <FaLinkedin className="w-5 h-5" />
-                  </a>
-                  <a href="#" className="hover:text-purple-600 transition-colors" aria-label="YouTube">
-                    <FaYoutube className="w-5 h-5" />
-                  </a>
-                  <a href="#" className="hover:text-purple-600 transition-colors" aria-label="Website">
-                    <Globe className="w-5 h-5" />
-                  </a>
-                </div>
               </div>
 
               {/* Right Column: Form Container */}
@@ -291,163 +256,137 @@ export default function ContactPage() {
                       </div>
 
                       {/* Form */}
-                      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                        {/* First & Last Name */}
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
-                          <div>
-                            <label htmlFor="firstName" className="text-zinc-700 text-sm font-medium mb-2 block">
-                              First name *
-                            </label>
-                            <input
-                              id="firstName"
-                              name="firstName"
-                              type="text"
-                              placeholder="First name"
-                              value={formData.firstName}
-                              onChange={handleInputChange}
-                              required
-                              className="w-full rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-purple-500 focus:bg-white focus:outline-none sm:py-2.5"
-                            />
-                          </div>
-                          <div>
-                            <label htmlFor="lastName" className="text-zinc-700 text-sm font-medium mb-2 block">
-                              Last name *
-                            </label>
-                            <input
-                              id="lastName"
-                              name="lastName"
-                              type="text"
-                              placeholder="Last name"
-                              value={formData.lastName}
-                              onChange={handleInputChange}
-                              required
-                              className="w-full rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-purple-500 focus:bg-white focus:outline-none sm:py-2.5"
-                            />
-                          </div>
+                      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-x-6 gap-y-5">
+                        {/* Full Name */}
+                        <label htmlFor="fullName" className="text-zinc-700 text-sm font-semibold md:py-2.5">
+                          Full Name
+                        </label>
+                        <input
+                          id="fullName"
+                          name="fullName"
+                          type="text"
+                          placeholder="Enter your full name"
+                          value={formData.fullName}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none sm:py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+                        />
+
+                        {/* Work Email */}
+                        <label htmlFor="workEmail" className="text-zinc-700 text-sm font-semibold md:py-2.5">
+                          Work Email
+                        </label>
+                        <input
+                          id="workEmail"
+                          name="workEmail"
+                          type="email"
+                          placeholder="Enter your work email"
+                          value={formData.workEmail}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none sm:py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+                        />
+
+                        {/* Phone */}
+                        <label htmlFor="phone" className="text-zinc-700 text-sm font-semibold md:py-2.5">
+                          Phone
+                        </label>
+                        <input
+                          id="phone"
+                          name="phone"
+                          type="tel"
+                          placeholder="Enter your phone number"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          className="w-full rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none sm:py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+                        />
+
+                        {/* Optional Section Header */}
+                        <div className="col-span-1 md:col-span-2 text-center text-zinc-400 text-[13px] italic py-2">
+                          For a more tailored demo, please tell us about your company (optional)
                         </div>
 
-                        {/* Email */}
-                        <div>
-                          <label htmlFor="email" className="text-zinc-700 text-sm font-medium mb-2 block">
-                            Email *
-                          </label>
+                        {/* Company */}
+                        <label htmlFor="company" className="text-zinc-700 text-sm font-semibold md:py-2.5">
+                          Company
+                        </label>
+                        <input
+                          id="company"
+                          name="company"
+                          type="text"
+                          placeholder="Enter your company name"
+                          value={formData.company}
+                          onChange={handleInputChange}
+                          className="w-full rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none sm:py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+                        />
+
+                        {/* Geo Focus */}
+                        <label htmlFor="geoFocus" className="text-zinc-700 text-sm font-semibold md:py-2.5">
+                          Geo Focus
+                        </label>
+                        <input
+                          id="geoFocus"
+                          name="geoFocus"
+                          type="text"
+                          placeholder="Enter your company's location"
+                          value={formData.geoFocus}
+                          onChange={handleInputChange}
+                          className="w-full rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none sm:py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+                        />
+
+                        {/* Potential Usecase */}
+                        <label htmlFor="potentialUsecase" className="text-zinc-700 text-sm font-semibold md:pt-2">
+                          Potential Usecase
+                        </label>
+                        <textarea
+                          id="potentialUsecase"
+                          name="potentialUsecase"
+                          rows={4}
+                          placeholder="Describe"
+                          value={formData.potentialUsecase}
+                          onChange={handleInputChange}
+                          className="w-full rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none resize-none min-h-[100px] shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+                        />
+
+                        {/* Checkbox */}
+                        <div className="col-span-1 md:col-span-2 flex items-center gap-3 py-2">
                           <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder="you@company.com"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                            className="w-full rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-purple-500 focus:bg-white focus:outline-none sm:py-2.5"
+                            id="protectData"
+                            name="protectData"
+                            type="checkbox"
+                            checked={formData.protectData}
+                            onChange={handleCheckboxChange}
+                            className="h-4.5 w-4.5 rounded border-zinc-300 text-[#0A1C3A] focus:ring-[#0A1C3A] cursor-pointer"
                           />
-                        </div>
-
-                        {/* Phone Number with Prefix */}
-                        <div>
-                          <label htmlFor="phone" className="text-zinc-700 text-sm font-medium mb-2 block">
-                            Phone number
+                          <label htmlFor="protectData" className="text-zinc-600 text-sm font-medium cursor-pointer select-none">
+                            I want to protect my data
                           </label>
-                          <div className="flex overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50/50 transition-all focus-within:border-purple-500 focus-within:bg-white">
-                            <select
-                              name="countryCode"
-                              value={formData.countryCode}
-                              onChange={handleInputChange}
-                              className="cursor-pointer border-r border-zinc-200 bg-transparent px-3 py-3 text-sm text-zinc-700 hover:bg-zinc-100/50 focus:outline-none sm:py-2.5"
-                            >
-                              <option value="US" className="bg-white text-zinc-950">US +1</option>
-                              <option value="GB" className="bg-white text-zinc-950">GB +44</option>
-                              <option value="IN" className="bg-white text-zinc-950">IN +91</option>
-                              <option value="CA" className="bg-white text-zinc-950">CA +1</option>
-                              <option value="AU" className="bg-white text-zinc-950">AU +61</option>
-                            </select>
-                            <input
-                              id="phone"
-                              name="phone"
-                              type="tel"
-                              placeholder="+1 (555) 000-0000"
-                              value={formData.phone}
-                              onChange={handleInputChange}
-                              className="min-w-0 flex-1 border-none bg-transparent px-3 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-0 sm:px-4 sm:py-2.5"
-                            />
-                          </div>
-                        </div>
-
-                        {/* Message */}
-                        <div>
-                          <label htmlFor="message" className="text-zinc-700 text-sm font-medium mb-2 block">
-                            Message *
-                          </label>
-                          <textarea
-                            id="message"
-                            name="message"
-                            rows={4}
-                            placeholder="Leave us a message..."
-                            value={formData.message}
-                            onChange={handleInputChange}
-                            required
-                            className="min-h-[130px] w-full resize-none rounded-lg border border-zinc-200 bg-zinc-50/50 px-4 py-3 text-sm text-zinc-900 transition-all placeholder:text-zinc-400 focus:border-purple-500 focus:bg-white focus:outline-none"
-                          />
-                        </div>
-
-                        {/* Services Checkboxes */}
-                        <div>
-                          <span className="text-zinc-700 text-sm font-medium mb-3 block">
-                            Services
-                          </span>
-                          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3.5">
-                            {serviceOptions.map((service) => {
-                              const isChecked = formData.services.includes(service);
-                              return (
-                                <label
-                                  key={service}
-                                  className="flex items-center gap-3 cursor-pointer group select-none"
-                                >
-                                  <input
-                                    type="checkbox"
-                                    checked={isChecked}
-                                    onChange={() => handleServiceChange(service)}
-                                    className="sr-only"
-                                  />
-                                  <div
-                                    className={cn(
-                                      "flex h-5 w-5 shrink-0 items-center justify-center rounded border border-zinc-200 bg-zinc-50/50 transition-all duration-200 group-hover:border-zinc-300",
-                                      isChecked && "border-purple-600 bg-purple-50 text-purple-600"
-                                    )}
-                                  >
-                                    {isChecked && <Check className="w-3.5 h-3.5" />}
-                                  </div>
-                                  <span className="text-zinc-500 group-hover:text-zinc-800 text-sm transition-colors duration-200">
-                                    {service}
-                                  </span>
-                                </label>
-                              );
-                            })}
-                          </div>
                         </div>
 
                         {/* Submit Error */}
                         {submitError && (
-                          <div className="text-sm font-semibold text-rose-600 p-4 rounded-lg bg-rose-50 border border-rose-100">
+                          <div className="col-span-1 md:col-span-2 text-sm font-semibold text-rose-600 p-4 rounded-lg bg-rose-50 border border-rose-100">
                             {submitError}
                           </div>
                         )}
 
                         {/* Submit Button */}
-                        <OriginButton
-                          type="submit"
-                          disabled={isSubmitting}
-                          className="h-12 w-full rounded-full border-[0.5px] text-sm font-semibold tracking-wide [--ic-background:#ffffff] [--ic-border:#0f172a] [--ic-card-foreground:#0f172a] [--ic-card:#ffffff] [--ic-foreground:#0f172a]"
-                        >
-                          {isSubmitting ? (
-                            <div className="flex items-center justify-center gap-2">
-                              <div className="w-4 h-4 border-2 border-zinc-950/25 border-t-zinc-950 rounded-full animate-spin" />
-                              <span>Submitting...</span>
-                            </div>
-                          ) : (
-                            <span>Get started</span>
-                          )}
-                        </OriginButton>
+                        <div className="col-span-1 md:col-span-2 pt-2">
+                          <OriginButton
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="h-12 w-full rounded-full border text-sm font-semibold tracking-wide [--ic-card:#0A1C3A] [--ic-card-foreground:#ffffff] [--ic-border:#0A1C3A] [--ic-foreground:#ffffff] [--ic-background:#0A1C3A]"
+                          >
+                            {isSubmitting ? (
+                              <div className="flex items-center justify-center gap-2">
+                                <div className="w-4 h-4 border-2 border-white/25 border-t-white rounded-full animate-spin" />
+                                <span>Submitting...</span>
+                              </div>
+                            ) : (
+                              <span>Contact Us</span>
+                            )}
+                          </OriginButton>
+                        </div>
                       </form>
                     </motion.div>
                   ) : (
