@@ -9,6 +9,7 @@ export default function LogoTicker() {
     <img key="workfin" src="https://ik.imagekit.io/edfoalImage/assets/image/workfin.png" alt="Workfin" className="partner-logo" />,
     <img key="rocksteady" src="https://ik.imagekit.io/edfoalImage/assets/image/rocksteadydigital.png" alt="Rocksteady Digital" className="partner-logo" />,
     <img key="lochhomes" src="https://ik.imagekit.io/edfoalImage/assets/image/lochhomes1.png" alt="lochhomes" className="partner-logo" />,
+    <img key="newpartner" src="https://ik.imagekit.io/sonu2k1/TEst/Logos/logo.webp?updatedAt=1780330681267" alt="Partner Logo" className="partner-logo" />,
   ];
 
   // Repeat the core logo set multiple times to ensure seamless infinite looping track
@@ -44,6 +45,11 @@ export default function LogoTicker() {
           filter: grayscale(100%);
           opacity: 0.6;
           transition: all 0.3s ease;
+        }
+        @media (min-width: 768px) {
+          .partner-logo {
+            height: 80px;
+          }
         }
         .partner-logo:hover {
           filter: grayscale(0%);

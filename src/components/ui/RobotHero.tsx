@@ -32,7 +32,7 @@ export function RobotHero({ kicker, title, subtitle, id }: RobotHeroProps) {
 
             <div className="relative mx-auto flex min-h-160 w-full max-w-360 flex-col items-center sm:min-h-170 lg:min-h-140 lg:flex-row">
               {/* Left content */}
-            <div className="relative z-10 flex w-full flex-col justify-center px-5 pb-8 pt-20 text-center sm:px-8 sm:pb-10 sm:pt-24 md:px-10 lg:w-[45%] lg:px-0 lg:py-18 lg:pr-8 lg:text-left">
+            <div className="relative z-10 flex w-full flex-col justify-center px-5 pb-8 pt-20 text-center sm:px-8 sm:pb-10 sm:pt-24 md:px-10 lg:w-[45%] lg:pl-16 lg:pr-8 lg:py-18 lg:text-left">
                 {kicker && (
                   <div className="text-xs font-semibold tracking-widest text-purple-400 uppercase mb-4">
                   {kicker}

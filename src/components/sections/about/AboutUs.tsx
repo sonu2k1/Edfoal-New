@@ -9,7 +9,7 @@ export default function AboutUs() {
       id="about-us"
       title={
         <>
-          About Us
+          About US
           <br />
           <span className="text-xl md:text-3xl text-neutral-300 font-semibold mt-2 block">
             Get to Know EdFoal
