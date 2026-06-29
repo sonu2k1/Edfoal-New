@@ -102,12 +102,12 @@ export default function HeroSection() {
       <div
         id="hero-section"
         ref={containerRef}
-        className="relative mx-auto h-[180svh] w-full max-w-[100vw] overflow-hidden rounded-xl bg-[#001427] sm:h-[190svh] lg:h-[180vh]"
+        className="relative mx-auto h-[180svh] w-full max-w-[100vw] rounded-xl bg-[#001427] sm:h-[190svh] lg:h-[180vh]"
       >
         {/* Pinned canvas layer */}
         <div
           ref={canvasContainerRef}
-          className="fixed left-0 top-0 z-0 h-svh w-full overflow-hidden pointer-events-none"
+          className="fixed left-1.5 top-1.5 right-1.5 bottom-1.5 sm:left-2.5 sm:top-2.5 sm:right-2.5 sm:bottom-2.5 z-0 overflow-hidden pointer-events-none rounded-xl"
         >
           <div className="absolute inset-0 h-full w-full">
             <ParticleBrain animState={animState} />
