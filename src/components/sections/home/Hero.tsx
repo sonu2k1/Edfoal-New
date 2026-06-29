@@ -43,8 +43,6 @@ export default function HeroSection() {
             trigger: containerRef.current,
             start: "top top",
             end: "bottom bottom",
-            pin: canvasContainerRef.current,
-            pinSpacing: false,
             scrub: 0.5,
           },
         });
@@ -109,7 +107,7 @@ export default function HeroSection() {
         {/* Pinned canvas layer */}
         <div
           ref={canvasContainerRef}
-          className="absolute left-0 top-0 z-0 h-svh w-full overflow-hidden pointer-events-none"
+          className="sticky left-0 top-0 z-0 h-svh w-full mb-[-100svh] overflow-hidden pointer-events-none"
         >
           <div className="absolute inset-0 h-full w-full">
             <ParticleBrain animState={animState} />

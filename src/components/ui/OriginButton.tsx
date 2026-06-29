@@ -97,6 +97,7 @@ const OriginButton = React.forwardRef<HTMLButtonElement, OriginButtonProps>(
     const [isPressed, setIsPressed] = React.useState(false);
     const [origin, setOrigin] = React.useState({ x: 0, y: 0 });
     const [coverSize, setCoverSize] = React.useState(0);
+    const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
 
     const ariaLabel = props["aria-label"];
     const ariaLabelledBy = props["aria-labelledby"];
@@ -119,42 +120,14 @@ const OriginButton = React.forwardRef<HTMLButtonElement, OriginButtonProps>(
       );
     }, [ariaLabel, ariaLabelledBy, children]);
 
-    const updateOrigin = React.useCallback((x: number, y: number) => {
+    // Measure and cache dimensions on mount and resize
+    React.useEffect(() => {
       const node = buttonRef.current;
       if (!node) return;
-
-      const rect = node.getBoundingClientRect();
-      setOrigin({ x, y });
-      setCoverSize(getCoverDiameter(rect.width, rect.height, x, y));
-    }, []);
-
-    const updateOriginFromPointer = React.useCallback(
-      (event: React.PointerEvent<HTMLButtonElement>) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        updateOrigin(event.clientX - rect.left, event.clientY - rect.top);
-      },
-      [updateOrigin]
-    );
-
-    const updateOriginFromCenter = React.useCallback(() => {
-      const node = buttonRef.current;
-      if (!node) return;
-
-      const rect = node.getBoundingClientRect();
-      updateOrigin(rect.width / 2, rect.height / 2);
-    }, [updateOrigin]);
-
-    const showFill = !isDisabled && (hovered || isPressed);
-
-    React.useLayoutEffect(() => {
-      const node = buttonRef.current;
-      if (!(node && showFill)) return;
 
       const measure = () => {
         const rect = node.getBoundingClientRect();
-        setCoverSize(
-          getCoverDiameter(rect.width, rect.height, origin.x, origin.y)
-        );
+        setDimensions({ width: rect.width, height: rect.height });
       };
 
       measure();
@@ -168,7 +141,28 @@ const OriginButton = React.forwardRef<HTMLButtonElement, OriginButtonProps>(
       }
 
       return () => observer.disconnect();
-    }, [showFill, origin.x, origin.y]);
+    }, []);
+
+    const updateOrigin = React.useCallback((x: number, y: number) => {
+      setOrigin({ x, y });
+      setCoverSize(getCoverDiameter(dimensions.width, dimensions.height, x, y));
+    }, [dimensions]);
+
+    const updateOriginFromPointer = React.useCallback(
+      (event: React.PointerEvent<HTMLButtonElement>) => {
+        // Use native event offset to avoid getBoundingClientRect() and layout thrashing
+        const x = event.nativeEvent.offsetX;
+        const y = event.nativeEvent.offsetY;
+        updateOrigin(x, y);
+      },
+      [updateOrigin]
+    );
+
+    const updateOriginFromCenter = React.useCallback(() => {
+      updateOrigin(dimensions.width / 2, dimensions.height / 2);
+    }, [updateOrigin, dimensions]);
+
+    const showFill = !isDisabled && (hovered || isPressed);
 
     const fillTransition = { duration: FILL_DURATION, ease: FILL_EASE };
 
@@ -294,7 +288,7 @@ const OriginButton = React.forwardRef<HTMLButtonElement, OriginButtonProps>(
           }}
           transition={fillTransition}
         />
-        <span className="relative z-10 inline-flex items-center justify-center gap-2">
+        <span className="relative z-10 inline-flex items-center justify-center gap-2 pointer-events-none">
           {children}
         </span>
       </motion.button>

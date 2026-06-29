@@ -43,18 +43,11 @@ const HoverExpandPanel = ({
   className?: string;
 }) => {
   const [activeImage, setActiveImage] = useState<number>(1);
-  const [viewportWidth, setViewportWidth] = useState(1200);
+  const [hasHover, setHasHover] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setViewportWidth(window.innerWidth);
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    setHasHover(window.matchMedia("(hover: hover)").matches);
   }, []);
-
-  const isMobile = viewportWidth < 768;
-  const isTablet = viewportWidth >= 768 && viewportWidth < 1024;
 
   return (
     <motion.div
@@ -68,29 +61,17 @@ const HoverExpandPanel = ({
         {images.map((image, index) => (
           <motion.div
             key={index}
-            className="relative w-full cursor-pointer overflow-hidden rounded-3xl md:w-auto"
-            animate={{
-              width: isMobile
-                ? "100%"
-                : activeImage === index
-                  ? isTablet
-                    ? "28rem"
-                    : "40rem"
-                  : isTablet
-                    ? "4.25rem"
-                    : "5rem",
-              height: isMobile
-                ? activeImage === index
-                  ? "22rem"
-                  : "5.5rem"
-                : isTablet
-                  ? "23rem"
-                  : "26rem",
-            }}
+            layout
+            className={cn(
+              "relative cursor-pointer overflow-hidden rounded-3xl",
+              activeImage === index
+                ? "w-full h-[22rem] md:w-[28rem] md:h-[23rem] lg:w-[40rem] lg:h-[26rem]"
+                : "w-full h-[5.5rem] md:w-[4.25rem] md:h-[23rem] lg:w-[5rem] lg:h-[26rem]"
+            )}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
             onClick={() => setActiveImage(index)}
             onHoverStart={() => {
-              if (!isMobile) setActiveImage(index);
+              if (hasHover) setActiveImage(index);
             }}
           >
             {/* Gradient overlay */}
@@ -147,9 +128,8 @@ const HoverExpandPanel = ({
                   className="absolute inset-0 z-20 flex items-center justify-center"
                 >
                   <span
-                    className="text-sm font-bold uppercase tracking-widest text-white/90 md:text-xs"
+                    className="collapsed-label text-sm font-bold uppercase tracking-widest text-white/90 md:text-xs"
                     style={{
-                      writingMode: isMobile ? "horizontal-tb" : "vertical-rl",
                       textOrientation: "mixed",
                     }}
                   >

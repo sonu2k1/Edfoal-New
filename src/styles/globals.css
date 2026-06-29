@@ -712,3 +712,13 @@ canvas + a[href*="spline"] {
   opacity: 0 !important;
   pointer-events: none !important;
 }
+
+/* Responsive writing mode for collapsed industries panels */
+.collapsed-label {
+  writing-mode: horizontal-tb;
+}
+@media (min-width: 768px) {
+  .collapsed-label {
+    writing-mode: vertical-rl;
+  }
+}
