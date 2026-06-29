@@ -74,10 +74,18 @@ const servicesData: ServiceDetail[] = [
 interface GetStartedModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialTab?: string;
 }
 
-export function GetStartedModal({ isOpen, onClose }: GetStartedModalProps) {
+export function GetStartedModal({ isOpen, onClose, initialTab }: GetStartedModalProps) {
   const [activeTab, setActiveTab] = useState<string>("tailored-ai");
+
+  // Sync active tab with initialTab prop when modal opens
+  useEffect(() => {
+    if (isOpen && initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [isOpen, initialTab]);
 
   // Prevent background scrolling when open
   useEffect(() => {
@@ -103,15 +111,21 @@ export function GetStartedModal({ isOpen, onClose }: GetStartedModalProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs cursor-pointer"
+            className="fixed inset-0 bg-black/60 backdrop-blur-md cursor-pointer"
           />
 
           {/* Modal Container Card */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 15 }}
-            transition={{ type: "spring", duration: 0.5, bounce: 0.2 }}
+            initial={{ scale: 0, rotate: "180deg" }}
+            animate={{
+              scale: 1,
+              rotate: "0deg",
+              transition: {
+                type: "spring",
+                bounce: 0.25,
+              },
+            }}
+            exit={{ scale: 0, rotate: "180deg" }}
             className="relative w-full max-w-6xl bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh] z-10 text-zinc-900"
           >
             {/* Close Button */}
