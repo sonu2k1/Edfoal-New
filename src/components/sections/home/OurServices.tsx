@@ -18,7 +18,7 @@ export default function OurServices() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E2076D]" />
             </span>
             <span className="text-sm font-semibold leading-none tracking-widest text-gray-600">
-              Our Services
+              Our Solutions
             </span>
           </div>
         </div>

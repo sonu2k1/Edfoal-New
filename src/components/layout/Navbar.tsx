@@ -29,7 +29,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "Services", href: "/services" },
+    { label: "Solutions", href: "/services" },
     { label: "About Us", href: "/about" },
     { label: "Usecases", href: "/usecases" },
     { label: "Contact Us", href: "/contact" },
@@ -73,24 +73,6 @@ export default function Navbar() {
           {/* 3. Right Column: CTA Button (Desktop) / Hamburger (Mobile) */}
           <div
             className="flex flex-initial items-center justify-end gap-2 sm:gap-3 lg:gap-4">
-
-            <div className="hidden h-10 w-[148px] items-center justify-center rounded-full lg:inline-flex">
-              <OriginButton
-                className="h-full w-full rounded-full border-[0.5px] px-0 text-sm font-semibold tracking-wide lg:text-sm"
-                style={{
-                  "--ic-card": "#ffffff",
-                  "--ic-card-foreground": "#0f172a",
-                  "--ic-border": "#0f172a",
-                  "--ic-foreground": "#0f172a",
-                  "--ic-background": "#ffffff",
-                } as React.CSSProperties}
-                onClick={() => {
-                  router.push("/contact");
-                }}
-              >
-                Contact Us
-              </OriginButton>
-            </div>
 
             {/* Mobile Menu Toggle button */}
             <button

@@ -14,7 +14,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const links = [
     { href: "/", label: "Home", icon: Home },
     { href: "/about", label: "About", icon: Info },
-    { href: "/services", label: "Services", icon: Briefcase },
+    { href: "/services", label: "Solutions", icon: Briefcase },
     { href: "/usecases", label: "Case Studies", icon: BookOpen },
     { href: "/contact", label: "Contact", icon: Mail },
   ];

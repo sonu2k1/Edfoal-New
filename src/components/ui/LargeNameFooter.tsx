@@ -7,7 +7,7 @@ const footerLogoUrl = "https://ik.imagekit.io/edfoalImage/assets/image/footerlog
 const PAGES = [
   { label: "Home",        href: "/" },
   { label: "About Us",    href: "/about" },
-  { label: "Our Services",href: "/services" },
+  { label: "Our Solutions",href: "/services" },
   { label: "Contact Us",  href: "/contact" },
 ];
 
@@ -159,7 +159,7 @@ function Footer() {
 
             {/* Services */}
             <div>
-              <h3 style={headingStyle}>Services</h3>
+              <h3 style={headingStyle}>Solutions</h3>
               <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "14px" }}>
                 {SERVICES.map(({ label, href }) => (
                   <li key={label}>

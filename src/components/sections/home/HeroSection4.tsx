@@ -182,7 +182,7 @@ export function HeroSection({
 
 const menuItems = [
     { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
+    { name: 'Solutions', href: '/services' },
     { name: 'About Us', href: '/about' },
     { name: 'Usecases', href: '/usecases' },
     { name: 'Contact Us', href: '/contact' },

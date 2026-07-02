@@ -93,7 +93,7 @@ export const defaultEntries: TimeLine_01Entry[] = [
  * As you scroll, the active card expands to reveal its full content. Others stay collapsed.
  */
 export default function TimeLine_01({
-  title = "Our Services",
+  title = "Our Solutions",
   description = "Tailored technologies designed to drive your business forward and address your unique challenges!",
   entries = defaultEntries,
   className,

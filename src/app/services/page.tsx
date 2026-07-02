@@ -27,7 +27,7 @@ export default function ServicesPage() {
           {/* Left Block */}
           <div className="max-w-md">
             <span className="text-xs font-bold tracking-widest text-[#3b82f6] uppercase block mb-3">
-              Our Services
+              Our Solutions
             </span>
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#0a1128] tracking-tight leading-tight">
               Our Exceptional <br className="hidden md:inline" /> Service Offerings

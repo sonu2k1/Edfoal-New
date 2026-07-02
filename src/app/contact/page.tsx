@@ -3,17 +3,16 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, ArrowRight } from "lucide-react";
-import { FaFacebook, FaXTwitter, FaLinkedin, FaYoutube } from "react-icons/fa6";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { MinimalistHero } from "@/components/ui/minimalist-hero";
 import useLenis from "@/hooks/useLenis";
+import MinimalHero from "@/components/ui/HeroMinimalism";
 
 const GOOGLE_SHEETS_URL = "";
 
-/* ── shared input style — inline overrides globals.css dark theme ── */
+/* ── Shared inline styles (override globals.css dark theme) ── */
 const inputStyle: React.CSSProperties = {
-  width: "100%",
+  flex: 1,
   height: "40px",
   backgroundColor: "#ffffff",
   border: "1px solid #D1D5DB",
@@ -23,20 +22,21 @@ const inputStyle: React.CSSProperties = {
   color: "#111827",
   outline: "none",
   boxSizing: "border-box",
+  width: "100%",
 };
 
 const labelStyle: React.CSSProperties = {
+  width: "130px",
+  flexShrink: 0,
   fontSize: "14px",
   color: "#374151",
-  fontWeight: 400,
-  whiteSpace: "nowrap",
+  fontWeight: 500,
+  paddingTop: "10px",
 };
 
 const rowStyle: React.CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "140px 1fr",
-  alignItems: "center",
-  marginBottom: "16px",
+  display: "flex",
+  alignItems: "flex-start",
   gap: "12px",
 };
 
@@ -45,7 +45,7 @@ export default function ContactPage() {
 
   const [formData, setFormData] = useState({
     fullName: "",
-    workEmail: "",
+    email: "",
     phone: "",
     company: "",
     geoFocus: "",
@@ -60,15 +60,22 @@ export default function ContactPage() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, type } = e.target;
-    if (type === "checkbox") {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: (e.target as HTMLInputElement).checked,
-      }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, protectData: e.target.checked }));
+  };
+
+  const focusStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.currentTarget.style.borderColor = "#2563EB";
+    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(37,99,235,0.1)";
+  };
+
+  const blurStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.currentTarget.style.borderColor = "#D1D5DB";
+    e.currentTarget.style.boxShadow = "none";
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -85,8 +92,9 @@ export default function ContactPage() {
       }
       setSubmitSuccess(true);
       setFormData({
-        fullName: "", workEmail: "", phone: "",
-        company: "", geoFocus: "", potentialUsecase: "", protectData: false,
+        fullName: "", email: "", phone: "",
+        company: "", geoFocus: "", potentialUsecase: "",
+        protectData: false,
       });
     } catch (err: unknown) {
       setSubmitError(err instanceof Error ? err.message : "Failed to submit. Please try again.");
@@ -96,71 +104,110 @@ export default function ContactPage() {
   };
 
   return (
-    <main style={{ backgroundColor: "#ffffff", minHeight: "100vh" }}>
+    <main className="relative min-h-screen overflow-x-hidden" style={{ backgroundColor: "#ffffff" }}>
+
       <Navbar />
 
-      {/* ── Hero Banner ── */}
-      <div className="relative">
-        <MinimalistHero
-          mainText="Explore how we're transforming businesses with cutting-edge AI solutions tailored just for you! Reach out to our AI strategy and engineering team to get started."
-          readMoreLink="#contact-form"
-          imageSrc="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800"
-          imageAlt="Contact Edfoal AI Solutions"
-          overlayText={{ part1: "get in", part2: "touch." }}
-          socialLinks={[
-            { icon: FaFacebook, href: "#" },
-            { icon: FaXTwitter, href: "#" },
-            { icon: FaLinkedin, href: "#" },
-            { icon: FaYoutube, href: "#" },
-          ]}
-          locationText="Edfoal AI Solutions"
-          hideHeader={true}
-          hideFooter={true}
-          className="mx-1.5 mt-1.5 w-auto rounded-xl bg-[#001427] text-white sm:mx-2.5 sm:mt-2.5"
-        />
-        {/* Fade from dark hero into white content below */}
-        <div
-          className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none"
-          style={{ height: "120px", background: "linear-gradient(to top, #ffffff, transparent)" }}
-        />
-      </div>
+      {/* ── Page Banner / Hero ── */}
+      <MinimalHero
+        kicker="Contact Us"
+        title={<span className="text-[#f5e1b8]">Tailored AI Solutions</span>}
+        subtitle="Explore how we're transforming businesses with cutting-edge AI solutions tailored just for you!"
+        showFooter={false}
+      />
 
-      {/* ── Contact Form ── */}
+      {/* ── Contact Form Section ── */}
       <section
-        id="contact-form"
-        style={{ backgroundColor: "#ffffff", padding: "64px 24px 80px" }}
+        style={{
+          backgroundColor: "#ffffff",
+          padding: "72px 24px 96px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
-        <div style={{ maxWidth: "580px", margin: "0 auto" }}>
+        <AnimatePresence mode="wait">
 
-          {/* Heading */}
-          <div style={{ textAlign: "center", marginBottom: "48px" }}>
-            <h1 style={{
-              fontSize: "clamp(2rem, 5vw, 2.5rem)",
-              fontWeight: 700,
-              color: "#111827",
-              marginBottom: "14px",
-              lineHeight: 1.2,
-            }}>
-              Get in <span style={{ color: "#2563EB" }}>Touch</span>
-            </h1>
-            <p style={{ fontSize: "14px", color: "#6B7280", lineHeight: 1.7, maxWidth: "none" }}>
-              Tailored technologies designed to drive your business forward and address your unique challenges.
-            </p>
-          </div>
+          {/* ── Success State ── */}
+          {submitSuccess ? (
+            <motion.div
+              key="success"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              style={{
+                display: "flex", flexDirection: "column", alignItems: "center",
+                textAlign: "center", maxWidth: "480px",
+              }}
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.1 }}
+                style={{
+                  width: "72px", height: "72px", borderRadius: "50%",
+                  backgroundColor: "#F0FDF4", border: "1px solid #BBF7D0",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  marginBottom: "24px",
+                }}
+              >
+                <CheckCircle size={36} color="#22C55E" />
+              </motion.div>
+              <h2 style={{ fontSize: "26px", fontWeight: 700, color: "#111827", marginBottom: "12px" }}>
+                Thank You!
+              </h2>
+              <p style={{ fontSize: "15px", color: "#6B7280", lineHeight: 1.7, marginBottom: "32px", maxWidth: "none" }}>
+                Your inquiry has been received. Our AI specialists will review your requirements and get back to you shortly.
+              </p>
+              <button
+                onClick={() => setSubmitSuccess(false)}
+                style={{
+                  display: "flex", alignItems: "center", gap: "6px",
+                  fontSize: "14px", fontWeight: 600, color: "#2563EB",
+                  background: "none", border: "none", cursor: "pointer",
+                }}
+              >
+                <span>Send another message</span>
+                <ArrowRight size={15} />
+              </button>
+            </motion.div>
 
-          {/* Form / Success */}
-          <AnimatePresence mode="wait">
-            {!submitSuccess ? (
-              <motion.form
-                key="form"
+          ) : (
+
+            /* ── Form State ── */
+            <motion.div
+              key="form"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              style={{ width: "100%", maxWidth: "560px" }}
+            >
+              {/* Heading */}
+              <div style={{ textAlign: "center", marginBottom: "36px" }}>
+                <h1 style={{
+                  fontSize: "36px", fontWeight: 700, lineHeight: 1.2,
+                  marginBottom: "12px", color: "#111827",
+                }}>
+                  Get in{" "}
+                  <span style={{ color: "#2563EB" }}>Touch</span>
+                </h1>
+                <p style={{
+                  fontSize: "14px", color: "#6B7280", lineHeight: 1.7,
+                  maxWidth: "440px", margin: "0 auto",
+                }}>
+                  Tailored technologies designed to drive your business forward and address your unique challenges.
+                </p>
+              </div>
+
+              {/* Form */}
+              <form
                 onSubmit={handleSubmit}
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                style={{ display: "flex", flexDirection: "column", gap: "20px" }}
               >
 
                 {/* Full Name */}
                 <div style={rowStyle}>
-                  <label style={labelStyle}>Full Name</label>
+                  <span style={labelStyle}>Full Name</span>
                   <input
                     name="fullName" type="text"
                     placeholder="Enter your full name"
@@ -168,79 +215,74 @@ export default function ContactPage() {
                     onChange={handleChange}
                     required
                     style={inputStyle}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                    onFocus={focusStyle} onBlur={blurStyle}
                   />
                 </div>
 
                 {/* Work Email */}
                 <div style={rowStyle}>
-                  <label style={labelStyle}>Work Email</label>
+                  <span style={labelStyle}>Work Email</span>
                   <input
-                    name="workEmail" type="email"
+                    name="email" type="email"
                     placeholder="Enter your work email"
-                    value={formData.workEmail}
+                    value={formData.email}
                     onChange={handleChange}
                     required
                     style={inputStyle}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                    onFocus={focusStyle} onBlur={blurStyle}
                   />
                 </div>
 
                 {/* Phone */}
-                <div style={{ ...rowStyle, marginBottom: "24px" }}>
-                  <label style={labelStyle}>Phone</label>
+                <div style={rowStyle}>
+                  <span style={labelStyle}>Phone</span>
                   <input
                     name="phone" type="tel"
                     placeholder="Enter your phone number"
                     value={formData.phone}
                     onChange={handleChange}
                     style={inputStyle}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                    onFocus={focusStyle} onBlur={blurStyle}
                   />
                 </div>
 
                 {/* Helper text */}
                 <p style={{
                   fontSize: "12px", color: "#9CA3AF", textAlign: "center",
-                  fontStyle: "italic", marginBottom: "16px", maxWidth: "none",
+                  fontStyle: "italic", margin: "-4px 0", maxWidth: "none",
                 }}>
                   For a more tailored demo, please tell us about your company (optional)
                 </p>
 
                 {/* Company */}
                 <div style={rowStyle}>
-                  <label style={labelStyle}>Company</label>
+                  <span style={labelStyle}>Company</span>
                   <input
                     name="company" type="text"
                     placeholder="Enter your company name"
                     value={formData.company}
                     onChange={handleChange}
                     style={inputStyle}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                    onFocus={focusStyle} onBlur={blurStyle}
                   />
                 </div>
 
                 {/* Geo Focus */}
                 <div style={rowStyle}>
-                  <label style={labelStyle}>Geo Focus</label>
+                  <span style={labelStyle}>Geo Focus</span>
                   <input
                     name="geoFocus" type="text"
                     placeholder="Enter your company's location"
                     value={formData.geoFocus}
                     onChange={handleChange}
                     style={inputStyle}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                    onFocus={focusStyle} onBlur={blurStyle}
                   />
                 </div>
 
                 {/* Potential Usecase */}
-                <div style={{ ...rowStyle, alignItems: "flex-start", marginBottom: "24px" }}>
-                  <label style={{ ...labelStyle, paddingTop: "8px" }}>Potential Usecase</label>
+                <div style={rowStyle}>
+                  <span style={{ ...labelStyle, paddingTop: "10px" }}>Potential Usecase</span>
                   <textarea
                     name="potentialUsecase"
                     placeholder="Describe"
@@ -250,123 +292,103 @@ export default function ContactPage() {
                     style={{
                       ...inputStyle,
                       height: "auto",
-                      padding: "8px 12px",
-                      resize: "none",
-                      lineHeight: 1.6,
+                      padding: "10px 12px",
+                      resize: "vertical",
+                      minHeight: "100px",
                       fontFamily: "inherit",
+                      lineHeight: 1.5,
                     }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "#2563EB"; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = "#D1D5DB"; }}
+                    onFocus={focusStyle} onBlur={blurStyle}
                   />
                 </div>
 
-                {/* Checkbox */}
-                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "24px" }}>
+                {/* Protect Data Checkbox */}
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", paddingLeft: "142px" }}>
                   <input
                     type="checkbox"
                     id="protectData"
                     name="protectData"
                     checked={formData.protectData}
-                    onChange={handleChange}
-                    style={{ width: "15px", height: "15px", cursor: "pointer", accentColor: "#2563EB" }}
+                    onChange={handleCheckbox}
+                    style={{ width: "15px", height: "15px", accentColor: "#2563EB", cursor: "pointer", flexShrink: 0 }}
                   />
-                  <label htmlFor="protectData" style={{ fontSize: "14px", color: "#374151", cursor: "pointer" }}>
+                  <label
+                    htmlFor="protectData"
+                    style={{ fontSize: "14px", color: "#374151", cursor: "pointer", userSelect: "none" }}
+                  >
                     I want to protect my data
                   </label>
                 </div>
 
+                {/* Error */}
                 {submitError && (
                   <p style={{
                     fontSize: "13px", color: "#DC2626",
+                    padding: "10px 14px", borderRadius: "6px",
                     backgroundColor: "#FEF2F2", border: "1px solid #FECACA",
-                    borderRadius: "6px", padding: "10px 14px",
-                    marginBottom: "16px", maxWidth: "none",
+                    maxWidth: "none",
                   }}>
                     {submitError}
                   </p>
                 )}
 
-                {/* Submit button */}
+                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   style={{
                     width: "100%",
                     height: "44px",
-                    backgroundColor: "#1e3a8a",
+                    backgroundColor: isSubmitting ? "#1e40af" : "#1e3a8a",
                     color: "#ffffff",
-                    fontSize: "15px",
                     fontWeight: 600,
-                    border: "none",
+                    fontSize: "14px",
                     borderRadius: "6px",
+                    border: "none",
                     cursor: isSubmitting ? "not-allowed" : "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
                     transition: "background-color 0.2s",
-                    letterSpacing: "0.01em",
-                    opacity: isSubmitting ? 0.75 : 1,
+                    marginTop: "4px",
                   }}
-                  onMouseEnter={(e) => { if (!isSubmitting) e.currentTarget.style.backgroundColor = "#1d4ed8"; }}
-                  onMouseLeave={(e) => { if (!isSubmitting) e.currentTarget.style.backgroundColor = "#1e3a8a"; }}
+                  onMouseEnter={(e) => {
+                    if (!isSubmitting) e.currentTarget.style.backgroundColor = "#1d4ed8";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSubmitting) e.currentTarget.style.backgroundColor = "#1e3a8a";
+                  }}
                 >
-                  {isSubmitting ? "Submitting…" : "Contact Us"}
+                  {isSubmitting ? (
+                    <>
+                      <div style={{
+                        width: "15px", height: "15px",
+                        border: "2px solid rgba(255,255,255,0.35)",
+                        borderTopColor: "#ffffff",
+                        borderRadius: "50%",
+                        animation: "spin 0.7s linear infinite",
+                      }} />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Contact Us"
+                  )}
                 </button>
 
+                {/* Footer note */}
                 <p style={{
-                  fontSize: "11px", color: "#9CA3AF", textAlign: "center",
-                  marginTop: "12px", maxWidth: "none",
+                  fontSize: "11px", color: "#9CA3AF",
+                  textAlign: "center", marginTop: "-8px", maxWidth: "none",
                 }}>
                   Field marked with * are required to complete demo
                 </p>
 
-              </motion.form>
+              </form>
+            </motion.div>
+          )}
 
-            ) : (
-
-              <motion.div
-                key="success"
-                initial={{ scale: 0.96, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.4 }}
-                style={{
-                  display: "flex", flexDirection: "column",
-                  alignItems: "center", textAlign: "center",
-                  padding: "48px 0",
-                }}
-              >
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.1 }}
-                  style={{
-                    width: "72px", height: "72px", borderRadius: "50%",
-                    backgroundColor: "#F0FDF4", border: "1px solid #BBF7D0",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    marginBottom: "24px",
-                  }}
-                >
-                  <CheckCircle size={36} color="#22C55E" />
-                </motion.div>
-                <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#111827", marginBottom: "10px" }}>
-                  Thank You!
-                </h2>
-                <p style={{ fontSize: "14px", color: "#6B7280", lineHeight: 1.7, marginBottom: "32px", maxWidth: "340px" }}>
-                  Your message has been received. Our team will review your request and get back to you shortly.
-                </p>
-                <button
-                  onClick={() => setSubmitSuccess(false)}
-                  style={{
-                    display: "flex", alignItems: "center", gap: "8px",
-                    fontSize: "13px", fontWeight: 600, color: "#2563EB",
-                    background: "none", border: "none", cursor: "pointer",
-                  }}
-                >
-                  <span>Send another message</span>
-                  <ArrowRight size={15} />
-                </button>
-              </motion.div>
-
-            )}
-          </AnimatePresence>
-        </div>
+        </AnimatePresence>
       </section>
 
       <Footer />

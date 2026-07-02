@@ -44,7 +44,7 @@ export default function ServiceHero() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="inline-block text-[11px] font-semibold tracking-[0.2em] text-neutral-300 uppercase px-5 py-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm mb-8"
             >
-              Our Services
+              Our Solutions
             </motion.span>
 
             {/* Heading */}
